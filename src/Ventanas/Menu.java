@@ -18,8 +18,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
-         this.setLocationRelativeTo(null);
-         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
+        this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
     }
 
     /**
@@ -181,20 +181,20 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
-       Venta venta = new Venta();
-       venta.setVisible(true);
-       this.dispose();
+        Venta venta = new Venta();
+        venta.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnVentaActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
-          ExistenciaProductos existencia = new ExistenciaProductos();
-       existencia.setVisible(true);
+        ExistenciaProductos existencia = new ExistenciaProductos();
+        existencia.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnControlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlActionPerformed
-     ControlEmpleados control = new ControlEmpleados();
+        ControlEmpleados control = new ControlEmpleados();
         control.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnControlActionPerformed

@@ -18,7 +18,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
      */
     public ExistenciaProductos() {
         initComponents();
-         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
         this.setLocationRelativeTo(null);
     }
 

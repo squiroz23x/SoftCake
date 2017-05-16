@@ -18,8 +18,8 @@ public class Venta extends javax.swing.JFrame {
      */
     public Venta() {
         initComponents();
-         this.setLocationRelativeTo(null);
-         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
+        this.setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
     }
 
     /**

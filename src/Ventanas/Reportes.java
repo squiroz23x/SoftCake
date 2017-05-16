@@ -19,7 +19,7 @@ public class Reportes extends javax.swing.JFrame {
     public Reportes() {
         initComponents();
         this.setLocationRelativeTo(null);
-         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
     }
 
     /**

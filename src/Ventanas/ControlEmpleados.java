@@ -196,103 +196,102 @@ public class ControlEmpleados extends javax.swing.JFrame {
         registro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    
-    private void limpiarTablaEmpleados(){
+
+    private void limpiarTablaEmpleados() {
         DefaultTableModel model = (DefaultTableModel) TablaEmpleados.getModel();
-        int CountRows = model.getRowCount();        
-        for (int i = 0; i<CountRows; i++){
+        int CountRows = model.getRowCount();
+        for (int i = 0; i < CountRows; i++) {
             model.removeRow(0);
-        }        
+        }
     }
-    
-    private void agregarRowTablaEmpleados(String IdentEmpleadoBusc, String NombreBusc,String ApellidoPBusc,String ApellidoMBusc){
+
+    private void agregarRowTablaEmpleados(String IdentEmpleadoBusc, String NombreBusc, String ApellidoPBusc, String ApellidoMBusc) {
         DefaultTableModel mode1TablaEmpleados = (DefaultTableModel) TablaEmpleados.getModel();
-        mode1TablaEmpleados.addRow(new Object[]{IdentEmpleadoBusc,NombreBusc,ApellidoPBusc,ApellidoMBusc});
+        mode1TablaEmpleados.addRow(new Object[]{IdentEmpleadoBusc, NombreBusc, ApellidoPBusc, ApellidoMBusc});
     }
-    
-    private String getQueryBuscar(){
+
+    private String getQueryBuscar() {
         String IdentEmpleadoBusc = txtIdEmpleado.getText();
         String NombreBusc = txtNombreEmpleado.getText();
         String ApellidoPBusc = txtPaterno.getText();
         String ApellidoMBusc = txtMaterno.getText();
-        
-        String Query="SELECT * FROM `empleados` WHERE `Activo` = 1 ";
+
+        String Query = "SELECT * FROM `empleados` WHERE `Activo` = 1 ";
         int pOR = 0;
-        if (!"".equals(IdentEmpleadoBusc)){
-            Query += ("AND `Identificador` = '"+IdentEmpleadoBusc+"'");
-        }else{
-            if (!"".equals(NombreBusc)){
-                Query += ("AND ( `Nombre` LIKE '%"+NombreBusc+"%'");
+        if (!"".equals(IdentEmpleadoBusc)) {
+            Query += ("AND `Identificador` = '" + IdentEmpleadoBusc + "'");
+        } else {
+            if (!"".equals(NombreBusc)) {
+                Query += ("AND ( `Nombre` LIKE '%" + NombreBusc + "%'");
                 pOR = 1;
             }
-            if (!"".equals(ApellidoPBusc)){
-                if (pOR == 1){
+            if (!"".equals(ApellidoPBusc)) {
+                if (pOR == 1) {
                     Query += " OR ";
-                }else{
+                } else {
                     Query += " AND ( ";
                 }
-                Query += ("`ApellidoP` LIKE '%"+ApellidoPBusc+"%'");
+                Query += ("`ApellidoP` LIKE '%" + ApellidoPBusc + "%'");
                 pOR = 2;
             }
-            if (!"".equals(ApellidoMBusc)){
-                if (pOR > 0 ){
+            if (!"".equals(ApellidoMBusc)) {
+                if (pOR > 0) {
                     Query += " OR ";
-                }else{
+                } else {
                     Query += " AND ( ";
                 }
-                Query += ("`ApellidoM` LIKE '%"+ApellidoMBusc+"%'");
+                Query += ("`ApellidoM` LIKE '%" + ApellidoMBusc + "%'");
                 pOR = 3;
             }
-            if (pOR > 0){
+            if (pOR > 0) {
                 Query += ")";
             }
         }
         return Query;
     }
-    
+
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:        
         Conexion conex = new Conexion();
         String Query = getQueryBuscar();
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-            Statement stmt = conn.createStatement();            
+        MysqlDataSource dataSource = conex.getConnection();
+        try (Connection conn = dataSource.getConnection()) {
+            Statement stmt = conn.createStatement();
             ResultSet ResulQuery = stmt.executeQuery(Query);
             limpiarTablaEmpleados();
-            while(ResulQuery.next()){
+            while (ResulQuery.next()) {
                 String Identificador = ResulQuery.getString("Identificador");
                 String Nombre = ResulQuery.getString("Nombre");
                 String ApellidoP = ResulQuery.getString("ApellidoP");
                 String ApellidoM = ResulQuery.getString("ApellidoM");
-                agregarRowTablaEmpleados(Identificador,Nombre,ApellidoP,ApellidoM);
+                agregarRowTablaEmpleados(Identificador, Nombre, ApellidoP, ApellidoM);
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e);
-        }     
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int RowSeleccionado = TablaEmpleados.getSelectedRow();       
+        int RowSeleccionado = TablaEmpleados.getSelectedRow();
         String Identificador = "";
-        if (RowSeleccionado > -1){
+        if (RowSeleccionado > -1) {
             Identificador = TablaEmpleados.getValueAt(RowSeleccionado, 0).toString();
             RegistroUsuario registro = new RegistroUsuario();
             registro.prepararModEmpleado(Identificador);
             registro.setVisible(true);
             this.dispose();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
         }
-        
-        
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         RegistroUsuario registro = new RegistroUsuario();
-            registro.prepararInsEmpleado();
-            registro.setVisible(true);
-        
+        registro.prepararInsEmpleado();
+        registro.setVisible(true);
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**

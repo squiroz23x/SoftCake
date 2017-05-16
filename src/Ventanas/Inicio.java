@@ -1,6 +1,5 @@
 package Ventanas;
 
-import static Ventanas.Conexion.MENSAJEERROR;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,7 +11,6 @@ import java.sql.Statement;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -26,15 +24,13 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
-        
+
     }
-    public Image getIconImage()
-    {
+
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Imagenes/iconcake.png"));
         return retValue;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -145,57 +141,58 @@ public class Inicio extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
-        int count = 3;
+    int count = 3;
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-       if (count>0){     
+        if (count > 0) {
             Conexion conex = new Conexion();
             String Usuario = txtUsuario.getText();
             String Password = txtPassword.getText();
             JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-            String Query = ("SELECT * FROM `empleados` WHERE `Activo` = 1 AND `Usuario` = '" + Usuario + "' AND `Password` = '" + Password +"'");
-            
-            MysqlDataSource dataSource = conex.getConnection();        
-            try(Connection conn = dataSource.getConnection()){
-                Statement stmt = conn.createStatement();            
+            String Query = ("SELECT * FROM `empleados` WHERE `Activo` = 1 AND `Usuario` = '" + Usuario + "' AND `Password` = '" + Password + "'");
+
+            MysqlDataSource dataSource = conex.getConnection();
+            try (Connection conn = dataSource.getConnection()) {
+                Statement stmt = conn.createStatement();
                 ResultSet ResulQuery = stmt.executeQuery(Query);
-                if (ResulQuery.next()){
+                if (ResulQuery.next()) {
                     Object Nombre = ResulQuery.getObject("Nombre") + " " + ResulQuery.getObject("ApellidoP") + " " + ResulQuery.getObject("ApellidoM");
-                    JOptionPane.showMessageDialog(frame,"Login Correcto. Bienvenido " + Nombre);
+                    JOptionPane.showMessageDialog(frame, "Login Correcto. Bienvenido " + Nombre);
                     Menu menu = new Menu();
                     menu.setVisible(true);
                     this.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(frame,"Login incorrecto, favor de verificar Usuario y Contraseña");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Login incorrecto, favor de verificar Usuario y Contraseña");
                     txtUsuario.setText("");
                     txtPassword.setText("");
                 }
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(frame,"Jiga es puto "+e);
-            } 
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(frame, "Jiga es puto " + e);
+            }
             count--;
-       }else{
-           JOptionPane.showMessageDialog(null,"Haz superado el limete de intentos. El programa se cerrara");
-           System.exit(0);
-       }
-       
-        
-        
-        
+        } else {
+            JOptionPane.showMessageDialog(null, "Haz superado el limete de intentos. El programa se cerrara");
+            System.exit(0);
+        }
+
         //Menu menu = new Menu();
         //menu.setVisible(true);
         //this.dispose();
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
-        
+
         char password = evt.getKeyChar();
-        if(password<'0'||password>'9')evt.consume();
-        
+        if (password < '0' || password > '9') {
+            evt.consume();
+        }
+
     }//GEN-LAST:event_txtPasswordKeyTyped
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
         char usuario = evt.getKeyChar();
-        if(usuario<'A'||usuario>'Z')evt.consume();
+        if (usuario < 'A' || usuario > 'Z') {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtUsuarioKeyTyped
 
     /**

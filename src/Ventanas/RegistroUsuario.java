@@ -22,13 +22,13 @@ public class RegistroUsuario extends javax.swing.JFrame {
      * Creates new form RegistroUsu
      */
     Empleados empleado = new Empleados();
-  
+
     public RegistroUsuario() {
         initComponents();
-  
+
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
         this.setLocationRelativeTo(null);
-    }      
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -354,33 +354,34 @@ public class RegistroUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void prepararModEmpleado(String Identificador){
+    public void prepararModEmpleado(String Identificador) {
         btnGuardar.setVisible(false);
         String Ident = Identificador;
         Conexion conex = new Conexion();
-        String Query = ("SELECT * FROM `empleados` WHERE `Activo` = 1 AND `Identificador` = '"+Ident+"'");
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-            Statement stmt = conn.createStatement();            
+        String Query = ("SELECT * FROM `empleados` WHERE `Activo` = 1 AND `Identificador` = '" + Ident + "'");
+        MysqlDataSource dataSource = conex.getConnection();
+        try (Connection conn = dataSource.getConnection()) {
+            Statement stmt = conn.createStatement();
             ResultSet ResulQuery = stmt.executeQuery(Query);
-            if (ResulQuery.next()){
-                fillEmpleado(ResulQuery.getInt("id"),ResulQuery.getShort("activo"),ResulQuery.getString("nombre"),ResulQuery.getString("apellidoP"),ResulQuery.getString("apellidoM"),ResulQuery.getDate("fechaNacimiento"),ResulQuery.getString("direccion"),ResulQuery.getString("numExt"),ResulQuery.getString("numInt"),ResulQuery.getString("cp"),ResulQuery.getString("colonia"),ResulQuery.getString("estado"),ResulQuery.getString("municipio"),ResulQuery.getString("telefono"),ResulQuery.getString("ext"),ResulQuery.getString("celular"),ResulQuery.getString("email"),ResulQuery.getString("facebook"),ResulQuery.getString("identificador"),ResulQuery.getString("usuario"),ResulQuery.getString("password"),ResulQuery.getDate("fechaCreacion"),ResulQuery.getDate("fechaMod"));
+            if (ResulQuery.next()) {
+                fillEmpleado(ResulQuery.getInt("id"), ResulQuery.getShort("activo"), ResulQuery.getString("nombre"), ResulQuery.getString("apellidoP"), ResulQuery.getString("apellidoM"), ResulQuery.getDate("fechaNacimiento"), ResulQuery.getString("direccion"), ResulQuery.getString("numExt"), ResulQuery.getString("numInt"), ResulQuery.getString("cp"), ResulQuery.getString("colonia"), ResulQuery.getString("estado"), ResulQuery.getString("municipio"), ResulQuery.getString("telefono"), ResulQuery.getString("ext"), ResulQuery.getString("celular"), ResulQuery.getString("email"), ResulQuery.getString("facebook"), ResulQuery.getString("identificador"), ResulQuery.getString("usuario"), ResulQuery.getString("password"), ResulQuery.getDate("fechaCreacion"), ResulQuery.getDate("fechaMod"));
                 fillFormulario();
-            }else{
-              JOptionPane.showMessageDialog(null,"Problema al encontrar los registros del Empleado.");
-              System.exit(0);
+            } else {
+                JOptionPane.showMessageDialog(null, "Problema al encontrar los registros del Empleado.");
+                System.exit(0);
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
-        } 
-        
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
+        }
+
     }
-    public void prepararInsEmpleado(){
+
+    public void prepararInsEmpleado() {
         btnModificar.setVisible(false);
         btnBorrar.setVisible(false);
     }
-    
-    private void fillFormulario(){        
+
+    private void fillFormulario() {
         txtNombre.setText(empleado.getNombre());
         txtApellidoP.setText(empleado.getApellidoP());
         txtApellidoM.setText(empleado.getApellidoM());
@@ -399,15 +400,15 @@ public class RegistroUsuario extends javax.swing.JFrame {
         txtFacebook.setText(empleado.getFacebook());
         txtIdentificador.setText(empleado.getIdentificador());
         txtUsuario.setText(empleado.getUsuario());
-        txtPassword.setText(empleado.getPassword());       
-        
+        txtPassword.setText(empleado.getPassword());
+
     }
-    
-    
-    private void fillEmpleado(Integer id, short activo, String nombre, String apellidoP, String apellidoM, java.util.Date fechaNacimiento, String direccion, String numExt, String numInt, String cp, String colonia, String estado, String municipio, String telefono, String ext, String celular, String email, String facebook, String identificador, String usuario, String password, java.util.Date fechaCreacion, java.util.Date fechaMod){
-       empleado = new Empleados( id,  activo,  nombre,  apellidoP,  apellidoM, fechaNacimiento,  direccion,  numExt,  numInt,  cp,  colonia,  estado,  municipio,  telefono,  ext,  celular,  email,  facebook,  identificador,  usuario,  password,  fechaCreacion,  fechaMod); 
+
+    private void fillEmpleado(Integer id, short activo, String nombre, String apellidoP, String apellidoM, java.util.Date fechaNacimiento, String direccion, String numExt, String numInt, String cp, String colonia, String estado, String municipio, String telefono, String ext, String celular, String email, String facebook, String identificador, String usuario, String password, java.util.Date fechaCreacion, java.util.Date fechaMod) {
+        empleado = new Empleados(id, activo, nombre, apellidoP, apellidoM, fechaNacimiento, direccion, numExt, numInt, cp, colonia, estado, municipio, telefono, ext, celular, email, facebook, identificador, usuario, password, fechaCreacion, fechaMod);
     }
-    private void updateEmpleado(){
+
+    private void updateEmpleado() {
         short Activo = 1;
         empleado.setActivo(Activo);
         empleado.setNombre(txtNombre.getText());
@@ -430,85 +431,82 @@ public class RegistroUsuario extends javax.swing.JFrame {
         empleado.setUsuario(txtUsuario.getText());
         empleado.setPassword(txtPassword.getText());
     }
-    
-    private void modEmpleado(){
+
+    private void modEmpleado() {
         updateEmpleado();
-        SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
-        String fechanacimiento = date.format(empleado.getFechaNacimiento());        
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        String fechanacimiento = date.format(empleado.getFechaNacimiento());
         Conexion conex = new Conexion();
-        String Query = ("UPDATE empleados SET Activo='"+ empleado.getActivo() +"',Nombre='"+ empleado.getNombre() +"',ApellidoP='"+ empleado.getApellidoP() +"',ApellidoM='"+ empleado.getApellidoM() +"',FechaNacimiento='"+ fechanacimiento +"',Direccion='"+ empleado.getDireccion() +"',NumExt='"+ empleado.getNumExt() +"',NumInt='"+ empleado.getNumInt() +"',CP='"+ empleado.getCp() +"',Colonia='"+ empleado.getColonia() +"',Estado='"+ empleado.getEstado() +"',Municipio='"+ empleado.getMunicipio() +"',Telefono='"+ empleado.getTelefono() +"',Ext='"+ empleado.getExt() +"',Celular='"+ empleado.getCelular() +"',Email='"+ empleado.getEmail() +"',Facebook='"+ empleado.getFacebook() +"',Identificador='"+ empleado.getIdentificador() +"',Usuario='"+ empleado.getUsuario() +"',Password='"+ empleado.getPassword() +"',FechaMod=CURRENT_TIMESTAMP WHERE ID="+empleado.getId());
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-            Statement stmt = conn.createStatement();          
+        String Query = ("UPDATE empleados SET Activo='" + empleado.getActivo() + "',Nombre='" + empleado.getNombre() + "',ApellidoP='" + empleado.getApellidoP() + "',ApellidoM='" + empleado.getApellidoM() + "',FechaNacimiento='" + fechanacimiento + "',Direccion='" + empleado.getDireccion() + "',NumExt='" + empleado.getNumExt() + "',NumInt='" + empleado.getNumInt() + "',CP='" + empleado.getCp() + "',Colonia='" + empleado.getColonia() + "',Estado='" + empleado.getEstado() + "',Municipio='" + empleado.getMunicipio() + "',Telefono='" + empleado.getTelefono() + "',Ext='" + empleado.getExt() + "',Celular='" + empleado.getCelular() + "',Email='" + empleado.getEmail() + "',Facebook='" + empleado.getFacebook() + "',Identificador='" + empleado.getIdentificador() + "',Usuario='" + empleado.getUsuario() + "',Password='" + empleado.getPassword() + "',FechaMod=CURRENT_TIMESTAMP WHERE ID=" + empleado.getId());
+        MysqlDataSource dataSource = conex.getConnection();
+        try (Connection conn = dataSource.getConnection()) {
+            Statement stmt = conn.createStatement();
             stmt.executeUpdate(Query);
-            JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
-        } 
-        
+            JOptionPane.showMessageDialog(null, "Los datos fueron modificados.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
+        }
+
     }
-    
-    private boolean validarUsuario(String Usuario,String Identificador){
+
+    private boolean validarUsuario(String Usuario, String Identificador) {
         Conexion conex = new Conexion();
-        String Query = ("SELECT * FROM `empleados` WHERE `Usuario`= '"+Usuario+"' OR `Identificador`= '"+Identificador+"'");
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-            Statement stmt = conn.createStatement();            
+        String Query = ("SELECT * FROM `empleados` WHERE `Usuario`= '" + Usuario + "' OR `Identificador`= '" + Identificador + "'");
+        MysqlDataSource dataSource = conex.getConnection();
+        try (Connection conn = dataSource.getConnection()) {
+            Statement stmt = conn.createStatement();
             ResultSet ResulQuery = stmt.executeQuery(Query);
-            if (ResulQuery.next()){
+            if (ResulQuery.next()) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
-        } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
+        }
         return false;
     }
-    
-    private void insEmpleado(){
+
+    private void insEmpleado() {
         updateEmpleado();
-        SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
-        String fechanacimiento = date.format(empleado.getFechaNacimiento());        
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        String fechanacimiento = date.format(empleado.getFechaNacimiento());
         Conexion conex = new Conexion();
-        String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"+ empleado.getNombre()+"','"+ empleado.getApellidoP()+"','"+ empleado.getApellidoM()+"','"+ fechanacimiento+"','"+ empleado.getDireccion()+"','"+ empleado.getNumExt()+"','"+ empleado.getNumInt()+"','"+ empleado.getCp()+"','"+ empleado.getColonia()+"','"+ empleado.getEstado()+"','"+ empleado.getMunicipio()+"','"+ empleado.getTelefono()+"','"+ empleado.getExt()+"','"+ empleado.getCelular()+"','"+ empleado.getEmail()+"','"+ empleado.getFacebook()+"','"+ empleado.getIdentificador()+"','"+ empleado.getUsuario()+"','"+ empleado.getPassword()+"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
-        if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
-            MysqlDataSource dataSource = conex.getConnection();        
-            try(Connection conn = dataSource.getConnection()){
-                Statement stmt = conn.createStatement();          
+        String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','" + empleado.getNombre() + "','" + empleado.getApellidoP() + "','" + empleado.getApellidoM() + "','" + fechanacimiento + "','" + empleado.getDireccion() + "','" + empleado.getNumExt() + "','" + empleado.getNumInt() + "','" + empleado.getCp() + "','" + empleado.getColonia() + "','" + empleado.getEstado() + "','" + empleado.getMunicipio() + "','" + empleado.getTelefono() + "','" + empleado.getExt() + "','" + empleado.getCelular() + "','" + empleado.getEmail() + "','" + empleado.getFacebook() + "','" + empleado.getIdentificador() + "','" + empleado.getUsuario() + "','" + empleado.getPassword() + "',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
+        if (validarUsuario(empleado.getUsuario(), empleado.getIdentificador())) {
+            MysqlDataSource dataSource = conex.getConnection();
+            try (Connection conn = dataSource.getConnection()) {
+                Statement stmt = conn.createStatement();
                 stmt.executeUpdate(Query);
-                JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+                JOptionPane.showMessageDialog(null, "Los datos fueron modificados.");
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
             }
-        }else{
-            JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
-        }       
-    }
-    
-    private void eliEmpleado(){
-        updateEmpleado();               
-        Conexion conex = new Conexion();
-        String Query = ("UPDATE empleados SET Activo='0' WHERE ID="+empleado.getId());
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-            Statement stmt = conn.createStatement();          
-            stmt.executeUpdate(Query);
-            JOptionPane.showMessageDialog(null,"El Usuario '"+empleado.getUsuario()+"' Con codigo de empleado "+empleado.getIdentificador()+" fue eliminado satisfactoriamente.");
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+        } else {
+            JOptionPane.showMessageDialog(null, "El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
         }
     }
-    
-    
+
+    private void eliEmpleado() {
+        updateEmpleado();
+        Conexion conex = new Conexion();
+        String Query = ("UPDATE empleados SET Activo='0' WHERE ID=" + empleado.getId());
+        MysqlDataSource dataSource = conex.getConnection();
+        try (Connection conn = dataSource.getConnection()) {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "El Usuario '" + empleado.getUsuario() + "' Con codigo de empleado " + empleado.getIdentificador() + " fue eliminado satisfactoriamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
+        }
+    }
+
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         Menu menu = new Menu();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
-    
-  
-    
+
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         eliEmpleado();        // TODO add your handling code here:
     }//GEN-LAST:event_btnBorrarActionPerformed
@@ -535,12 +533,16 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
-        if(c<'A'||c>'Z')evt.consume();
+        if (c < 'A' || c > 'Z') {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPKeyTyped
         char c = evt.getKeyChar();
-        if(c<'A'||c>'Z')evt.consume();
+        if (c < 'A' || c > 'Z') {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtApellidoPKeyTyped
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
