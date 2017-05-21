@@ -3,24 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ventanas;
+package Ventanas.Articulos;
 
+import DataBase.Articulo;
+import DataBase.ArticuloLote;
+import DataBase.ArticuloUnidad;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.sql.*;
+import Ventanas.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author JIGA_
  */
-public class Inventario extends javax.swing.JFrame {
-
+public class Inventario extends javax.swing.JFrame {    
     /**
      * Creates new form Inventario
      */
+    
+    Articulo articulo = new Articulo();
+    ArticuloUnidad articulounidad = new ArticuloUnidad();
+    ArticuloLote articulolote = new ArticuloLote();
+    
     public Inventario() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
@@ -39,20 +49,86 @@ public class Inventario extends javax.swing.JFrame {
     private void updateArticulo(){
         
     }
-    public void prepararModArticulo(){
+    public void prepararModArticulo(String Index){
+        Conexion conex = new Conexion();
+        Integer IDUnidad;
+        String Query = "";
+        MysqlDataSource dataSourceArticulo = conex.getConnection();        
+        try(Connection conn = dataSourceArticulo.getConnection()){
+                Statement stmtArticulo = conn.createStatement();            
+                ResultSet ResulQueryArticulo = stmtArticulo.executeQuery(Query);
+                while(ResulQueryArticulo.next()){
+                    Integer id = ResulQueryArticulo.getInt("ID");
+                    short activo = ResulQueryArticulo.getShort("Activo");
+                    int codigo = ResulQueryArticulo.getInt("Codigo");
+                    String nombre = ResulQueryArticulo.getString("Nombre");
+                    String descripcion = ResulQueryArticulo.getString("Descripcion");
+                    BigDecimal precio = ResulQueryArticulo.getBigDecimal("Precio");
+                    int sMaximo = ResulQueryArticulo.getInt("SMaximo");
+                    int sMinimo = ResulQueryArticulo.getInt("SMinimo");
+                    int existencia = ResulQueryArticulo.getInt("Existencia");
+                    Date fechaCreacion = ResulQueryArticulo.getDate("FechaCreacion");
+                    Date fechaMod = ResulQueryArticulo.getDate("FechaMod");
+                    IDUnidad = ResulQueryArticulo.getInt("IDUnidad");                    
+                    fillArticulo(id,activo,codigo,nombre,descripcion,precio,sMaximo,sMinimo,existencia,fechaCreacion,fechaMod);
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+        
+        
+        
+        
+        fillCmbUnidad();
         
     }
     public void prepararInsArticulo(){
         
     }
-    private void validadArticulo(){
+    private boolean validadArticulo(){
         
+        return false;
     }
     private void fillArticulo(Integer id, short activo, int codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod){
         
     }
+    private void fillArticuloUnidad(Integer id, short activo, String descripcion, String nombreCorto, Date fechaCreacion, Date fechaMod){
+        
+    }
+    private void fillArticuloLote(Integer id, short activo, String codigo, long cantidad, Date fechaElaboracion, Date fecbaCaducidad, Date fechaCreacion, Date fechaMod){
+        
+    }
     private void fillFormulario(){
         
+    }
+    private void fillCmbUnidad(){
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `articulo_unidad` WHERE `Activo` = '1' ";
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                cmbUnidad.removeAllItems();
+                cmbUnidad.addItem("Seleccionar");
+                while(ResulQuery.next()){
+                    cmbUnidad.addItem(ResulQuery.getString("Descripcion"));
+                }
+                 cmbUnidad.addItem("Nuevo...");
+                 cmbUnidad.setSelectedItem(articulounidad.getDescripcion());
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        } 
+    }
+    private void fillTablaExistencias(String Codigo, String Cantidad, String FechaElaboracion, String FechaCaducidad, String ID, String ID2){
+        DefaultTableModel mode1TablaExistencias = (DefaultTableModel) TablaExistencias.getModel();
+        mode1TablaExistencias.addRow(new Object[]{Codigo,Cantidad,FechaElaboracion,FechaCaducidad,ID,ID2});        
+    }
+     private void limpiarTablaExistencias(){
+        DefaultTableModel model = (DefaultTableModel) TablaExistencias.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            model.removeRow(0);
+        } 
     }
 
     /**
@@ -100,7 +176,7 @@ public class Inventario extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtExistencia = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaExistencias = new javax.swing.JTable();
         lblFondo1 = new javax.swing.JLabel();
 
         jMenu1.setText("File");
@@ -310,7 +386,7 @@ public class Inventario extends javax.swing.JFrame {
         });
         jPanel3.add(txtExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 80, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaExistencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -333,10 +409,10 @@ public class Inventario extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jScrollPane1.setViewportView(TablaExistencias);
+        if (TablaExistencias.getColumnModel().getColumnCount() > 0) {
+            TablaExistencias.getColumnModel().getColumn(2).setPreferredWidth(100);
+            TablaExistencias.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 420, 120));
@@ -427,16 +503,11 @@ public class Inventario extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        cmbUnidad.addItem("Nuevo...");
     }//GEN-LAST:event_formComponentShown
-    
-    Boolean Parsecmb = true;
+
     private void cmbUnidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbUnidadItemStateChanged
         // TODO add your handling code here:
-        if (cmbUnidad.getSelectedItem().toString() == "Nuevo..." && Parsecmb){
-            Parsecmb = false;
-           cmbUnidad.addItem("Hola...");
-        } 
+
     }//GEN-LAST:event_cmbUnidadItemStateChanged
         
     /**
@@ -475,6 +546,7 @@ public class Inventario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaExistencias;
     private javax.swing.JComboBox<String> cmbUnidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -503,7 +575,6 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblFondo1;
     private javax.swing.JTextField txtCodigo;

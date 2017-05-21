@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ventanas;
+package Ventanas.Articulos;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
@@ -13,6 +13,7 @@ import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Ventanas.*;
 
 /**
  *
@@ -45,8 +46,8 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         TablaProductos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -122,17 +123,27 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 410, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(153, 51, 0));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Modificar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
+        btnModificar.setBackground(new java.awt.Color(153, 51, 0));
+        btnModificar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(153, 51, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Nuevo");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 90, -1));
+        btnNuevo.setBackground(new java.awt.Color(153, 51, 0));
+        btnNuevo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnNuevo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 90, -1));
 
         btnBuscar.setBackground(new java.awt.Color(153, 51, 0));
         btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -199,19 +210,17 @@ public class ExistenciaProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
     
     private String getQueryBuscar(){
-        String Query = "SELECT * FROM `articulo` WHERE ";
-        String codigoBuscar = "";
-        String nombreBuscar = "";
+        String Query = "SELECT * FROM `articulo` WHERE `Activo` = '1' ";
+        String codigoBuscar;
+        String nombreBuscar;
         
         codigoBuscar = txtCodigo.getText();
         nombreBuscar = txtNombre.getText();
         
         if (!"".equals(codigoBuscar)){
-            Query +="`Codigo` = '" + codigoBuscar + "'";
+            Query +="AND `Codigo` = '" + codigoBuscar + "'";
         }else if(!"".equals(nombreBuscar)){
-            Query += "`Nombre` LIKE '%" + nombreBuscar + "%'"; 
-        }else{
-            Query +="1";
+            Query += "AND `Nombre` LIKE '%" + nombreBuscar + "%'";         
         }           
         return Query;
     }
@@ -229,7 +238,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
     private String getUnidad(Integer Index){
         String Parametro = "";
         String Query = "SELECT * FROM `articulo_unidad` WHERE `ID` = '" + Index + "'";
-        Conexion conex = new Conexion();
+        Conexion  conex = new Conexion();
         MysqlDataSource dataSource = conex.getConnection();     
         try(Connection conn = dataSource.getConnection()){
             Statement stmt = conn.createStatement();            
@@ -245,7 +254,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
     
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-         Conexion conex = new Conexion();
+        Conexion conex = new Conexion();
         String Query = getQueryBuscar();
         MysqlDataSource dataSource = conex.getConnection();        
         try(Connection conn = dataSource.getConnection()){
@@ -266,15 +275,29 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         } 
         
     }//GEN-LAST:event_btnBuscarActionPerformed
-private void limpiarTablaProductos()
-    {
-        DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
-        int CountRows = model.getRowCount();        
-        for (int i = 0; i<CountRows; i++)
-        {
-            model.removeRow(0);
-        }   
-    }
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        int RowSeleccionado = TablaProductos.getSelectedRow();       
+        String Identificador;
+        if (RowSeleccionado > -1){
+            Identificador = TablaProductos.getValueAt(RowSeleccionado, 0).toString();
+            Inventario articulo = new Inventario();
+            articulo.prepararModArticulo(Identificador);
+            articulo.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        Inventario registro = new Inventario();
+        registro.prepararInsArticulo();
+        registro.setVisible(true);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -313,8 +336,8 @@ private void limpiarTablaProductos()
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaProductos;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
