@@ -5,7 +5,13 @@
  */
 package Ventanas;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -41,11 +47,11 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -57,6 +63,11 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SoftCake Existencia de productos");
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Brush Script MT", 1, 18)); // NOI18N
@@ -69,21 +80,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
 
         TablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Código", "Nombre", "Descripción", "Precio", "Existencia", "Unidad"
@@ -110,7 +107,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
             TablaProductos.getColumnModel().getColumn(2).setPreferredWidth(200);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 710, 30));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 710, 210));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,27 +134,32 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         jButton2.setText("Nuevo");
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 90, -1));
 
-        jButton3.setBackground(new java.awt.Color(153, 51, 0));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Buscar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, -1, -1));
+        btnBuscar.setBackground(new java.awt.Color(153, 51, 0));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Código de producto:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 120, -1));
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 120, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Nombre:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, -1, -1));
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 130, -1));
+        txtNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 130, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 470));
@@ -191,6 +193,79 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         inventario.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_formComponentShown
+    
+    private String getQueryBuscar(){
+        String Query = "SELECT * FROM `articulo` WHERE ";
+        String codigoBuscar = "";
+        String nombreBuscar = "";
+        
+        codigoBuscar = txtCodigo.getText();
+        nombreBuscar = txtNombre.getText();
+        
+        if (!"".equals(codigoBuscar)){
+            Query +="`Codigo` = '" + codigoBuscar + "'";
+        }else if(!"".equals(nombreBuscar)){
+            Query += "`Nombre` LIKE '%" + nombreBuscar + "%'"; 
+        }else{
+            Query +="1";
+        }           
+        return Query;
+    }
+    private void limpiarTablaArticulo(){
+        DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            model.removeRow(0);
+        } 
+    }
+    private void agregarRowTablaArticulo(String Codigo, String Nombre,String Descripcion, String Precio,String Existencia,String Unidad){
+        DefaultTableModel mode1TablaProductos = (DefaultTableModel) TablaProductos.getModel();
+        mode1TablaProductos.addRow(new Object[]{Codigo,Nombre,Descripcion,Precio,Existencia,Unidad});
+    }
+    private String getUnidad(Integer Index){
+        String Parametro = "";
+        String Query = "SELECT * FROM `articulo_unidad` WHERE `ID` = '" + Index + "'";
+        Conexion conex = new Conexion();
+        MysqlDataSource dataSource = conex.getConnection();     
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
+            ResultSet ResulQuery = stmt.executeQuery(Query);
+            while(ResulQuery.next()){
+               Parametro = ResulQuery.getString("NombreCorto");                
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        } 
+        return Parametro;
+    }
+    
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+         Conexion conex = new Conexion();
+        String Query = getQueryBuscar();
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
+            ResultSet ResulQuery = stmt.executeQuery(Query);
+            limpiarTablaArticulo();
+            while(ResulQuery.next()){
+                String Codigo = ResulQuery.getString("Codigo");
+                String Nombre = ResulQuery.getString("Nombre");
+                String Descripcion = ResulQuery.getString("Descripcion");
+                String Precio = ResulQuery.getString("Precio");
+                String Existencia = ResulQuery.getString("Existencia");
+                String Unidad = getUnidad(ResulQuery.getInt("IDUnidad"));
+                agregarRowTablaArticulo(Codigo,Nombre,Descripcion,Precio,Existencia,Unidad);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        } 
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
 private void limpiarTablaProductos()
     {
         DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
@@ -237,9 +312,9 @@ private void limpiarTablaProductos()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaProductos;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -252,7 +327,7 @@ private void limpiarTablaProductos()
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

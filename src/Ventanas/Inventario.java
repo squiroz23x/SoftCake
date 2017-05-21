@@ -6,7 +6,10 @@
 package Ventanas;
 
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +25,34 @@ public class Inventario extends javax.swing.JFrame {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
         this.setLocationRelativeTo(null);
+    }
+    
+    private void insArticulo(){
+        
+    }    
+    private void modArticulo(){
+        
+    }
+    private void eliArticulo(){
+        
+    }
+    private void updateArticulo(){
+        
+    }
+    public void prepararModArticulo(){
+        
+    }
+    public void prepararInsArticulo(){
+        
+    }
+    private void validadArticulo(){
+        
+    }
+    private void fillArticulo(Integer id, short activo, int codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod){
+        
+    }
+    private void fillFormulario(){
+        
     }
 
     /**
@@ -93,11 +124,16 @@ public class Inventario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Softcake Inventario");
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblFondo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblFondo.setForeground(new java.awt.Color(255, 255, 255));
-        lblFondo.setText("Control de Inventariossssss");
+        lblFondo.setText("Control de Inventario");
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
@@ -131,7 +167,7 @@ public class Inventario extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Modificar ");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 520, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 490, -1, -1));
 
         jButton4.setBackground(new java.awt.Color(153, 51, 0));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -206,7 +242,12 @@ public class Inventario extends javax.swing.JFrame {
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
         cmbUnidad.setBackground(new java.awt.Color(153, 51, 0));
-        cmbUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Pieza\t", "Rebanada" }));
+        cmbUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Pieza", "Rebanada" }));
+        cmbUnidad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbUnidadItemStateChanged(evt);
+            }
+        });
         cmbUnidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbUnidadActionPerformed(evt);
@@ -303,6 +344,11 @@ public class Inventario extends javax.swing.JFrame {
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 800, 180));
 
         lblFondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
+        lblFondo1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                lblFondo1ComponentShown(evt);
+            }
+        });
         getContentPane().add(lblFondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 610));
 
         pack();
@@ -374,6 +420,24 @@ public class Inventario extends javax.swing.JFrame {
         char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
     }//GEN-LAST:event_txtExistenciaKeyTyped
+
+    private void lblFondo1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_lblFondo1ComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblFondo1ComponentShown
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        cmbUnidad.addItem("Nuevo...");
+    }//GEN-LAST:event_formComponentShown
+    
+    Boolean Parsecmb = true;
+    private void cmbUnidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbUnidadItemStateChanged
+        // TODO add your handling code here:
+        if (cmbUnidad.getSelectedItem().toString() == "Nuevo..." && Parsecmb){
+            Parsecmb = false;
+           cmbUnidad.addItem("Hola...");
+        } 
+    }//GEN-LAST:event_cmbUnidadItemStateChanged
         
     /**
      * @param args the command line arguments

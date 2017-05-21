@@ -1,0 +1,32 @@
+private void insArticulo(){
+        
+    }    
+    private void modArticulo(){
+        
+    }
+    private void eliArticulo(){
+        
+    }
+    private void updateArticulo(){
+        
+    }
+    public void prepararModArticulo(){
+        
+    }
+    public void prepararInsArticulo(){
+        
+    }
+    private void validadArticulo(){
+        
+    }
+    private void fillArticulo(){
+        
+    }
+    private void fillFormulario(){
+        
+    }
+	
+	SELECT * FROM `articulo` WHERE `Codigo` = "001" or `Nombre` LIKE "%PASTEL%"
+	INSERT INTO `articulo_lote` (`ID`, `IDArticulo`, `Activo`, `Codigo`, `Cantidad`, `FechaElaboracion`, `FecbaCaducidad`, `FechaCreacion`, `FechaMod`) VALUES (NULL, '1', '1', 'L001', '15', '2017-05-20', '2018-05-20', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	INSERT INTO `articulo` (`ID`, `Activo`, `Codigo`, `Nombre`, `Descripcion`, `Precio`, `IDUnidad`, `SMaximo`, `SMinimo`, `Existencia`, `FechaCreacion`, `FechaMod`) VALUES (NULL, '1', '001', 'PASTEL DE FRESA', 'PASTEL DE FRESA', '100.00', '1', '20', '5', '15', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+	INSERT INTO `articulo_unidad` (`ID`, `Activo`, `Descripcion`, `NombreCorto`, `FechaCreacion`, `FechaMod`) VALUES (NULL, '1', 'Kilogramos', 'Kg', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
