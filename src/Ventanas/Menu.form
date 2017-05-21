@@ -307,7 +307,7 @@
         <Component class="javax.swing.JTextArea" name="btnCaducidad">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="32" red="76" type="rgb"/>
+              <Color blue="2" green="16" red="71" type="rgb"/>
             </Property>
             <Property name="columns" type="int" value="20"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

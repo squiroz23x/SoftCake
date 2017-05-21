@@ -53,8 +53,8 @@ public class ControlEmpleados extends javax.swing.JFrame {
         txtPaterno = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtMaterno = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -91,6 +91,9 @@ public class ControlEmpleados extends javax.swing.JFrame {
         txtNombreEmpleado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(txtNombreEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 130, -1));
 
+        btnBuscar.setBackground(new java.awt.Color(153, 51, 0));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +102,9 @@ public class ControlEmpleados extends javax.swing.JFrame {
         });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 110, -1, -1));
 
+        btnModificar.setBackground(new java.awt.Color(153, 51, 0));
+        btnModificar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,13 +113,16 @@ public class ControlEmpleados extends javax.swing.JFrame {
         });
         getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, -1));
 
+        btnNuevo.setBackground(new java.awt.Color(153, 51, 0));
+        btnNuevo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnNuevo.setForeground(new java.awt.Color(255, 255, 255));
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, -1, -1));
+        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,20 +139,32 @@ public class ControlEmpleados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identificador ", "Nombre", "Apellido Paterno", "Apellido Materno"
+                "Identificador ", "Nombre", "Apellido Paterno", "Apellido Materno", "Dirrecion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         TablaEmpleados.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        TablaEmpleados.setColumnSelectionAllowed(false);
         jScrollPane2.setViewportView(TablaEmpleados);
+        if (TablaEmpleados.getColumnModel().getColumnCount() > 0) {
+            TablaEmpleados.getColumnModel().getColumn(1).setPreferredWidth(150);
+            TablaEmpleados.getColumnModel().getColumn(2).setPreferredWidth(150);
+            TablaEmpleados.getColumnModel().getColumn(3).setPreferredWidth(150);
+            TablaEmpleados.getColumnModel().getColumn(4).setPreferredWidth(260);
+        }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 790, 310));
 
@@ -159,13 +180,13 @@ public class ControlEmpleados extends javax.swing.JFrame {
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
         getContentPane().add(txtMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 130, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 580));
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Apellido Paterno:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 580));
 
         jMenu1.setText("Control de empleados");
 
@@ -196,102 +217,106 @@ public class ControlEmpleados extends javax.swing.JFrame {
         registro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void limpiarTablaEmpleados() {
+    
+    private void limpiarTablaEmpleados(){
         DefaultTableModel model = (DefaultTableModel) TablaEmpleados.getModel();
-        int CountRows = model.getRowCount();
-        for (int i = 0; i < CountRows; i++) {
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
             model.removeRow(0);
-        }
+        }        
     }
-
-    private void agregarRowTablaEmpleados(String IdentEmpleadoBusc, String NombreBusc, String ApellidoPBusc, String ApellidoMBusc) {
+    
+    private void agregarRowTablaEmpleados(String IdentEmpleadoBusc, String NombreBusc,String ApellidoPBusc,String ApellidoMBusc,String DireccionBusc){
         DefaultTableModel mode1TablaEmpleados = (DefaultTableModel) TablaEmpleados.getModel();
-        mode1TablaEmpleados.addRow(new Object[]{IdentEmpleadoBusc, NombreBusc, ApellidoPBusc, ApellidoMBusc});
+        mode1TablaEmpleados.addRow(new Object[]{IdentEmpleadoBusc,NombreBusc,ApellidoPBusc,ApellidoMBusc,DireccionBusc});
     }
-
-    private String getQueryBuscar() {
+    
+    private String getQueryBuscar(){
         String IdentEmpleadoBusc = txtIdEmpleado.getText();
         String NombreBusc = txtNombreEmpleado.getText();
         String ApellidoPBusc = txtPaterno.getText();
         String ApellidoMBusc = txtMaterno.getText();
-
-        String Query = "SELECT * FROM `empleados` WHERE `Activo` = 1 ";
+        
+        
+        String Query="SELECT * FROM `empleados` WHERE `Activo` = 1 ";
         int pOR = 0;
-        if (!"".equals(IdentEmpleadoBusc)) {
-            Query += ("AND `Identificador` = '" + IdentEmpleadoBusc + "'");
-        } else {
-            if (!"".equals(NombreBusc)) {
-                Query += ("AND ( `Nombre` LIKE '%" + NombreBusc + "%'");
+        if (!"".equals(IdentEmpleadoBusc)){
+            Query += ("AND `Identificador` = '"+IdentEmpleadoBusc+"'");
+        }else{
+            if (!"".equals(NombreBusc)){
+                Query += ("AND ( `Nombre` LIKE '%"+NombreBusc+"%'");
                 pOR = 1;
             }
-            if (!"".equals(ApellidoPBusc)) {
-                if (pOR == 1) {
+            if (!"".equals(ApellidoPBusc)){
+                if (pOR == 1){
                     Query += " OR ";
-                } else {
+                }else{
                     Query += " AND ( ";
                 }
-                Query += ("`ApellidoP` LIKE '%" + ApellidoPBusc + "%'");
+                Query += ("`ApellidoP` LIKE '%"+ApellidoPBusc+"%'");
                 pOR = 2;
             }
-            if (!"".equals(ApellidoMBusc)) {
-                if (pOR > 0) {
+            if (!"".equals(ApellidoMBusc)){
+                if (pOR > 0 ){
                     Query += " OR ";
-                } else {
+                }else{
                     Query += " AND ( ";
                 }
-                Query += ("`ApellidoM` LIKE '%" + ApellidoMBusc + "%'");
+                Query += ("`ApellidoM` LIKE '%"+ApellidoMBusc+"%'");
                 pOR = 3;
             }
-            if (pOR > 0) {
+            
+            if (pOR > 0){
                 Query += ")";
             }
         }
         return Query;
     }
-
+    
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:        
         Conexion conex = new Conexion();
         String Query = getQueryBuscar();
-        MysqlDataSource dataSource = conex.getConnection();
-        try (Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement();
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
             ResultSet ResulQuery = stmt.executeQuery(Query);
             limpiarTablaEmpleados();
-            while (ResulQuery.next()) {
+            while(ResulQuery.next()){
                 String Identificador = ResulQuery.getString("Identificador");
                 String Nombre = ResulQuery.getString("Nombre");
                 String ApellidoP = ResulQuery.getString("ApellidoP");
                 String ApellidoM = ResulQuery.getString("ApellidoM");
-                agregarRowTablaEmpleados(Identificador, Nombre, ApellidoP, ApellidoM);
+                String Direccion = ResulQuery.getString("Direccion");
+                agregarRowTablaEmpleados(Identificador,Nombre,ApellidoP,ApellidoM,Direccion);
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        }     
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int RowSeleccionado = TablaEmpleados.getSelectedRow();
+        int RowSeleccionado = TablaEmpleados.getSelectedRow();       
         String Identificador = "";
-        if (RowSeleccionado > -1) {
+        if (RowSeleccionado > -1){
             Identificador = TablaEmpleados.getValueAt(RowSeleccionado, 0).toString();
             RegistroUsuario registro = new RegistroUsuario();
             registro.prepararModEmpleado(Identificador);
             registro.setVisible(true);
             this.dispose();
-        } else {
+        }else{
             JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
         }
-
+        
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         RegistroUsuario registro = new RegistroUsuario();
-        registro.prepararInsEmpleado();
-        registro.setVisible(true);
-
+            registro.prepararInsEmpleado();
+            registro.setVisible(true);
+        
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**

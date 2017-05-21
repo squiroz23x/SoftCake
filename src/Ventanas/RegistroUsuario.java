@@ -10,7 +10,10 @@ import java.sql.*;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.swing.JOptionPane;
 import DataBase.Empleados;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -22,13 +25,13 @@ public class RegistroUsuario extends javax.swing.JFrame {
      * Creates new form RegistroUsu
      */
     Empleados empleado = new Empleados();
-
+  
     public RegistroUsuario() {
         initComponents();
-
+  
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
         this.setLocationRelativeTo(null);
-    }
+    }      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,25 +49,20 @@ public class RegistroUsuario extends javax.swing.JFrame {
         btnBorrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
         txtApellidoP = new javax.swing.JTextField();
-        txtDireccion = new javax.swing.JTextField();
-        txtCelular = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
+        txtNombre = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         txtApellidoM = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         CalendarFecha = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtDireccion = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtNumeroE = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
@@ -74,20 +72,27 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         txtCp = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         cmbEstado = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
         txtMunicipio = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtCelular = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         txtExtension = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         txtFacebook = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         txtIdentificador = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Jigay = new javax.swing.JTextArea();
+        jLabel9 = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         lblfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,10 +111,10 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 460, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 600, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarioregistro.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 210, 230));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, 230));
 
         btnGuardar.setBackground(new java.awt.Color(153, 51, 0));
         btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -120,7 +125,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 410, 80, 30));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 540, 90, 30));
 
         btnBorrar.setBackground(new java.awt.Color(153, 51, 0));
         btnBorrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -131,7 +136,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 btnBorrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 410, 70, 30));
+        getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 600, 90, 30));
 
         btnModificar.setBackground(new java.awt.Color(153, 51, 0));
         btnModificar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -142,35 +147,12 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 410, 90, 30));
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 600, 90, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Nombre:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Apellido paterno:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Celular:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Dirección:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, -1, -1));
-
-        txtNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 160, -1));
 
         txtApellidoP.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtApellidoP.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -180,80 +162,97 @@ public class RegistroUsuario extends javax.swing.JFrame {
         });
         getContentPane().add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 160, -1));
 
-        txtDireccion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 130, 410, -1));
-
-        txtCelular.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 60, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Teléfono:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 210, -1, -1));
-
-        txtTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 130, -1));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Usuario:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 300, -1, -1));
-
-        txtUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
+        txtNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
             }
         });
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 300, 200, -1));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Password:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 300, -1, -1));
-
-        txtPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 300, 200, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 160, -1));
 
         jLabel11.setFont(new java.awt.Font("Brush Script MT", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("SoftCake");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 630, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, -1, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(153, 51, 0));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, 90, 30));
+
+        jPanel1.setBackground(new java.awt.Color(113, 22, 2));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DATOS PERSONALES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Apellido paterno:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Apellido materno:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 90, -1, -1));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, -1, -1));
 
         txtApellidoM.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 90, 170, -1));
+        txtApellidoM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoMKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, 170, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Fecha de nacimiento:");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, -1, -1));
-        getContentPane().add(CalendarFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 140, -1));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, -1));
+        jPanel1.add(CalendarFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 60, 170, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 840, 100));
+
+        jPanel2.setBackground(new java.awt.Color(113, 22, 2));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "UBICACION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Dirección:");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        txtDireccion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 360, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Número exterior:");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, -1, -1));
 
         txtNumeroE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtNumeroE, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 50, -1));
+        txtNumeroE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroEKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtNumeroE, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, 60, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Número interior:");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, -1, -1));
+        jLabel17.setText("Interior:");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, -1, -1));
 
         txtNumeroI.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtNumeroI.addActionListener(new java.awt.event.ActionListener() {
@@ -261,33 +260,43 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtNumeroIActionPerformed(evt);
             }
         });
-        getContentPane().add(txtNumeroI, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 50, -1));
+        txtNumeroI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroIKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtNumeroI, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, 110, -1));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Colonia:");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, -1, -1));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         txtColonia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 170, 270, -1));
+        txtColonia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColoniaKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 360, -1));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("CP:");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 170, -1, -1));
+        jLabel19.setText("Código postal:");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, -1, -1));
 
         txtCp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtCp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 170, 60, -1));
+        txtCp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCpKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtCp, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 60, -1));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Estado:");
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, -1, -1));
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Municipio:");
-        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, -1, -1));
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         cmbEstado.setBackground(new java.awt.Color(153, 51, 0));
         cmbEstado.setMaximumRowCount(33);
@@ -299,89 +308,192 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 cmbEstadoActionPerformed(evt);
             }
         });
-        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, -1, -1));
+        jPanel2.add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 120, -1));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Municipio:");
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
 
         txtMunicipio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtMunicipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 160, -1));
+        txtMunicipio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMunicipioKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtMunicipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 160, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 840, 140));
+
+        jPanel3.setBackground(new java.awt.Color(113, 22, 2));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CONTACTO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Celular:");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        txtCelular.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelularKeyTyped(evt);
+            }
+        });
+        jPanel3.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 200, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Teléfono:");
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, -1, -1));
+
+        txtTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+        jPanel3.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, 130, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("Extensión:");
-        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, -1, -1));
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, -1, -1));
 
         txtExtension.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtExtension, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 210, 50, -1));
+        txtExtension.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtExtensionKeyTyped(evt);
+            }
+        });
+        jPanel3.add(txtExtension, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 50, -1));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("Email:");
-        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, -1, -1));
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 280, -1));
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+        jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 200, -1));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("Sitio web:");
-        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 250, -1, -1));
+        jLabel24.setText("Facebook:");
+        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 60, -1, -1));
 
         txtFacebook.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtFacebook, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 250, 240, -1));
+        txtFacebook.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFacebookKeyTyped(evt);
+            }
+        });
+        jPanel3.add(txtFacebook, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 240, -1));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 840, 100));
+
+        jPanel4.setBackground(new java.awt.Color(113, 22, 2));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "USUARIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Identificador:");
-        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, -1, -1));
+        jPanel4.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         txtIdentificador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(txtIdentificador, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 100, -1));
+        txtIdentificador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdentificadorActionPerformed(evt);
+            }
+        });
+        txtIdentificador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdentificadorKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtIdentificador, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 100, -1));
 
-        jButton1.setBackground(new java.awt.Color(153, 51, 0));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Buscar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, -1, -1));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Usuario:");
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
-        Jigay.setColumns(20);
-        Jigay.setRows(5);
-        jScrollPane1.setViewportView(Jigay);
+        txtUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 200, -1));
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Password:");
+        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, -1, -1));
+
+        txtPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 200, -1));
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 840, 90));
 
         lblfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
-        getContentPane().add(lblfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 520));
+        getContentPane().add(lblfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 660));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void prepararModEmpleado(String Identificador) {
+    public void prepararModEmpleado(String Identificador){
         btnGuardar.setVisible(false);
         String Ident = Identificador;
         Conexion conex = new Conexion();
-        String Query = ("SELECT * FROM `empleados` WHERE `Activo` = 1 AND `Identificador` = '" + Ident + "'");
-        MysqlDataSource dataSource = conex.getConnection();
-        try (Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement();
+        String Query = ("SELECT * FROM `empleados` WHERE `Activo` = 1 AND `Identificador` = '"+Ident+"'");
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
             ResultSet ResulQuery = stmt.executeQuery(Query);
-            if (ResulQuery.next()) {
-                fillEmpleado(ResulQuery.getInt("id"), ResulQuery.getShort("activo"), ResulQuery.getString("nombre"), ResulQuery.getString("apellidoP"), ResulQuery.getString("apellidoM"), ResulQuery.getDate("fechaNacimiento"), ResulQuery.getString("direccion"), ResulQuery.getString("numExt"), ResulQuery.getString("numInt"), ResulQuery.getString("cp"), ResulQuery.getString("colonia"), ResulQuery.getString("estado"), ResulQuery.getString("municipio"), ResulQuery.getString("telefono"), ResulQuery.getString("ext"), ResulQuery.getString("celular"), ResulQuery.getString("email"), ResulQuery.getString("facebook"), ResulQuery.getString("identificador"), ResulQuery.getString("usuario"), ResulQuery.getString("password"), ResulQuery.getDate("fechaCreacion"), ResulQuery.getDate("fechaMod"));
+            if (ResulQuery.next()){
+                fillEmpleado(ResulQuery.getInt("id"),ResulQuery.getShort("activo"),ResulQuery.getString("nombre"),ResulQuery.getString("apellidoP"),ResulQuery.getString("apellidoM"),ResulQuery.getDate("fechaNacimiento"),ResulQuery.getString("direccion"),ResulQuery.getString("numExt"),ResulQuery.getString("numInt"),ResulQuery.getString("cp"),ResulQuery.getString("colonia"),ResulQuery.getString("estado"),ResulQuery.getString("municipio"),ResulQuery.getString("telefono"),ResulQuery.getString("ext"),ResulQuery.getString("celular"),ResulQuery.getString("email"),ResulQuery.getString("facebook"),ResulQuery.getString("identificador"),ResulQuery.getString("usuario"),ResulQuery.getString("password"),ResulQuery.getDate("fechaCreacion"),ResulQuery.getDate("fechaMod"));
                 fillFormulario();
-            } else {
-                JOptionPane.showMessageDialog(null, "Problema al encontrar los registros del Empleado.");
-                System.exit(0);
+            }else{
+              JOptionPane.showMessageDialog(null,"Problema al encontrar los registros del Empleado.");
+              System.exit(0);
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
-        }
-
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+        } 
+        
     }
-
-    public void prepararInsEmpleado() {
+    public void prepararInsEmpleado(){
         btnModificar.setVisible(false);
         btnBorrar.setVisible(false);
     }
-
-    private void fillFormulario() {
+    
+    private void fillFormulario(){        
         txtNombre.setText(empleado.getNombre());
         txtApellidoP.setText(empleado.getApellidoP());
         txtApellidoM.setText(empleado.getApellidoM());
@@ -400,15 +512,15 @@ public class RegistroUsuario extends javax.swing.JFrame {
         txtFacebook.setText(empleado.getFacebook());
         txtIdentificador.setText(empleado.getIdentificador());
         txtUsuario.setText(empleado.getUsuario());
-        txtPassword.setText(empleado.getPassword());
-
+        txtPassword.setText(empleado.getPassword());       
+        
     }
-
-    private void fillEmpleado(Integer id, short activo, String nombre, String apellidoP, String apellidoM, java.util.Date fechaNacimiento, String direccion, String numExt, String numInt, String cp, String colonia, String estado, String municipio, String telefono, String ext, String celular, String email, String facebook, String identificador, String usuario, String password, java.util.Date fechaCreacion, java.util.Date fechaMod) {
-        empleado = new Empleados(id, activo, nombre, apellidoP, apellidoM, fechaNacimiento, direccion, numExt, numInt, cp, colonia, estado, municipio, telefono, ext, celular, email, facebook, identificador, usuario, password, fechaCreacion, fechaMod);
+    
+    
+    private void fillEmpleado(Integer id, short activo, String nombre, String apellidoP, String apellidoM, java.util.Date fechaNacimiento, String direccion, String numExt, String numInt, String cp, String colonia, String estado, String municipio, String telefono, String ext, String celular, String email, String facebook, String identificador, String usuario, String password, java.util.Date fechaCreacion, java.util.Date fechaMod){
+       empleado = new Empleados( id,  activo,  nombre,  apellidoP,  apellidoM, fechaNacimiento,  direccion,  numExt,  numInt,  cp,  colonia,  estado,  municipio,  telefono,  ext,  celular,  email,  facebook,  identificador,  usuario,  password,  fechaCreacion,  fechaMod); 
     }
-
-    private void updateEmpleado() {
+    private void updateEmpleado(){
         short Activo = 1;
         empleado.setActivo(Activo);
         empleado.setNombre(txtNombre.getText());
@@ -431,86 +543,85 @@ public class RegistroUsuario extends javax.swing.JFrame {
         empleado.setUsuario(txtUsuario.getText());
         empleado.setPassword(txtPassword.getText());
     }
-
-    private void modEmpleado() {
+    
+    private void modEmpleado(){
         updateEmpleado();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        String fechanacimiento = date.format(empleado.getFechaNacimiento());
+        SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+        String fechanacimiento = date.format(empleado.getFechaNacimiento());        
         Conexion conex = new Conexion();
-        String Query = ("UPDATE empleados SET Activo='" + empleado.getActivo() + "',Nombre='" + empleado.getNombre() + "',ApellidoP='" + empleado.getApellidoP() + "',ApellidoM='" + empleado.getApellidoM() + "',FechaNacimiento='" + fechanacimiento + "',Direccion='" + empleado.getDireccion() + "',NumExt='" + empleado.getNumExt() + "',NumInt='" + empleado.getNumInt() + "',CP='" + empleado.getCp() + "',Colonia='" + empleado.getColonia() + "',Estado='" + empleado.getEstado() + "',Municipio='" + empleado.getMunicipio() + "',Telefono='" + empleado.getTelefono() + "',Ext='" + empleado.getExt() + "',Celular='" + empleado.getCelular() + "',Email='" + empleado.getEmail() + "',Facebook='" + empleado.getFacebook() + "',Identificador='" + empleado.getIdentificador() + "',Usuario='" + empleado.getUsuario() + "',Password='" + empleado.getPassword() + "',FechaMod=CURRENT_TIMESTAMP WHERE ID=" + empleado.getId());
-        MysqlDataSource dataSource = conex.getConnection();
-        try (Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement();
+        String Query = ("UPDATE empleados SET Activo='"+ empleado.getActivo() +"',Nombre='"+ empleado.getNombre() +"',ApellidoP='"+ empleado.getApellidoP() +"',ApellidoM='"+ empleado.getApellidoM() +"',FechaNacimiento='"+ fechanacimiento +"',Direccion='"+ empleado.getDireccion() +"',NumExt='"+ empleado.getNumExt() +"',NumInt='"+ empleado.getNumInt() +"',CP='"+ empleado.getCp() +"',Colonia='"+ empleado.getColonia() +"',Estado='"+ empleado.getEstado() +"',Municipio='"+ empleado.getMunicipio() +"',Telefono='"+ empleado.getTelefono() +"',Ext='"+ empleado.getExt() +"',Celular='"+ empleado.getCelular() +"',Email='"+ empleado.getEmail() +"',Facebook='"+ empleado.getFacebook() +"',Identificador='"+ empleado.getIdentificador() +"',Usuario='"+ empleado.getUsuario() +"',Password='"+ empleado.getPassword() +"',FechaMod=CURRENT_TIMESTAMP WHERE ID="+empleado.getId());
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();          
             stmt.executeUpdate(Query);
-            JOptionPane.showMessageDialog(null, "Los datos fueron modificados.");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
-        }
-
+            JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+        } 
+        
     }
-
-    private boolean validarUsuario(String Usuario, String Identificador) {
+    
+    private boolean validarUsuario(String Usuario,String Identificador){
         Conexion conex = new Conexion();
-        String Query = ("SELECT * FROM `empleados` WHERE `Usuario`= '" + Usuario + "' OR `Identificador`= '" + Identificador + "'");
-        MysqlDataSource dataSource = conex.getConnection();
-        try (Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement();
+        String Query = ("SELECT * FROM `empleados` WHERE `Usuario`= '"+Usuario+"' OR `Identificador`= '"+Identificador+"'");
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
             ResultSet ResulQuery = stmt.executeQuery(Query);
-            if (ResulQuery.next()) {
+            if (ResulQuery.next()){
                 return false;
-            } else {
+            }else{
                 return true;
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
-        }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+        } 
         return false;
     }
-
-    private void insEmpleado() {
+    
+    private void insEmpleado(){
         updateEmpleado();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        String fechanacimiento = date.format(empleado.getFechaNacimiento());
+        SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+        String fechanacimiento = date.format(empleado.getFechaNacimiento());        
         Conexion conex = new Conexion();
-        String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','" + empleado.getNombre() + "','" + empleado.getApellidoP() + "','" + empleado.getApellidoM() + "','" + fechanacimiento + "','" + empleado.getDireccion() + "','" + empleado.getNumExt() + "','" + empleado.getNumInt() + "','" + empleado.getCp() + "','" + empleado.getColonia() + "','" + empleado.getEstado() + "','" + empleado.getMunicipio() + "','" + empleado.getTelefono() + "','" + empleado.getExt() + "','" + empleado.getCelular() + "','" + empleado.getEmail() + "','" + empleado.getFacebook() + "','" + empleado.getIdentificador() + "','" + empleado.getUsuario() + "','" + empleado.getPassword() + "',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
-        if (validarUsuario(empleado.getUsuario(), empleado.getIdentificador())) {
-            MysqlDataSource dataSource = conex.getConnection();
-            try (Connection conn = dataSource.getConnection()) {
-                Statement stmt = conn.createStatement();
+        String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"+ empleado.getNombre()+"','"+ empleado.getApellidoP()+"','"+ empleado.getApellidoM()+"','"+ fechanacimiento+"','"+ empleado.getDireccion()+"','"+ empleado.getNumExt()+"','"+ empleado.getNumInt()+"','"+ empleado.getCp()+"','"+ empleado.getColonia()+"','"+ empleado.getEstado()+"','"+ empleado.getMunicipio()+"','"+ empleado.getTelefono()+"','"+ empleado.getExt()+"','"+ empleado.getCelular()+"','"+ empleado.getEmail()+"','"+ empleado.getFacebook()+"','"+ empleado.getIdentificador()+"','"+ empleado.getUsuario()+"','"+ empleado.getPassword()+"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
+        if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
+            MysqlDataSource dataSource = conex.getConnection();        
+            try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();          
                 stmt.executeUpdate(Query);
-                JOptionPane.showMessageDialog(null, "Los datos fueron modificados.");
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
+                JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
-        }
+        }else{
+            JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
+        }       
     }
-
-    private void eliEmpleado() {
-        updateEmpleado();
+    
+    private void eliEmpleado(){
+        updateEmpleado();               
         Conexion conex = new Conexion();
-        String Query = ("UPDATE empleados SET Activo='0' WHERE ID=" + empleado.getId());
-        MysqlDataSource dataSource = conex.getConnection();
-        try (Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement();
+        String Query = ("UPDATE empleados SET Activo='0' WHERE ID="+empleado.getId());
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();          
             stmt.executeUpdate(Query);
-            JOptionPane.showMessageDialog(null, "El Usuario '" + empleado.getUsuario() + "' Con codigo de empleado " + empleado.getIdentificador() + " fue eliminado satisfactoriamente.");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error con la conexion de la base de datos: " + e);
+            JOptionPane.showMessageDialog(null,"El Usuario '"+empleado.getUsuario()+"' Con codigo de empleado "+empleado.getIdentificador()+" fue eliminado satisfactoriamente.");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
         }
     }
-
+    
+    
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        Menu menu = new Menu();
-        menu.setVisible(true);
+        ControlEmpleados control = new ControlEmpleados();
+        control.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        eliEmpleado();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBorrarActionPerformed
-
+    
+  
+    
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
@@ -533,21 +644,133 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
-        if (c < 'A' || c > 'Z') {
-            evt.consume();
-        }
+        if((c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPKeyTyped
         char c = evt.getKeyChar();
-        if (c < 'A' || c > 'Z') {
-            evt.consume();
-        }
+        if(c<'A'||c>'Z')evt.consume();
     }//GEN-LAST:event_txtApellidoPKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtApellidoMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'A'||c>'Z')evt.consume();
+    }//GEN-LAST:event_txtApellidoMKeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        char c = evt.getKeyChar();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+    }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void txtNumeroEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroEKeyTyped
+         char c = evt.getKeyChar();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+    }//GEN-LAST:event_txtNumeroEKeyTyped
+
+    private void txtNumeroIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroIKeyTyped
+       char c = evt.getKeyChar();
+       if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+       
+    }//GEN-LAST:event_txtNumeroIKeyTyped
+
+    private void txtCpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+    }//GEN-LAST:event_txtCpKeyTyped
+
+    private void txtColoniaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyTyped
+         char c = evt.getKeyChar();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+    }//GEN-LAST:event_txtColoniaKeyTyped
+
+    private void txtMunicipioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMunicipioKeyTyped
+         char c = evt.getKeyChar();
+        if((c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+    }//GEN-LAST:event_txtMunicipioKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtExtensionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExtensionKeyTyped
+         char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+    }//GEN-LAST:event_txtExtensionKeyTyped
+
+    private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
+         char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+    }//GEN-LAST:event_txtCelularKeyTyped
+
+    private void txtFacebookKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFacebookKeyTyped
+         char c = evt.getKeyChar();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+    }//GEN-LAST:event_txtFacebookKeyTyped
+
+    private void txtIdentificadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdentificadorKeyTyped
+       char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+    }//GEN-LAST:event_txtIdentificadorKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+         char c = evt.getKeyChar();
+        if(c<'A'||c>'Z')evt.consume();
+    }//GEN-LAST:event_txtUsuarioKeyTyped
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         modEmpleado();
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        eliEmpleado();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorrarActionPerformed
+    
+    public boolean verifyEmail (String correo)
+    {
+        Pattern pat = null;
+        Matcher mat = null;
+        pat = Pattern.compile("^[\\w\\-\\_\\+]+(\\.[\\w\\-\\_]+)*@[A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$");   
+        mat = pat.matcher(correo);
+        if(mat.find())
+            {
+                return true;
+            }
+                else
+                {
+                    return false;
+                }
+    }
+    
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        if(verifyEmail(txtEmail.getText()))
+        {
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Correo incorrecto", "Favor de ingresar un correo valido", JOptionPane.INFORMATION_MESSAGE);
+            txtEmail.requestFocus();
+        }
+    }//GEN-LAST:event_txtEmailFocusLost
+
+    private void txtIdentificadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdentificadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -587,7 +810,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser CalendarFecha;
-    private javax.swing.JTextArea Jigay;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
@@ -617,7 +839,10 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblfondo;
     private javax.swing.JTextField txtApellidoM;
     private javax.swing.JTextField txtApellidoP;
