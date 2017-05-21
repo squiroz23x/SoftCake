@@ -97,7 +97,7 @@ public class Inventario extends javax.swing.JFrame {
 
         lblFondo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblFondo.setForeground(new java.awt.Color(255, 255, 255));
-        lblFondo.setText("Control de Inventario");
+        lblFondo.setText("Control de Inventariossssss");
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
