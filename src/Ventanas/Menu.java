@@ -5,6 +5,7 @@
  */
 package Ventanas;
 
+import Ventanas.Articulos.ExistenciaProductos;
 import javax.swing.ImageIcon;
 
 /**
