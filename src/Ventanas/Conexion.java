@@ -7,11 +7,7 @@ package Ventanas;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**

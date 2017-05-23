@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
 import Ventanas.*;
+import java.util.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,8 +29,8 @@ public class Inventario extends javax.swing.JFrame {
      */
     
     Articulo articulo = new Articulo();
-    ArticuloUnidad articulounidad = new ArticuloUnidad();
-    ArticuloLote articulolote = new ArticuloLote();
+    ArticuloUnidad articulounidad = new ArticuloUnidad();    
+    ArrayList<ArticuloLote> articulolote = new ArrayList<ArticuloLote>();
     
     public Inventario() {
         initComponents();
@@ -47,12 +48,20 @@ public class Inventario extends javax.swing.JFrame {
         
     }
     private void updateArticulo(){
+        Integer codigo = Integer.parseInt(txtCodigo.getText());
+        String nombre = txtNombre.getText();
+        String descripcion = txtDescripcion.getText();
+        BigDecimal precio = new BigDecimal(txtPrecio.getText());
+        Integer sMaximo = Integer.parseInt(txtMaximo.getText());
+        Integer sMinimo = Integer.parseInt(txtMinimo.getText());
+        Integer existencia = Integer.parseInt(txtExistencia.getText());
+
         
     }
     public void prepararModArticulo(String Index){
         Conexion conex = new Conexion();
-        Integer IDUnidad;
-        String Query = "";
+        Integer IDUnidad = 0;
+        String Query = "SELECT * FROM `articulo` WHERE `Activo`='1' AND `ID`='"+Index+"'";
         MysqlDataSource dataSourceArticulo = conex.getConnection();        
         try(Connection conn = dataSourceArticulo.getConnection()){
                 Statement stmtArticulo = conn.createStatement();            
@@ -75,12 +84,50 @@ public class Inventario extends javax.swing.JFrame {
         }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e);
         }
-        
-        
-        
-        
+        Query = "SELECT * FROM `articulo_unidad` WHERE `Activo` = '1' AND `ID` ='" + IDUnidad + "'";
+        MysqlDataSource dataSourceArticuloUnidad = conex.getConnection();        
+        try(Connection conn = dataSourceArticuloUnidad.getConnection()){
+            Statement stmtArticuloUnidad = conn.createStatement();            
+            ResultSet ResulQueryArticuloUnidad = stmtArticuloUnidad.executeQuery(Query);	
+            while(ResulQueryArticuloUnidad.next()){
+                Integer id = ResulQueryArticuloUnidad.getInt("ID");
+                short activo = ResulQueryArticuloUnidad.getShort("Activo");
+                String descripcion = ResulQueryArticuloUnidad.getString("Descripcion");
+                String nombreCorto = ResulQueryArticuloUnidad.getString("NombreCorto");
+                Date fechaCreacion = ResulQueryArticuloUnidad.getDate("FechaCreacion");
+                Date fechaMod = ResulQueryArticuloUnidad.getDate("FechaMod");
+                fillArticuloUnidad( id,  activo,  descripcion,  nombreCorto,  fechaCreacion,  fechaMod);
+		}
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+        Query = "SELECT * FROM `articulo_lote` WHERE `Activo` = '1' AND `IDArticulo` = '" + articulo.getId() + "'";
+        MysqlDataSource dataSourceArticuloLote = conex.getConnection();        
+        try(Connection conn = dataSourceArticuloLote.getConnection()){
+                Statement stmtArticuloLote = conn.createStatement();            
+                ResultSet ResulQueryArticuloLote = stmtArticuloLote.executeQuery(Query);
+
+                while(ResulQueryArticuloLote.next()){
+                    Integer id = ResulQueryArticuloLote.getInt("ID");
+                    short activo = ResulQueryArticuloLote.getShort("Activo");
+                    String codigo = ResulQueryArticuloLote.getString("Codigo");
+                    long cantidad = ResulQueryArticuloLote.getLong("Cantidad");
+                    Date fechaElaboracion = ResulQueryArticuloLote.getDate("FechaElaboracion");
+                    Date fecbaCaducidad = ResulQueryArticuloLote.getDate("FecbaCaducidad");
+                    Date fechaCreacion = ResulQueryArticuloLote.getDate("FechaCreacion");
+                    Date fechaMod = ResulQueryArticuloLote.getDate("FechaMod");
+                    fillArticuloLote( id,  activo,  codigo,  cantidad,  fechaElaboracion,  fecbaCaducidad,  fechaCreacion,  fechaMod);
+             
+                
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+        articulo.setIDUnidad(articulounidad);
+        articulo.setArticuloLoteCollection(articulolote);  
         fillCmbUnidad();
-        
+        fillFormulario();
+  
     }
     public void prepararInsArticulo(){
         
@@ -90,20 +137,48 @@ public class Inventario extends javax.swing.JFrame {
         return false;
     }
     private void fillArticulo(Integer id, short activo, int codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod){
-        
+        articulo = new Articulo(id,activo,codigo,nombre,descripcion,precio,sMaximo,sMinimo,existencia,fechaCreacion,fechaMod);
     }
     private void fillArticuloUnidad(Integer id, short activo, String descripcion, String nombreCorto, Date fechaCreacion, Date fechaMod){
-        
+        articulounidad = new ArticuloUnidad(id,activo,descripcion,nombreCorto,fechaCreacion,fechaMod);
     }
     private void fillArticuloLote(Integer id, short activo, String codigo, long cantidad, Date fechaElaboracion, Date fecbaCaducidad, Date fechaCreacion, Date fechaMod){
-        
+        ArticuloLote lote = new ArticuloLote(id,activo,codigo,cantidad,fechaElaboracion,fecbaCaducidad,fechaCreacion,fechaMod);
+        articulolote.add(lote);
     }
     private void fillFormulario(){
-        
+        Integer codigo = articulo.getCodigo();
+        String nombre = articulo.getNombre();
+        String descripcion = articulo.getDescripcion();
+        BigDecimal precio = articulo.getPrecio();
+        Integer sMaximo = articulo.getSMaximo();
+        Integer sMinimo = articulo.getSMinimo();
+        Integer existencia = articulo.getExistencia();
+        Iterator<ArticuloLote> itArticuloLote = articulo.getArticuloLoteCollection().iterator();
+        txtCodigo.setText(codigo.toString());
+        txtNombre.setText(nombre);
+        txtDescripcion.setText(descripcion);
+        txtPrecio.setText(precio.toString());
+        txtMaximo.setText(sMaximo.toString());
+        txtMinimo.setText(sMinimo.toString());
+        txtExistencia.setText(existencia.toString());
+        limpiarTablaExistencias();
+        while (itArticuloLote.hasNext()){
+            ArticuloLote Lote = itArticuloLote.next();
+            Integer Loteid = Lote.getId();
+            Short Loteactivo = Lote.getActivo();
+            String Lotecodigo = Lote.getCodigo();
+            Long Lotecantidad = Lote.getCantidad();
+            Date LotefechaElaboracion = Lote.getFechaElaboracion();
+            Date LotefecbaCaducidad = Lote.getFecbaCaducidad();
+            Date LotefechaCreacion = Lote.getFechaCreacion();
+            Date LotefechaMod = Lote.getFechaMod();            
+            fillTablaExistencias(Lotecodigo,  Lotecantidad.toString(),  LotefechaElaboracion.toString(),  LotefecbaCaducidad.toString(),  Loteid.toString(), "0");          
+        }
     }
     private void fillCmbUnidad(){
         Conexion conex = new Conexion();
-        String Query = "SELECT * FROM `articulo_unidad` WHERE `Activo` = '1' ";
+        String Query = "SELECT * FROM `articulo_unidad` WHERE `Activo` = '1' ORDER BY `ID`";
         MysqlDataSource dataSource = conex.getConnection();        
         try(Connection conn = dataSource.getConnection()){
                 Statement stmt = conn.createStatement();            
@@ -114,7 +189,7 @@ public class Inventario extends javax.swing.JFrame {
                     cmbUnidad.addItem(ResulQuery.getString("Descripcion"));
                 }
                  cmbUnidad.addItem("Nuevo...");
-                 cmbUnidad.setSelectedItem(articulounidad.getDescripcion());
+                 cmbUnidad.setSelectedItem(articulo.getIDUnidad().getDescripcion());
         }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e);
         } 
