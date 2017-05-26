@@ -243,6 +243,8 @@ public class Inventario extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         cmbUnidad = new javax.swing.JComboBox<>();
+        btnLote = new javax.swing.JButton();
+        btnUnidad = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         txtMaximo = new javax.swing.JTextField();
@@ -318,6 +320,11 @@ public class Inventario extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Modificar ");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 490, -1, -1));
 
         jButton4.setBackground(new java.awt.Color(153, 51, 0));
@@ -407,6 +414,17 @@ public class Inventario extends javax.swing.JFrame {
         jPanel2.add(cmbUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 100, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 800, 150));
+
+        btnLote.setText("Lote");
+        btnLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, -1, -1));
+
+        btnUnidad.setText("Unidad");
+        getContentPane().add(btnUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(113, 22, 2));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "INVENTARIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -584,6 +602,16 @@ public class Inventario extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_cmbUnidadItemStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoteActionPerformed
+        Lote lote = new Lote();
+        lote.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLoteActionPerformed
         
     /**
      * @param args the command line arguments
@@ -622,6 +650,8 @@ public class Inventario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaExistencias;
+    private javax.swing.JButton btnLote;
+    private javax.swing.JButton btnUnidad;
     private javax.swing.JComboBox<String> cmbUnidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
