@@ -53,7 +53,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -125,7 +124,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 540, 90, 30));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 540, 90, 30));
 
         btnBorrar.setBackground(new java.awt.Color(153, 51, 0));
         btnBorrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -136,7 +135,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 btnBorrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 600, 90, 30));
+        getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 540, 90, 30));
 
         btnModificar.setBackground(new java.awt.Color(153, 51, 0));
         btnModificar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -147,7 +146,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 600, 90, 30));
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 540, 90, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,17 +176,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, -1, -1));
-
-        jButton1.setBackground(new java.awt.Color(153, 51, 0));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, 90, 30));
 
         jPanel1.setBackground(new java.awt.Color(113, 22, 2));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DATOS PERSONALES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -652,10 +640,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
         if(c<'A'||c>'Z')evt.consume();
     }//GEN-LAST:event_txtApellidoPKeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void txtApellidoMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMKeyTyped
         char c = evt.getKeyChar();
         if(c<'A'||c>'Z')evt.consume();
@@ -814,7 +798,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cmbEstado;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

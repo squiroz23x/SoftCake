@@ -56,8 +56,6 @@ public class ControlEmpleados extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SoftCake Lista de empleados");
@@ -187,20 +185,6 @@ public class ControlEmpleados extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 580));
-
-        jMenu1.setText("Control de empleados");
-
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/empleado_menubar.png"))); // NOI18N
-        jMenuItem1.setText("Registro de personal");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -211,12 +195,6 @@ public class ControlEmpleados extends javax.swing.JFrame {
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        RegistroUsuario registro = new RegistroUsuario();
-        registro.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
     
     private void limpiarTablaEmpleados(){
         DefaultTableModel model = (DefaultTableModel) TablaEmpleados.getModel();
@@ -305,7 +283,7 @@ public class ControlEmpleados extends javax.swing.JFrame {
             registro.setVisible(true);
             this.dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
+            JOptionPane.showMessageDialog(null, "Seleccione un registro.");
         }
         
         
@@ -369,9 +347,7 @@ public class ControlEmpleados extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField txtIdEmpleado;
     private javax.swing.JTextField txtMaterno;
