@@ -60,7 +60,7 @@ public class Articulo implements Serializable {
     private short activo;
     @Basic(optional = false)
     @Column(name = "Codigo")
-    private int codigo;
+    private String codigo;
     @Basic(optional = false)
     @Column(name = "Nombre")
     private String nombre;
@@ -101,7 +101,7 @@ public class Articulo implements Serializable {
         this.id = id;
     }
 
-    public Articulo(Integer id, short activo, int codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod) {
+    public Articulo(Integer id, short activo, String codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod) {
         this.id = id;
         this.activo = activo;
         this.codigo = codigo;
@@ -131,11 +131,11 @@ public class Articulo implements Serializable {
         this.activo = activo;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

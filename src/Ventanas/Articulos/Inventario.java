@@ -48,20 +48,40 @@ public class Inventario extends javax.swing.JFrame {
         
     }
     private void updateArticulo(){
-        Integer codigo = Integer.parseInt(txtCodigo.getText());
+        Integer IDUnidad = cmbUnidad.getSelectedIndex();
+        articulounidad.setId(IDUnidad);
+        articulo.setIDUnidad(articulounidad);
+        Integer id = articulo.getId();
+        Short activo = 1;
+        String codigo = txtCodigo.getText();
         String nombre = txtNombre.getText();
         String descripcion = txtDescripcion.getText();
         BigDecimal precio = new BigDecimal(txtPrecio.getText());
         Integer sMaximo = Integer.parseInt(txtMaximo.getText());
         Integer sMinimo = Integer.parseInt(txtMinimo.getText());
         Integer existencia = Integer.parseInt(txtExistencia.getText());
-
-        
+        Date fechaCreacion = articulo.getFechaCreacion();
+        Date fechaMod = articulo.getFechaMod();
+        fillArticulo(id,activo,codigo,nombre,descripcion,precio,sMaximo,sMinimo,existencia,fechaCreacion,fechaMod);
+        Conexion conex = new Conexion();
+        String Query = "UPDATE `articulo` SET `Activo`='" + activo.toString() +"',`Codigo`='" + codigo +"',`Nombre`='" + nombre +"',`Descripcion`='" + descripcion +"',`Precio`='" + precio.toString() +"',`IDUnidad`='" + IDUnidad.toString() +"',`SMaximo`='" + sMaximo.toString() +"',`SMinimo`='" + sMinimo.toString() +"',`Existencia`='" + existencia.toString() +"' WHERE `ID` = '" + articulo.getId().toString() +" '";
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                stmt.executeUpdate(Query);
+                JOptionPane.showMessageDialog(null,"Correcto");
+                Menu menu = new Menu();
+                menu.setVisible(true);
+                this.dispose();
+                
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
     }
     public void prepararModArticulo(String Index){
         Conexion conex = new Conexion();
         Integer IDUnidad = 0;
-        String Query = "SELECT * FROM `articulo` WHERE `Activo`='1' AND `ID`='"+Index+"'";
+        String Query = "SELECT * FROM `articulo` WHERE `Activo`='1' AND `Codigo`='"+Index+"'";
         MysqlDataSource dataSourceArticulo = conex.getConnection();        
         try(Connection conn = dataSourceArticulo.getConnection()){
                 Statement stmtArticulo = conn.createStatement();            
@@ -69,7 +89,7 @@ public class Inventario extends javax.swing.JFrame {
                 while(ResulQueryArticulo.next()){
                     Integer id = ResulQueryArticulo.getInt("ID");
                     short activo = ResulQueryArticulo.getShort("Activo");
-                    int codigo = ResulQueryArticulo.getInt("Codigo");
+                    String codigo = ResulQueryArticulo.getString("Codigo");
                     String nombre = ResulQueryArticulo.getString("Nombre");
                     String descripcion = ResulQueryArticulo.getString("Descripcion");
                     BigDecimal precio = ResulQueryArticulo.getBigDecimal("Precio");
@@ -136,7 +156,7 @@ public class Inventario extends javax.swing.JFrame {
         
         return false;
     }
-    private void fillArticulo(Integer id, short activo, int codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod){
+    private void fillArticulo(Integer id, short activo, String codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod){
         articulo = new Articulo(id,activo,codigo,nombre,descripcion,precio,sMaximo,sMinimo,existencia,fechaCreacion,fechaMod);
     }
     private void fillArticuloUnidad(Integer id, short activo, String descripcion, String nombreCorto, Date fechaCreacion, Date fechaMod){
@@ -147,7 +167,7 @@ public class Inventario extends javax.swing.JFrame {
         articulolote.add(lote);
     }
     private void fillFormulario(){
-        Integer codigo = articulo.getCodigo();
+        String codigo = articulo.getCodigo();
         String nombre = articulo.getNombre();
         String descripcion = articulo.getDescripcion();
         BigDecimal precio = articulo.getPrecio();
@@ -155,13 +175,12 @@ public class Inventario extends javax.swing.JFrame {
         Integer sMinimo = articulo.getSMinimo();
         Integer existencia = articulo.getExistencia();
         Iterator<ArticuloLote> itArticuloLote = articulo.getArticuloLoteCollection().iterator();
-        txtCodigo.setText(codigo.toString());
+        txtCodigo.setText(codigo);
         txtNombre.setText(nombre);
         txtDescripcion.setText(descripcion);
         txtPrecio.setText(precio.toString());
         txtMaximo.setText(sMaximo.toString());
-        txtMinimo.setText(sMinimo.toString());
-        txtExistencia.setText(existencia.toString());
+        txtMinimo.setText(sMinimo.toString());        
         limpiarTablaExistencias();
         while (itArticuloLote.hasNext()){
             ArticuloLote Lote = itArticuloLote.next();
@@ -175,6 +194,7 @@ public class Inventario extends javax.swing.JFrame {
             Date LotefechaMod = Lote.getFechaMod();            
             fillTablaExistencias(Lotecodigo,  Lotecantidad.toString(),  LotefechaElaboracion.toString(),  LotefecbaCaducidad.toString(),  Loteid.toString(), "0");          
         }
+        txtExistencia.setText(getExistenciasTabla().toString());
     }
     private void fillCmbUnidad(){
         Conexion conex = new Conexion();
@@ -198,6 +218,21 @@ public class Inventario extends javax.swing.JFrame {
         DefaultTableModel mode1TablaExistencias = (DefaultTableModel) TablaExistencias.getModel();
         mode1TablaExistencias.addRow(new Object[]{Codigo,Cantidad,FechaElaboracion,FechaCaducidad,ID,ID2});        
     }
+    public void updateTablaExistencia(){
+        this.setEnabled(true);
+    }
+    
+    private Integer getExistenciasTabla(){
+        Integer Existencias = 0;
+         DefaultTableModel model = (DefaultTableModel) TablaExistencias.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            
+            Existencias += Integer.parseInt(TablaExistencias.getValueAt(i, 1).toString());
+        }
+        return Existencias;
+    }
+    
      private void limpiarTablaExistencias(){
         DefaultTableModel model = (DefaultTableModel) TablaExistencias.getModel();
         int CountRows = model.getRowCount();        
@@ -243,7 +278,6 @@ public class Inventario extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         cmbUnidad = new javax.swing.JComboBox<>();
-        btnLote = new javax.swing.JButton();
         btnUnidad = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -252,6 +286,8 @@ public class Inventario extends javax.swing.JFrame {
         txtMinimo = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtExistencia = new javax.swing.JTextField();
+        btnModificarLote = new javax.swing.JButton();
+        btnAgregarLote = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaExistencias = new javax.swing.JTable();
         lblFondo1 = new javax.swing.JLabel();
@@ -415,14 +451,6 @@ public class Inventario extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 800, 150));
 
-        btnLote.setText("Lote");
-        btnLote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoteActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, -1, -1));
-
         btnUnidad.setText("Unidad");
         getContentPane().add(btnUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, -1, -1));
 
@@ -479,6 +507,22 @@ public class Inventario extends javax.swing.JFrame {
         });
         jPanel3.add(txtExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 80, -1));
 
+        btnModificarLote.setText("Modificar Lote");
+        btnModificarLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarLoteActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnModificarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, 120, -1));
+
+        btnAgregarLote.setText("Agregar Lote");
+        btnAgregarLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLoteActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnAgregarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, 120, -1));
+
         TablaExistencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -508,7 +552,7 @@ public class Inventario extends javax.swing.JFrame {
             TablaExistencias.getColumnModel().getColumn(3).setPreferredWidth(100);
         }
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 420, 120));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 420, 120));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 800, 180));
 
@@ -604,14 +648,37 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbUnidadItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        updateArticulo();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoteActionPerformed
+    private void btnAgregarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLoteActionPerformed
         Lote lote = new Lote();
         lote.setVisible(true);
+        lote.setInventario(this);
         this.dispose();
-    }//GEN-LAST:event_btnLoteActionPerformed
+    }//GEN-LAST:event_btnAgregarLoteActionPerformed
+
+    private void btnModificarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarLoteActionPerformed
+        try{          
+        
+        int RowSeleccionado = TablaExistencias.getSelectedRow();       
+        String Identificador = "";
+        if (RowSeleccionado > -1){
+            Identificador = TablaExistencias.getValueAt(RowSeleccionado, 4).toString();
+                Lote lote = new Lote();                
+                lote.setInventario(this);
+                JOptionPane.showMessageDialog(null,Identificador);
+                lote.prepararModLote(Identificador);
+                lote.setVisible(true);
+                this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
+        }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+            
+        }
+    }//GEN-LAST:event_btnModificarLoteActionPerformed
         
     /**
      * @param args the command line arguments
@@ -650,7 +717,8 @@ public class Inventario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaExistencias;
-    private javax.swing.JButton btnLote;
+    private javax.swing.JButton btnAgregarLote;
+    private javax.swing.JButton btnModificarLote;
     private javax.swing.JButton btnUnidad;
     private javax.swing.JComboBox<String> cmbUnidad;
     private javax.swing.JButton jButton1;

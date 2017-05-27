@@ -5,8 +5,12 @@
  */
 package Ventanas.Articulos;
 
-import Ventanas.Articulos.ExistenciaProductos;
-
+import Ventanas.Conexion;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import DataBase.ArticuloLote;
+import java.util.Date;
 /**
  *
  * @author JIGA_
@@ -16,6 +20,9 @@ public class Lote extends javax.swing.JFrame {
     /**
      * Creates new form Lote
      */
+    Inventario inventario = new Inventario();
+    ArticuloLote articulolote = new ArticuloLote();
+    
     public Lote() {
         initComponents();
     }
@@ -82,6 +89,11 @@ public class Lote extends javax.swing.JFrame {
         getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, -1, -1));
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
@@ -91,11 +103,58 @@ public class Lote extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        Inventario inventario = new Inventario();
-        inventario.setVisible(true);
+        inventario.setVisible(true);        
         this.dispose();
     }//GEN-LAST:event_jLabel7MouseClicked
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
+    
+    
+    public void setInventario(Inventario inventariopasado){        
+        inventario = inventariopasado;        
+    }
+    private void fillArticuloLote(Integer id, short activo, String codigo, long cantidad, Date fechaElaboracion, Date fecbaCaducidad, Date fechaCreacion, Date fechaMod){
+        articulolote = new ArticuloLote(id,activo,codigo,cantidad,fechaElaboracion,fecbaCaducidad,fechaCreacion,fechaMod);
+    }
+    
+    public void prepararModLote(String Index){
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `articulo_lote` WHERE `Activo` = '1' AND `ID` = '"+ Index +"'";
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                while(ResulQuery.next()){
+                    Integer id = ResulQuery.getInt("ID");
+                    short activo = ResulQuery.getShort("Activo");
+                    String codigo = ResulQuery.getString("Codigo");
+                    long cantidad = ResulQuery.getLong("Cantidad");
+                    Date fechaElaboracion = ResulQuery.getDate("FechaElaboracion");
+                    Date fecbaCaducidad = ResulQuery.getDate("FecbaCaducidad");
+                    Date fechaCreacion = ResulQuery.getDate("FechaCreacion");
+                    Date fechaMod = ResulQuery.getDate("FechaMod");
+                    fillArticuloLote( id,activo,  codigo,  cantidad,  fechaElaboracion,  fecbaCaducidad,  fechaCreacion,  fechaMod);
+                    fillFormulario();
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        } 
+
+    }
+    
+    private void fillFormulario(){
+        String Codigo = articulolote.getCodigo();
+        Long Cantidad = articulolote.getCantidad();
+        Date Elaboracion = articulolote.getFechaElaboracion() ;
+        Date Caducidad = articulolote.getFecbaCaducidad();
+        txtCodigo.setText(Codigo.toString());
+        txtCantidad.setText(Cantidad.toString());
+        CalendarElaboracion.setDate(Elaboracion);
+        CalendarCaducidad.setDate(Caducidad);
+    }
+    
     /**
      * @param args the command line arguments
      */
