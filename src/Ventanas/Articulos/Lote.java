@@ -10,6 +10,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import DataBase.ArticuloLote;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
  *
@@ -22,7 +23,7 @@ public class Lote extends javax.swing.JFrame {
      */
     Inventario inventario = new Inventario();
     ArticuloLote articulolote = new ArticuloLote();
-    
+    Integer IDArticulo = 0;
     public Lote() {
         initComponents();
     }
@@ -48,6 +49,7 @@ public class Lote extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -86,6 +88,11 @@ public class Lote extends javax.swing.JFrame {
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, -1, -1));
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, -1, -1));
 
         btnModificar.setText("Modificar");
@@ -94,7 +101,15 @@ public class Lote extends javax.swing.JFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, -1, -1));
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, -1, -1));
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 360, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 430));
@@ -108,17 +123,123 @@ public class Lote extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        modLote();
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        insLote();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+       eliLote();
+    }//GEN-LAST:event_btnEliminarActionPerformed
     
-    
-    public void setInventario(Inventario inventariopasado){        
-        inventario = inventariopasado;        
+    private void insLote(){
+        Boolean ValidadNulo = true;        
+        if (ValidadNulo){
+            updateLote();
+            if (validadLote()){
+                Conexion conex = new Conexion();
+                SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+                String FechaElaboracion = date.format(articulolote.getFechaElaboracion());
+                String FechaCaducidad = date.format(articulolote.getFecbaCaducidad());
+                String Query = "INSERT INTO `articulo_lote`(`ID`, `IDArticulo`, `Activo`, `Codigo`, `Cantidad`, `FechaElaboracion`, `FecbaCaducidad`, `FechaCreacion`, `FechaMod`) VALUES ("
+                        + "null,"
+                        + "'" + IDArticulo + "',"
+                        + "'" + articulolote.getActivo() + "',"
+                        + "'" + articulolote.getCodigo() + "',"
+                        + "'" + articulolote.getCantidad() + "',"
+                        + "'" + FechaElaboracion + "',"
+                        + "'" + FechaCaducidad + "',"
+                        + "CURRENT_TIMESTAMP,"
+                        + "CURRENT_TIMESTAMP)";
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                        Statement stmt = conn.createStatement();            
+                        stmt.executeUpdate(Query);
+                        JOptionPane.showMessageDialog(null,"Agregado Correctamente.");
+                        inventario.prepararArticuloLote(inventario.articulo.getId().toString());
+                        inventario.fillTablaLote();
+                        inventario.setVisible(true);
+                        this.dispose();
+                }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null,e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El codigo del Lote esta en uso. Favor de proporcionar otro codigo.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+        }
+    }    
+    private void modLote(){
+        Boolean ValidadNulo = true;        
+        if (ValidadNulo){
+            updateLote();
+            if (validadLote()){
+                Conexion conex = new Conexion();
+                SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+                String FechaElaboracion = date.format(articulolote.getFechaElaboracion());
+                String FechaCaducidad = date.format(articulolote.getFecbaCaducidad()); 
+                String Query = "UPDATE `articulo_lote` SET "
+                        + "`IDArticulo`='" + IDArticulo + "',"
+                        + "`Activo`='" + articulolote.getActivo() + "',"
+                        + "`Codigo`='" + articulolote.getCodigo() + "',"
+                        + "`Cantidad`='" + articulolote.getCantidad() + "',"
+                        + "`FechaElaboracion`='" + FechaElaboracion + "',"
+                        + "`FecbaCaducidad`='" + FechaCaducidad + "'"
+                        + "WHERE `ID` = '" + articulolote.getId() + "'";
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                        Statement stmt = conn.createStatement();            
+                        stmt.executeUpdate(Query);
+                        JOptionPane.showMessageDialog(null,"Modificado Correctamente.");
+                        inventario.prepararArticuloLote(inventario.articulo.getId().toString());
+                        inventario.fillTablaLote();
+                        inventario.setVisible(true);
+                        this.dispose();
+                }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null,e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El codigo del Lote esta en uso. Favor de proporcionar otro codigo.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+        }
+        
     }
-    private void fillArticuloLote(Integer id, short activo, String codigo, long cantidad, Date fechaElaboracion, Date fecbaCaducidad, Date fechaCreacion, Date fechaMod){
-        articulolote = new ArticuloLote(id,activo,codigo,cantidad,fechaElaboracion,fecbaCaducidad,fechaCreacion,fechaMod);
+    private void eliLote(){
+        Conexion conex = new Conexion();
+        String Query = "UPDATE `articulo_lote` SET "
+                        + "`Activo`='0'"
+                        + "WHERE `ID` = '" + articulolote.getId() + "'";
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                stmt.executeUpdate(Query);
+                JOptionPane.showMessageDialog(null,"Eliminado Correctamente.");
+                inventario.prepararArticuloLote(inventario.articulo.getId().toString());
+                inventario.fillTablaLote();
+                inventario.setVisible(true);
+                this.dispose();
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+        
     }
-    
+    private void updateLote(){
+        Integer id = articulolote.getId();
+        Short activo = 1;
+        String codigo = txtCodigo.getText();
+        Long cantidad = Long.parseLong(txtCantidad.getText());
+        Date fechaElaboracion = CalendarElaboracion.getDate();
+        Date fecbaCaducidad = CalendarCaducidad.getDate();
+        Date fechaCreacion = articulolote.getFechaCreacion();
+        Date fechaMod = articulolote.getFechaMod();
+        fillArticuloLote( id,activo,  codigo,  cantidad,  fechaElaboracion,  fecbaCaducidad,  fechaCreacion,  fechaMod);
+        
+    }
     public void prepararModLote(String Index){
         Conexion conex = new Conexion();
         String Query = "SELECT * FROM `articulo_lote` WHERE `Activo` = '1' AND `ID` = '"+ Index +"'";
@@ -137,13 +258,23 @@ public class Lote extends javax.swing.JFrame {
                     Date fechaMod = ResulQuery.getDate("FechaMod");
                     fillArticuloLote( id,activo,  codigo,  cantidad,  fechaElaboracion,  fecbaCaducidad,  fechaCreacion,  fechaMod);
                     fillFormulario();
+                    btnAgregar.setVisible(false);
                 }
         }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e);
         } 
-
     }
-    
+    public void prepararInsLote(){
+        btnEliminar.setVisible(false);
+        btnModificar.setVisible(false);        
+    }
+    private boolean validadLote(){
+        
+        return true;        
+    }
+    private void fillArticuloLote(Integer id, short activo, String codigo, long cantidad, Date fechaElaboracion, Date fecbaCaducidad, Date fechaCreacion, Date fechaMod){
+        articulolote = new ArticuloLote(id,activo,codigo,cantidad,fechaElaboracion,fecbaCaducidad,fechaCreacion,fechaMod);
+    }    
     private void fillFormulario(){
         String Codigo = articulolote.getCodigo();
         Long Cantidad = articulolote.getCantidad();
@@ -153,6 +284,12 @@ public class Lote extends javax.swing.JFrame {
         txtCantidad.setText(Cantidad.toString());
         CalendarElaboracion.setDate(Elaboracion);
         CalendarCaducidad.setDate(Caducidad);
+    }
+    public void setInventario(Inventario inventariopasado){        
+        inventario = inventariopasado;        
+    }
+    public void setIDArticulo(Integer Index){
+        IDArticulo = Index;
     }
     
     /**
@@ -194,6 +331,7 @@ public class Lote extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser CalendarCaducidad;
     private com.toedter.calendar.JDateChooser CalendarElaboracion;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

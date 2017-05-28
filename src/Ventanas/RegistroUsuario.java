@@ -534,18 +534,51 @@ public class RegistroUsuario extends javax.swing.JFrame {
     
     private void modEmpleado(){
         updateEmpleado();
-        SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
-        String fechanacimiento = date.format(empleado.getFechaNacimiento());        
-        Conexion conex = new Conexion();
-        String Query = ("UPDATE empleados SET Activo='"+ empleado.getActivo() +"',Nombre='"+ empleado.getNombre() +"',ApellidoP='"+ empleado.getApellidoP() +"',ApellidoM='"+ empleado.getApellidoM() +"',FechaNacimiento='"+ fechanacimiento +"',Direccion='"+ empleado.getDireccion() +"',NumExt='"+ empleado.getNumExt() +"',NumInt='"+ empleado.getNumInt() +"',CP='"+ empleado.getCp() +"',Colonia='"+ empleado.getColonia() +"',Estado='"+ empleado.getEstado() +"',Municipio='"+ empleado.getMunicipio() +"',Telefono='"+ empleado.getTelefono() +"',Ext='"+ empleado.getExt() +"',Celular='"+ empleado.getCelular() +"',Email='"+ empleado.getEmail() +"',Facebook='"+ empleado.getFacebook() +"',Identificador='"+ empleado.getIdentificador() +"',Usuario='"+ empleado.getUsuario() +"',Password='"+ empleado.getPassword() +"',FechaMod=CURRENT_TIMESTAMP WHERE ID="+empleado.getId());
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-            Statement stmt = conn.createStatement();          
-            stmt.executeUpdate(Query);
-            JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
-        } 
+        Boolean ValidacionesNulas = true;
+        if (ValidacionesNulas){
+            if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
+                SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+                String fechanacimiento = date.format(empleado.getFechaNacimiento());        
+                Conexion conex = new Conexion();
+                String Query = ("UPDATE empleados SET "
+                        + "Activo='"+ empleado.getActivo() +"',"
+                        + "Nombre='"+ empleado.getNombre() +"',"
+                        + "ApellidoP='"+ empleado.getApellidoP() +"',"
+                        + "ApellidoM='"+ empleado.getApellidoM() +"',"
+                        + "FechaNacimiento='"+ fechanacimiento +"',"
+                        + "Direccion='"+ empleado.getDireccion() +"',"
+                        + "NumExt='"+ empleado.getNumExt() +"',"
+                        + "NumInt='"+ empleado.getNumInt() +"',"
+                        + "CP='"+ empleado.getCp() +"',"
+                        + "Colonia='"+ empleado.getColonia() +"',"
+                        + "Estado='"+ empleado.getEstado() +"',"
+                        + "Municipio='"+ empleado.getMunicipio() +"',"
+                        + "Telefono='"+ empleado.getTelefono() +"',"
+                        + "Ext='"+ empleado.getExt() +"',"
+                        + "Celular='"+ empleado.getCelular() +"',"
+                        + "Email='"+ empleado.getEmail() +"',"
+                        + "Facebook='"+ empleado.getFacebook() +"',"
+                        + "Identificador='"+ empleado.getIdentificador() +"',"
+                        + "Usuario='"+ empleado.getUsuario() +"',"
+                        + "Password='"+ empleado.getPassword() +"',"
+                        + "FechaMod=CURRENT_TIMESTAMP "
+                        + "WHERE ID="+empleado.getId());
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                    Statement stmt = conn.createStatement();          
+                    stmt.executeUpdate(Query);
+                    JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"No se pueden dejar campos en blanco.");
+        }
+        
+         
         
     }
     
@@ -557,7 +590,13 @@ public class RegistroUsuario extends javax.swing.JFrame {
             Statement stmt = conn.createStatement();            
             ResultSet ResulQuery = stmt.executeQuery(Query);
             if (ResulQuery.next()){
-                return false;
+                Integer ID1 = ResulQuery.getInt("ID");
+                Integer ID2 = empleado.getId();
+                if (ID1 == ID2){
+                    return true;
+                }else{
+                   return false; 
+                }
             }else{
                 return true;
             }
@@ -567,24 +606,49 @@ public class RegistroUsuario extends javax.swing.JFrame {
         return false;
     }
     
-    private void insEmpleado(){
+    private void insEmpleado(){        
         updateEmpleado();
-        SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
-        String fechanacimiento = date.format(empleado.getFechaNacimiento());        
-        Conexion conex = new Conexion();
-        String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"+ empleado.getNombre()+"','"+ empleado.getApellidoP()+"','"+ empleado.getApellidoM()+"','"+ fechanacimiento+"','"+ empleado.getDireccion()+"','"+ empleado.getNumExt()+"','"+ empleado.getNumInt()+"','"+ empleado.getCp()+"','"+ empleado.getColonia()+"','"+ empleado.getEstado()+"','"+ empleado.getMunicipio()+"','"+ empleado.getTelefono()+"','"+ empleado.getExt()+"','"+ empleado.getCelular()+"','"+ empleado.getEmail()+"','"+ empleado.getFacebook()+"','"+ empleado.getIdentificador()+"','"+ empleado.getUsuario()+"','"+ empleado.getPassword()+"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
-        if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
-            MysqlDataSource dataSource = conex.getConnection();        
-            try(Connection conn = dataSource.getConnection()){
-                Statement stmt = conn.createStatement();          
-                stmt.executeUpdate(Query);
-                JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
-            }
+        Boolean ValidacionesNulas = true;
+        if (ValidacionesNulas){
+            SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+            String fechanacimiento = date.format(empleado.getFechaNacimiento());        
+            Conexion conex = new Conexion();
+            String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"
+                    + empleado.getNombre()+"','"
+                    + empleado.getApellidoP()+"','"
+                    + empleado.getApellidoM()+"','"
+                    + fechanacimiento+"','"
+                    + empleado.getDireccion()+"','"
+                    + empleado.getNumExt()+"','"
+                    + empleado.getNumInt()+"','"
+                    + empleado.getCp()+"','"
+                    + empleado.getColonia()+"','"
+                    + empleado.getEstado()+"','"
+                    + empleado.getMunicipio()+"','"
+                    + empleado.getTelefono()+"','"
+                    + empleado.getExt()+"','"
+                    + empleado.getCelular()+"','"
+                    + empleado.getEmail()+"','"
+                    + empleado.getFacebook()+"','"
+                    + empleado.getIdentificador()+"','"
+                    + empleado.getUsuario()+"','"
+                    + empleado.getPassword()
+                    +"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
+            if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                    Statement stmt = conn.createStatement();          
+                    stmt.executeUpdate(Query);
+                    JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
+            }   
         }else{
-            JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
-        }       
+            JOptionPane.showMessageDialog(null,"No se pueden dejar campos en blanco.");            
+        }               
     }
     
     private void eliEmpleado(){

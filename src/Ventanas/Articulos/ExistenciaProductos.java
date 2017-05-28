@@ -296,6 +296,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         Inventario registro = new Inventario();
         registro.prepararInsArticulo();
         registro.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
