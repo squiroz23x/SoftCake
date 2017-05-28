@@ -121,50 +121,59 @@ public class Unidad extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel7MouseClicked
     
     private void insUnidad(){
-        updateUnidad();
-        Conexion conex = new Conexion();
-        String Query = "INSERT INTO `articulo_unidad` (`ID`, `Activo`, `Descripcion`, `NombreCorto`, `FechaCreacion`, `FechaMod`) VALUES ("
-                + "NULL, "
-                + "'" + articulounidad.getActivo() + "', "
-                + "'" + articulounidad.getDescripcion() + "', "
-                + "'" + articulounidad.getNombreCorto() + "', "
-                + "CURRENT_TIMESTAMP, "
-                + "CURRENT_TIMESTAMP);";
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-                Statement stmt = conn.createStatement();            
-                stmt.executeUpdate(Query);
-                JOptionPane.showMessageDialog(null,"Agregado correctamente.");
-                inventario.fillCmbUnidad();
-                inventario.setVisible(true);
-                
-                this.dispose();
-        }catch(SQLException e){
-                JOptionPane.showMessageDialog(null,e);
-        } 
+        if (txtDescripcion.getText() != null && txtNombreCorto.getText() != null){
+            updateUnidad();
+            Conexion conex = new Conexion();
+            String Query = "INSERT INTO `articulo_unidad` (`ID`, `Activo`, `Descripcion`, `NombreCorto`, `FechaCreacion`, `FechaMod`) VALUES ("
+                    + "NULL, "
+                    + "'" + articulounidad.getActivo() + "', "
+                    + "'" + articulounidad.getDescripcion() + "', "
+                    + "'" + articulounidad.getNombreCorto() + "', "
+                    + "CURRENT_TIMESTAMP, "
+                    + "CURRENT_TIMESTAMP);";
+            MysqlDataSource dataSource = conex.getConnection();        
+            try(Connection conn = dataSource.getConnection()){
+                    Statement stmt = conn.createStatement();            
+                    stmt.executeUpdate(Query);
+                    JOptionPane.showMessageDialog(null,"Agregado correctamente.");
+                    inventario.fillCmbUnidad();
+                    inventario.setVisible(true);
+                    this.dispose();
+            }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,e);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"Favor de proppraosjdnas");
+        }
         
     }    
     private void modUnidad(){
-        updateUnidad();
-        Conexion conex = new Conexion();
-        String Query = "UPDATE `articulo_unidad` SET "
-                + "`ID`='" + articulounidad.getId() + "',"
-                + "`Activo`='" + articulounidad.getActivo() + "',"
-                + "`Descripcion`='" + articulounidad.getDescripcion() + "',"
-                + "`NombreCorto`='" + articulounidad.getNombreCorto() + "'"
-                + "WHERE `ID`='" + articulounidad.getId() + "'";
-        MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-                Statement stmt = conn.createStatement();            
-                stmt.executeUpdate(Query);
-                JOptionPane.showMessageDialog(null,"Modificado correctamente.");
-                inventario.fillCmbUnidad();
-                inventario.setVisible(true);
-                
-                this.dispose();
-        }catch(SQLException e){
-                JOptionPane.showMessageDialog(null,e);
-        } 
+        if (txtDescripcion.getText() != null && txtNombreCorto.getText() != null){
+            updateUnidad();
+            Conexion conex = new Conexion();
+            String Query = "UPDATE `articulo_unidad` SET "
+                    + "`ID`='" + articulounidad.getId() + "',"
+                    + "`Activo`='" + articulounidad.getActivo() + "',"
+                    + "`Descripcion`='" + articulounidad.getDescripcion() + "',"
+                    + "`NombreCorto`='" + articulounidad.getNombreCorto() + "'"
+                    + "WHERE `ID`='" + articulounidad.getId() + "'";
+            MysqlDataSource dataSource = conex.getConnection();        
+            try(Connection conn = dataSource.getConnection()){
+                    Statement stmt = conn.createStatement();            
+                    stmt.executeUpdate(Query);
+                    JOptionPane.showMessageDialog(null,"Modificado correctamente.");
+                    inventario.fillCmbUnidad();
+                    inventario.setVisible(true);
+
+                    this.dispose();
+            }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,e);
+            } 
+        }else{
+            JOptionPane.showMessageDialog(null,"Favor de proppraosjdnas");
+        }
+        
+        
         
     }
     private void eliUnidad(){
@@ -211,12 +220,14 @@ public class Unidad extends javax.swing.JFrame {
                     fillArticuloUnidad( id,  activo,  descripcion,  nombreCorto,  fechaCreacion,  fechaMod);
                 }
                 fillFormulario();
+                this.btnAgregar.setVisible(false);
         }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e);
         }
      }
     public void prepararInsUnidad(){
-        this.btnModificar.setVisible(false);        
+        this.btnModificar.setVisible(false);
+        this.btnEliminar.setVisible(false);
     }
     private void validadUnidad(){
         

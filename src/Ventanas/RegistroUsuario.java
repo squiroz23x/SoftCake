@@ -532,10 +532,10 @@ public class RegistroUsuario extends javax.swing.JFrame {
         empleado.setPassword(txtPassword.getText());
     }
     
-    private void modEmpleado(){
-        updateEmpleado();
+    private void modEmpleado(){       
         Boolean ValidacionesNulas = true;
         if (ValidacionesNulas){
+            updateEmpleado();
             if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
                 SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
                 String fechanacimiento = date.format(empleado.getFechaNacimiento());        
@@ -606,35 +606,36 @@ public class RegistroUsuario extends javax.swing.JFrame {
         return false;
     }
     
-    private void insEmpleado(){        
-        updateEmpleado();
+    private void insEmpleado(){       
+        
         Boolean ValidacionesNulas = true;
         if (ValidacionesNulas){
-            SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
-            String fechanacimiento = date.format(empleado.getFechaNacimiento());        
-            Conexion conex = new Conexion();
-            String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"
-                    + empleado.getNombre()+"','"
-                    + empleado.getApellidoP()+"','"
-                    + empleado.getApellidoM()+"','"
-                    + fechanacimiento+"','"
-                    + empleado.getDireccion()+"','"
-                    + empleado.getNumExt()+"','"
-                    + empleado.getNumInt()+"','"
-                    + empleado.getCp()+"','"
-                    + empleado.getColonia()+"','"
-                    + empleado.getEstado()+"','"
-                    + empleado.getMunicipio()+"','"
-                    + empleado.getTelefono()+"','"
-                    + empleado.getExt()+"','"
-                    + empleado.getCelular()+"','"
-                    + empleado.getEmail()+"','"
-                    + empleado.getFacebook()+"','"
-                    + empleado.getIdentificador()+"','"
-                    + empleado.getUsuario()+"','"
-                    + empleado.getPassword()
-                    +"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
+            updateEmpleado();
             if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
+                SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+                String fechanacimiento = date.format(empleado.getFechaNacimiento());        
+                Conexion conex = new Conexion();
+                String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"
+                        + empleado.getNombre()+"','"
+                        + empleado.getApellidoP()+"','"
+                        + empleado.getApellidoM()+"','"
+                        + fechanacimiento+"','"
+                        + empleado.getDireccion()+"','"
+                        + empleado.getNumExt()+"','"
+                        + empleado.getNumInt()+"','"
+                        + empleado.getCp()+"','"
+                        + empleado.getColonia()+"','"
+                        + empleado.getEstado()+"','"
+                        + empleado.getMunicipio()+"','"
+                        + empleado.getTelefono()+"','"
+                        + empleado.getExt()+"','"
+                        + empleado.getCelular()+"','"
+                        + empleado.getEmail()+"','"
+                        + empleado.getFacebook()+"','"
+                        + empleado.getIdentificador()+"','"
+                        + empleado.getUsuario()+"','"
+                        + empleado.getPassword()
+                        +"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");            
                 MysqlDataSource dataSource = conex.getConnection();        
                 try(Connection conn = dataSource.getConnection()){
                     Statement stmt = conn.createStatement();          
