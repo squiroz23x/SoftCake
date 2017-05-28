@@ -60,18 +60,8 @@ public class Venta extends javax.swing.JFrame {
         txtIva = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         btnCompra = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        cmbProductos = new javax.swing.JComboBox<>();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel18 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        txtCambio = new javax.swing.JTextField();
         txtEfectivo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -169,7 +159,7 @@ public class Venta extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 680, 90));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 680, 140));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -209,18 +199,6 @@ public class Venta extends javax.swing.JFrame {
         btnCompra.setText("Realizar Compra");
         getContentPane().add(btnCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 560, -1, -1));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Tipo producto:");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
-
-        cmbProductos.setBackground(new java.awt.Color(153, 51, 0));
-        cmbProductos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        cmbProductos.setForeground(new java.awt.Color(255, 255, 255));
-        cmbProductos.setMaximumRowCount(5);
-        cmbProductos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Pastel", "Gelatina", "Postre", "Rebanada de pastel" }));
-        getContentPane().add(cmbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
-
         btnAgregar.setBackground(new java.awt.Color(153, 51, 0));
         btnAgregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
@@ -232,34 +210,6 @@ public class Venta extends javax.swing.JFrame {
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar Producto");
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, -1, -1));
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Seleccionar producto:");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
-
-        jComboBox1.setBackground(new java.awt.Color(153, 51, 0));
-        jComboBox1.setMaximumRowCount(5);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Pastel de x", "Pastel de y", "Pastel de z", "Pastel de w" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Cantidad:");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, -1, -1));
-        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 190, -1, -1));
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Efectivo:");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, -1, -1));
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Cambio:");
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 470, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 440, 100, -1));
-        getContentPane().add(txtCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 470, 100, -1));
 
         txtEfectivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
@@ -313,8 +263,6 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCompra;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JComboBox<String> cmbProductos;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -322,12 +270,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -336,10 +279,7 @@ public class Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField txtCambio;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtColonia;
     private javax.swing.JTextField txtCp;

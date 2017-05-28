@@ -148,7 +148,7 @@ public class Unidad extends javax.swing.JFrame {
         
     }    
     private void modUnidad(){
-        if (txtDescripcion.getText() != null && txtNombreCorto.getText() != null){
+        if (!"".equals(txtDescripcion.getText()) && !"".equals(txtNombreCorto.getText())){
             updateUnidad();
             Conexion conex = new Conexion();
             String Query = "UPDATE `articulo_unidad` SET "
