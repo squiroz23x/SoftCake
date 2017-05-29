@@ -197,6 +197,11 @@ public class Venta extends javax.swing.JFrame {
         btnCompra.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCompra.setForeground(new java.awt.Color(255, 255, 255));
         btnCompra.setText("Realizar Compra");
+        btnCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompraActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 560, -1, -1));
 
         btnAgregar.setBackground(new java.awt.Color(153, 51, 0));
@@ -223,6 +228,12 @@ public class Venta extends javax.swing.JFrame {
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
+       CompletarVenta completar = new CompletarVenta();
+       completar.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_btnCompraActionPerformed
 
     /**
      * @param args the command line arguments

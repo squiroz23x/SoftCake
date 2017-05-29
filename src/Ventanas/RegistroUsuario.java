@@ -162,6 +162,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
         getContentPane().add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 160, -1));
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombreKeyTyped(evt);
@@ -820,6 +825,10 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private void txtIdentificadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdentificadorActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     /**
      * @param args the command line arguments
