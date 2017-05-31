@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ventanas;
+package Ventas;
 
+import Ventanas.Menu;
 import javax.swing.ImageIcon;
 
 /**
@@ -59,7 +60,7 @@ public class Venta extends javax.swing.JFrame {
         txtSubtotal = new javax.swing.JTextField();
         txtIva = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
-        btnCompra = new javax.swing.JButton();
+        btnGenerar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         txtEfectivo = new javax.swing.JLabel();
@@ -193,16 +194,16 @@ public class Venta extends javax.swing.JFrame {
         txtTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, 100, -1));
 
-        btnCompra.setBackground(new java.awt.Color(153, 51, 0));
-        btnCompra.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCompra.setForeground(new java.awt.Color(255, 255, 255));
-        btnCompra.setText("Realizar Compra");
-        btnCompra.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerar.setBackground(new java.awt.Color(153, 51, 0));
+        btnGenerar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnGenerar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerar.setText("Generar venta");
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCompraActionPerformed(evt);
+                btnGenerarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 560, -1, -1));
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 560, -1, -1));
 
         btnAgregar.setBackground(new java.awt.Color(153, 51, 0));
         btnAgregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -229,11 +230,11 @@ public class Venta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
        CompletarVenta completar = new CompletarVenta();
        completar.setVisible(true);
        this.dispose();
-    }//GEN-LAST:event_btnCompraActionPerformed
+    }//GEN-LAST:event_btnGenerarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,8 +273,8 @@ public class Venta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnCompra;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGenerar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

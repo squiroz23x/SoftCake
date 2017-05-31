@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ventanas;
+package Empleados;
 
 import javax.swing.ImageIcon;
 import java.sql.*;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.swing.JOptionPane;
 import DataBase.Empleados;
+import Ventanas.Conexion;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;

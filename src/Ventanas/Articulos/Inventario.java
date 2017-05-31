@@ -720,7 +720,7 @@ public class Inventario extends javax.swing.JFrame {
 
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
         char c = evt.getKeyChar();
-        if(c<'0'||c>'9')evt.consume();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped

@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ventanas;
+package Empleados;
 
+import Ventanas.Conexion;
+import Ventanas.Menu;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
