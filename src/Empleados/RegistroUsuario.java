@@ -572,7 +572,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 try(Connection conn = dataSource.getConnection()){
                     Statement stmt = conn.createStatement();          
                     stmt.executeUpdate(Query);
-                    JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
+                    JOptionPane.showMessageDialog(null,"Los datos fueron modificados satisfactoriamente.");
                 }catch(SQLException e){
                     JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
                 }
@@ -580,7 +580,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
             }
         }else{
-            JOptionPane.showMessageDialog(null,"No se pueden dejar campos en blanco.");
+            JOptionPane.showMessageDialog(null,"Los campos marcados con * son obligatorios.");
         }
         
          
@@ -645,7 +645,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 try(Connection conn = dataSource.getConnection()){
                     Statement stmt = conn.createStatement();          
                     stmt.executeUpdate(Query);
-                    JOptionPane.showMessageDialog(null,"Los datos fueron modificados.");
+                    JOptionPane.showMessageDialog(null,"Registro realizado exitosamente.");
                 }catch(SQLException e){
                     JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
                 }

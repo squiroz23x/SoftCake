@@ -70,7 +70,7 @@ public class Lote extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Código:");
+        jLabel3.setText("*Código:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
 
         txtCodigo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -79,11 +79,11 @@ public class Lote extends javax.swing.JFrame {
                 txtCodigoKeyTyped(evt);
             }
         });
-        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 130, -1));
+        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 120, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Cantidad:");
+        jLabel4.setText("*Cantidad:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
         txtCantidad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -92,19 +92,19 @@ public class Lote extends javax.swing.JFrame {
                 txtCantidadKeyTyped(evt);
             }
         });
-        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 130, -1));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 120, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Fecha elaboración:");
+        jLabel5.setText("*Fecha elaboración:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Fecha caducidad:");
+        jLabel6.setText("*Fecha caducidad:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, -1, -1));
-        getContentPane().add(CalendarElaboracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 140, -1));
-        getContentPane().add(CalendarCaducidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, 140, -1));
+        getContentPane().add(CalendarElaboracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 130, -1));
+        getContentPane().add(CalendarCaducidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 130, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {

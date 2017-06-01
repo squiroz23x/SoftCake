@@ -72,7 +72,7 @@ public class Inventario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"El codigo del articulo esta en uso. Favor de proporcionar otro codigo.");
             }
         }else{
-            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+            JOptionPane.showMessageDialog(null,"Los campos marcados con * son obligatorios");
         }
     }    
     private void modArticulo(){
@@ -108,7 +108,7 @@ public class Inventario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"El codigo del articulo esta en uso. Favor de proporcionar otro codigo.");
             }
         }else{
-            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+            JOptionPane.showMessageDialog(null,"Los campos marcados con * son obligatorios");
         }        
     }
     private void eliArticulo(){
@@ -578,7 +578,7 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Stock Máximo:");
+        jLabel11.setText("*Stock Máximo:");
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         txtMaximo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -596,7 +596,7 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Stock Mínimo:");
+        jLabel12.setText("*Stock Mínimo:");
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
         txtMinimo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -614,7 +614,7 @@ public class Inventario extends javax.swing.JFrame {
 
         lblExistencia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblExistencia.setForeground(new java.awt.Color(255, 255, 255));
-        lblExistencia.setText("En Existencia:");
+        lblExistencia.setText("*En Existencia:");
         jPanel3.add(lblExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         txtExistencia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -803,7 +803,7 @@ public class Inventario extends javax.swing.JFrame {
                 lote.setVisible(true);
                 this.dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
+            JOptionPane.showMessageDialog(null, "Seleccione un registro.");
         }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);

@@ -76,7 +76,7 @@ public class Unidad extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Descripción:");
+        jLabel3.setText("*Descripción:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
 
         txtDescripcion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -90,11 +90,11 @@ public class Unidad extends javax.swing.JFrame {
                 txtDescripcionKeyTyped(evt);
             }
         });
-        getContentPane().add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 220, -1));
+        getContentPane().add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 210, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Nombre corto:");
+        jLabel4.setText("*Nombre corto:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
 
         txtNombreCorto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -108,7 +108,7 @@ public class Unidad extends javax.swing.JFrame {
                 txtNombreCortoKeyTyped(evt);
             }
         });
-        getContentPane().add(txtNombreCorto, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 220, -1));
+        getContentPane().add(txtNombreCorto, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 210, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
