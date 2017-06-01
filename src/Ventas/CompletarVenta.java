@@ -235,7 +235,7 @@ public class CompletarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        Venta venta = new Venta();
+        GenerarVenta venta = new GenerarVenta();
         venta.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel11MouseClicked

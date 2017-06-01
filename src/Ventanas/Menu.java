@@ -6,7 +6,8 @@
 package Ventanas;
 
 import Empleados.ControlEmpleados;
-import Ventas.Venta;
+import Empleados.RegistroUsuario;
+import Ventas.GenerarVenta;
 import Ventanas.Articulos.ExistenciaProductos;
 import javax.swing.ImageIcon;
 
@@ -200,6 +201,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu1.setText("Venta");
 
         jMenuItem1.setText("Generar venta");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Ver factura");
@@ -213,6 +219,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu2.setText("Inventario");
 
         jMenuItem3.setText("Existencias");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -232,10 +243,15 @@ public class Menu extends javax.swing.JFrame {
 
         jMenu4.setText("Usuario");
 
-        jMenuItem10.setText("Agregar usuario");
+        jMenuItem10.setText("Control de empleados");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem10);
 
-        jMenuItem11.setText("Modificar usuario");
+        jMenuItem11.setText("Agregar usuario");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
@@ -256,6 +272,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu5.add(jMenuItem8);
 
         jMenuItem9.setText("Salir de SoftCake");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem9);
 
         jMenuBar1.add(jMenu5);
@@ -266,7 +287,7 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
-       Venta venta = new Venta();
+       GenerarVenta venta = new GenerarVenta();
        venta.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnVentaActionPerformed
@@ -308,12 +329,38 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
+        About acerca = new About();
+        acerca.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        // TODO add your handling code here:
+        RegistroUsuario registro = new RegistroUsuario();
+        registro.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        GenerarVenta venta = new GenerarVenta();
+        venta.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ExistenciaProductos existencia = new ExistenciaProductos();
+        existencia.setVisible(true);
+        this.disable();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        ControlEmpleados control = new ControlEmpleados();
+        control.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments

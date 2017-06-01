@@ -189,8 +189,8 @@ public class Lote extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantidadKeyTyped
     
     private void insLote(){
-        Boolean ValidadNulo = true;        
-        if (ValidadNulo){
+             
+        if (!"".equals(txtCodigo.getText()) && !"".equals(txtCantidad.getText()) && CalendarElaboracion.getDate() !=null && CalendarCaducidad.getDate() !=null){
             updateLote();
             if (validadLote()){
                 Conexion conex = new Conexion();
@@ -227,8 +227,8 @@ public class Lote extends javax.swing.JFrame {
         }
     }    
     private void modLote(){
-        Boolean ValidadNulo = true;        
-        if (ValidadNulo){
+              
+        if (!"".equals(txtCodigo.getText()) && !"".equals(txtCantidad.getText()) && CalendarElaboracion.getDate() !=null && CalendarCaducidad.getDate() !=null){
             updateLote();
             if (validadLote()){
                 Conexion conex = new Conexion();

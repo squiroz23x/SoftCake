@@ -40,8 +40,8 @@ public class Inventario extends javax.swing.JFrame {
     
     private void insArticulo(){
         updateArticulo();
-        Boolean ValidacionesNulas = true;
-        if (ValidacionesNulas){
+        
+        if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText()) && !"".equals(txtExistencia.getText()) ){
             if (validadArticulo(articulo.getCodigo())){
                 Conexion conex = new Conexion();
                 String Query = "INSERT INTO `articulo` (`ID`, `Activo`, `Codigo`, `Nombre`, `Descripcion`, `Precio`, `IDUnidad`, `SMaximo`, `SMinimo`, `Existencia`, `FechaCreacion`, `FechaMod`) VALUES ("
@@ -77,8 +77,8 @@ public class Inventario extends javax.swing.JFrame {
     }    
     private void modArticulo(){
         updateArticulo();
-        Boolean ValidacionesNulas = true;
-        if (ValidacionesNulas){
+        
+        if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText()) && !"".equals(txtExistencia.getText())){
             if (validadArticulo(articulo.getCodigo())){
                 Conexion conex = new Conexion();
                 String Query = "UPDATE `articulo` SET "
@@ -489,7 +489,7 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Código:");
+        jLabel5.setText("*Código:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         txtCodigo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -503,11 +503,11 @@ public class Inventario extends javax.swing.JFrame {
                 txtCodigoKeyTyped(evt);
             }
         });
-        jPanel2.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 100, -1));
+        jPanel2.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 90, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Nombre:");
+        jLabel6.setText("*Nombre:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -516,11 +516,11 @@ public class Inventario extends javax.swing.JFrame {
                 txtNombreKeyTyped(evt);
             }
         });
-        jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 240, -1));
+        jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 230, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Precio:");
+        jLabel8.setText("*Precio:");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         txtPrecio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -533,7 +533,7 @@ public class Inventario extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Descripción:");
+        jLabel7.setText("*Descripción:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
 
         txtDescripcion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -542,11 +542,11 @@ public class Inventario extends javax.swing.JFrame {
                 txtDescripcionKeyTyped(evt);
             }
         });
-        jPanel2.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 240, -1));
+        jPanel2.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 230, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Unidad:");
+        jLabel16.setText("*Unidad:");
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
         cmbUnidad.setBackground(new java.awt.Color(153, 51, 0));
@@ -561,14 +561,14 @@ public class Inventario extends javax.swing.JFrame {
                 cmbUnidadActionPerformed(evt);
             }
         });
-        jPanel2.add(cmbUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 100, -1));
+        jPanel2.add(cmbUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 90, -1));
 
         btnUnidadNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUnidadNuevoActionPerformed(evt);
             }
         });
-        jPanel2.add(btnUnidadNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 112, -1, 20));
+        jPanel2.add(btnUnidadNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, -1, 20));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 800, 150));
 
@@ -683,7 +683,7 @@ public class Inventario extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 530, -1, -1));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 530, 90, -1));
 
         lblFondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         lblFondo1.addComponentListener(new java.awt.event.ComponentAdapter() {

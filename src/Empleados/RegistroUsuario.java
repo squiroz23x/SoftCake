@@ -151,7 +151,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Nombre:");
+        jLabel4.setText("*Nombre:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
 
         txtApellidoP.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -160,7 +160,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtApellidoPKeyTyped(evt);
             }
         });
-        getContentPane().add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 160, -1));
+        getContentPane().add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 150, -1));
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +173,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtNombreKeyTyped(evt);
             }
         });
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 160, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 150, -1));
 
         jLabel11.setFont(new java.awt.Font("Brush Script MT", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,12 +189,12 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Apellido paterno:");
+        jLabel5.setText("*Apellido paterno:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Apellido materno:");
+        jLabel13.setText("*Apellido materno:");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, -1, -1));
 
         txtApellidoM.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -203,13 +203,13 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtApellidoMKeyTyped(evt);
             }
         });
-        jPanel1.add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, 170, -1));
+        jPanel1.add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, 160, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Fecha de nacimiento:");
+        jLabel15.setText("*Fecha de nacimiento:");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, -1));
-        jPanel1.add(CalendarFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 60, 170, -1));
+        jPanel1.add(CalendarFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 840, 100));
 
@@ -219,7 +219,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Dirección:");
+        jLabel7.setText("*Dirección:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         txtDireccion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -228,11 +228,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtDireccionKeyTyped(evt);
             }
         });
-        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 360, -1));
+        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 350, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Número exterior:");
+        jLabel16.setText("*Número exterior:");
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, -1, -1));
 
         txtNumeroE.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -241,7 +241,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtNumeroEKeyTyped(evt);
             }
         });
-        jPanel2.add(txtNumeroE, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, 60, -1));
+        jPanel2.add(txtNumeroE, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 50, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -263,7 +263,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Colonia:");
+        jLabel18.setText("*Colonia:");
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         txtColonia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -272,11 +272,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtColoniaKeyTyped(evt);
             }
         });
-        jPanel2.add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 360, -1));
+        jPanel2.add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 350, -1));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Código postal:");
+        jLabel19.setText("*Código postal:");
         jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, -1, -1));
 
         txtCp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -285,15 +285,15 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtCpKeyTyped(evt);
             }
         });
-        jPanel2.add(txtCp, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 60, -1));
+        jPanel2.add(txtCp, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 50, -1));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Estado:");
+        jLabel20.setText("*Estado:");
         jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         cmbEstado.setBackground(new java.awt.Color(153, 51, 0));
-        cmbEstado.setMaximumRowCount(33);
+        cmbEstado.setMaximumRowCount(5);
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Ciudad de México", "Coahuila", "Colima", "Durango", "Estado de México", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas" }));
         cmbEstado.setAutoscrolls(true);
         cmbEstado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -302,11 +302,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 cmbEstadoActionPerformed(evt);
             }
         });
-        jPanel2.add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 120, -1));
+        jPanel2.add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 110, -1));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Municipio:");
+        jLabel21.setText("*Municipio:");
         jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
 
         txtMunicipio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -315,7 +315,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtMunicipioKeyTyped(evt);
             }
         });
-        jPanel2.add(txtMunicipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 160, -1));
+        jPanel2.add(txtMunicipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 150, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 840, 140));
 
@@ -338,7 +338,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Teléfono:");
+        jLabel8.setText("*Teléfono:");
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, -1, -1));
 
         txtTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -347,7 +347,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtTelefonoKeyTyped(evt);
             }
         });
-        jPanel3.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, 130, -1));
+        jPanel3.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 120, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
@@ -401,7 +401,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Identificador:");
+        jLabel25.setText("*Identificador:");
         jPanel4.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         txtIdentificador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -415,11 +415,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtIdentificadorKeyTyped(evt);
             }
         });
-        jPanel4.add(txtIdentificador, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 100, -1));
+        jPanel4.add(txtIdentificador, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 90, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Usuario:");
+        jLabel9.setText("*Usuario:");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         txtUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -433,11 +433,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtUsuarioKeyTyped(evt);
             }
         });
-        jPanel4.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 200, -1));
+        jPanel4.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 190, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Password:");
+        jLabel10.setText("*Password:");
         jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, -1, -1));
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -451,7 +451,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 txtPasswordKeyTyped(evt);
             }
         });
-        jPanel4.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 200, -1));
+        jPanel4.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, 190, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 840, 90));
 
@@ -539,8 +539,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
     }
     
     private void modEmpleado(){       
-        Boolean ValidacionesNulas = true;
-        if (ValidacionesNulas){
+        if (!"".equals(txtNombre.getText()) && !"".equals(txtApellidoP.getText()) && !"".equals(txtApellidoM.getText()) && CalendarFecha.getDate() !=null && !"".equals(txtDireccion.getText()) && !"".equals(txtNumeroE.getText()) && !"".equals(txtColonia.getText()) && !"".equals(txtCp.getText()) && !"Seleccionar".equals(cmbEstado.getSelectedItem()) && !"".equals(txtMunicipio.getText()) && !"".equals(txtTelefono.getText()) && !"".equals(txtIdentificador.getText()) && !"".equals(txtUsuario.getText()) && !"".equals(txtPassword.getText())){
             updateEmpleado();
             if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
                 SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
@@ -615,7 +614,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private void insEmpleado(){       
         
         Boolean ValidacionesNulas = true;
-        if (ValidacionesNulas){
+        if (!"".equals(txtNombre.getText()) && !"".equals(txtApellidoP.getText()) && !"".equals(txtApellidoM.getText()) && CalendarFecha.getDate() !=null && !"".equals(txtDireccion.getText()) && !"".equals(txtNumeroE.getText()) && !"".equals(txtColonia.getText()) && !"".equals(txtCp.getText()) && !"Seleccionar".equals(cmbEstado.getSelectedItem()) && !"".equals(txtMunicipio.getText()) && !"".equals(txtTelefono.getText()) && !"".equals(txtIdentificador.getText()) && !"".equals(txtUsuario.getText()) && !"".equals(txtPassword.getText())){
             updateEmpleado();
             if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
                 SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
@@ -654,7 +653,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
             }   
         }else{
-            JOptionPane.showMessageDialog(null,"No se pueden dejar campos en blanco.");            
+            JOptionPane.showMessageDialog(null,"Los campos marcados con * son obligatorios.");            
         }               
     }
     
