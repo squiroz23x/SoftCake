@@ -209,6 +209,11 @@ public class GenerarVenta extends javax.swing.JFrame {
         btnAgregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("Agregar Producto");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, -1, -1));
 
         btnEliminar.setBackground(new java.awt.Color(153, 51, 0));
@@ -235,6 +240,12 @@ public class GenerarVenta extends javax.swing.JFrame {
        completar.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        AgregarProducto agregar = new AgregarProducto();
+        agregar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
