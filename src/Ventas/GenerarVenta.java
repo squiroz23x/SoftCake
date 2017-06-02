@@ -7,6 +7,8 @@ package Ventas;
 
 import Ventanas.Menu;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -51,7 +53,7 @@ public class GenerarVenta extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaConceptos = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -147,18 +149,19 @@ public class GenerarVenta extends javax.swing.JFrame {
         txtTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, 150, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaConceptos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Producto", "Cantidad", "En Stock", "Descripción", "Precio Unitario", "Total"
+                "IDArticulo_Lote", "Codigo", "Cantidad", "Descripción", "Stock", "Precio Unitario", "Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaConceptos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 680, 140));
 
@@ -220,6 +223,11 @@ public class GenerarVenta extends javax.swing.JFrame {
         btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar Producto");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, -1, -1));
 
         txtEfectivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -242,10 +250,16 @@ public class GenerarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        AgregarProducto agregar = new AgregarProducto();
-        agregar.setVisible(true);
-        this.dispose();
+        
+
+        //AgregarProducto agregar = new AgregarProducto();
+        //agregar.setVisible(true);
+        //this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,6 +298,7 @@ public class GenerarVenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaConceptos;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGenerar;
@@ -303,7 +318,6 @@ public class GenerarVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtColonia;
     private javax.swing.JTextField txtCp;
