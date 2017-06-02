@@ -250,7 +250,9 @@ public class GenerarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
+Agregar agregar = new Agregar();
+agregar.setVisible(true);
+this.dispose();
 
         //AgregarProducto agregar = new AgregarProducto();
         //agregar.setVisible(true);
