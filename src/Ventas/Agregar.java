@@ -4,7 +4,15 @@
  * and open the template in the editor.
  */
 package Ventas;
-
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import Ventanas.*;
 /**
  *
  * @author JIGA_
@@ -16,6 +24,60 @@ public class Agregar extends javax.swing.JFrame {
      */
     public Agregar() {
         initComponents();
+    }
+    private void limpiarTablaArticulo(){
+        DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            model.removeRow(0);
+        } 
+    }
+    private void agregarRowTablaArticulo(String ID, String Codigo, String Nombre,String Descripcion, String Precio,String Existencia,String Unidad){
+        DefaultTableModel mode1TablaProductos = (DefaultTableModel) TablaProductos.getModel();
+        mode1TablaProductos.addRow(new Object[]{ID,Codigo,Nombre,Descripcion,Precio,Existencia,Unidad});
+    }
+     private void limpiarTablaLote(){
+        DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            model.removeRow(0);
+        } 
+    }
+    private void agregarRowTablaLote(String ID, String Codigo, String Cantidad, String FechaElaboracion, String FechaCaducidad){
+        DefaultTableModel mode1TablaProductos = (DefaultTableModel) TablaProductos.getModel();
+        mode1TablaProductos.addRow(new Object[]{ID,Codigo,Cantidad,FechaElaboracion,FechaCaducidad});
+    }
+    private String getQueryBuscar(){
+        String Query = "SELECT * FROM `articulo` WHERE `Activo` = '1' ";
+        String codigoBuscar;
+        String nombreBuscar;
+        
+        codigoBuscar = txtCodigo.getText();
+        nombreBuscar = txtNombre.getText();
+        
+        if (!"".equals(codigoBuscar)){
+            Query +="AND `Codigo` = '" + codigoBuscar + "'";
+        }else if(!"".equals(nombreBuscar)){
+            Query += "AND `Nombre` LIKE '%" + nombreBuscar + "%'";         
+        }           
+        return Query;
+    }
+    
+    private String getUnidad(Integer Index){
+        String Parametro = "";
+        String Query = "SELECT * FROM `articulo_unidad` WHERE `ID` = '" + Index + "'";
+        Conexion  conex = new Conexion();
+        MysqlDataSource dataSource = conex.getConnection();     
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
+            ResultSet ResulQuery = stmt.executeQuery(Query);
+            while(ResulQuery.next()){
+               Parametro = ResulQuery.getString("NombreCorto");                
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        } 
+        return Parametro;
     }
 
     /**
@@ -49,6 +111,11 @@ public class Agregar extends javax.swing.JFrame {
         getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 120, -1));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
 
         TablaProductos.setModel(new javax.swing.table.DefaultTableModel(
@@ -86,6 +153,29 @@ public class Agregar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        Conexion conex = new Conexion();
+        String Query = getQueryBuscar();
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
+            ResultSet ResulQuery = stmt.executeQuery(Query);
+            limpiarTablaArticulo();
+            while(ResulQuery.next()){
+                String ID = ResulQuery.getString("ID");
+                String Codigo = ResulQuery.getString("Codigo");
+                String Nombre = ResulQuery.getString("Nombre");
+                String Descripcion = ResulQuery.getString("Descripcion");
+                String Precio = ResulQuery.getString("Precio");
+                String Existencia = ResulQuery.getString("Existencia");
+                String Unidad = getUnidad(ResulQuery.getInt("IDUnidad"));
+                agregarRowTablaArticulo(ID,Codigo,Nombre,Descripcion,Precio,Existencia,Unidad);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
