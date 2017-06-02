@@ -39,10 +39,9 @@ public class Inventario extends javax.swing.JFrame {
     }
     
     private void insArticulo(){
-        updateArticulo();
-        
-        if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText()) && !"".equals(txtExistencia.getText()) ){
-            if (validadArticulo(articulo.getCodigo())){
+       if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText()) && !"".equals(txtExistencia.getText()) ){
+             updateArticulo();
+           if (validadArticulo(articulo.getCodigo())){
                 Conexion conex = new Conexion();
                 String Query = "INSERT INTO `articulo` (`ID`, `Activo`, `Codigo`, `Nombre`, `Descripcion`, `Precio`, `IDUnidad`, `SMaximo`, `SMinimo`, `Existencia`, `FechaCreacion`, `FechaMod`) VALUES ("
                         + "NULL, "
@@ -76,9 +75,8 @@ public class Inventario extends javax.swing.JFrame {
         }
     }    
     private void modArticulo(){
-        updateArticulo();
-        
         if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText()) && !"".equals(txtExistencia.getText())){
+            updateArticulo();
             if (validadArticulo(articulo.getCodigo())){
                 Conexion conex = new Conexion();
                 String Query = "UPDATE `articulo` SET "
