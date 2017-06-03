@@ -6,15 +6,19 @@
 package Ventas;
 
 import Ventanas.Menu;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.event.*;
+import javax.swing.table.TableModel;
 /**
  *
  * @author JIGA_
  */
-public class GenerarVenta extends javax.swing.JFrame {
+public class GenerarVenta extends javax.swing.JFrame implements TableModelListener {
 
     /**
      * Creates new form Venta
@@ -23,6 +27,159 @@ public class GenerarVenta extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
          setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
+         TablaConceptos.getModel().addTableModelListener(this);
+    }
+    String[] nUnidades = {"UN", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE", "DIEZ", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE", "DIECISEIS", "DIECISIETE", "DIECIOCHO", "DIECINUEVE", "VEINTE", "VEINTIUN", "VENTIDOS", "VEINTITRES", "VEINTICUATRO", "VEINTICINCO", "VEINTISEIS", "VEINTISIETE", "VEINTIOCHO", "VEINTINUEVE"};
+    String[] nDecenas = {"DIEZ", "VEINTE", "TREINTA", "CUARENTA", "CINCUENTA", "SESENTA", "SETENTA", "OCHENTA", "NOVENTA"};
+    String[] nCentenas = {"CIENTO", "DOCIENTOS", "TRECIENTOS", "CUATROCIENTOS", "QUINIENTOS", "SEISCIENTOS","SETECIENTOS","OCHOCIENTOS", "NOVECIENTOS"};
+    private char[] nValor;
+    String valorLetras="",rta="";
+    int bloqueTres=0;
+
+   public String convertirnumtext(int valor){ 
+      
+       int nBloque=0;
+       String mostrar="";
+    char []arregloValor=Integer.toString(valor).toCharArray();
+    int[]arregloValores=new int[arregloValor.length];
+       for(int i=0;i<arregloValores.length;i++)            
+           arregloValores[arregloValor.length-i-1]=Character.getNumericValue(arregloValor[i]);
+       int recorrer=0;
+           while(arregloValor.length-recorrer!=0){
+                int bloqueCero=0;
+               int primerDigito=0;
+               int segundoDigito=0;
+               int tercerDigito=0;
+               
+               for(int i=0;i<3;i++ ){
+                   
+                   if(arregloValores[recorrer]!=0){
+                   switch (i){
+                       case 0:
+                           valorLetras=" "+nUnidades[arregloValores[recorrer]-1];
+                           primerDigito=arregloValores[recorrer];
+                           break;
+                       case 1:
+                           if(arregloValores[recorrer]<=2){
+                           valorLetras=" "+nUnidades[arregloValores[recorrer]*10+primerDigito-1];
+                           }else{
+                               valorLetras=" "+nDecenas[arregloValores[recorrer]-1]+(primerDigito!=0?" Y":"")+valorLetras;
+                           }
+                           segundoDigito=arregloValores[recorrer];
+                           break;
+                       case 2:
+                          valorLetras=((primerDigito==0 && segundoDigito==0 && arregloValores[recorrer]==1)?" CIEN":nCentenas[arregloValores[recorrer]-1])+valorLetras; 
+                           tercerDigito=arregloValores[recorrer];
+                           break;
+                   }}
+                   else{
+                      bloqueCero++; 
+                   }
+                   if((++recorrer)>arregloValores.length-1)
+                   break; 
+               }
+               switch(nBloque){
+                   case 0:
+                       mostrar=valorLetras;
+                       break;
+                   case 1:
+                       mostrar=valorLetras+(bloqueCero==3?"":" MIL ")+mostrar;
+                       break;
+                   case 2:
+                       mostrar=valorLetras+((primerDigito==1 && segundoDigito==0 && tercerDigito==0)?" MILLON ":" MILLONES ")+(mostrar.trim().compareTo("")==0?" DE ":"")+mostrar;
+                       
+               }
+               nBloque++;
+               
+           }
+           
+           return mostrar+(valor>1?" PESOS":" PESO");
+   }
+    public String generarNumeroLetras(BigDecimal Numero){        
+        
+        BigDecimal bd = Numero.setScale(2,BigDecimal.ROUND_HALF_DOWN);
+        String textBD = bd.toPlainString();
+   
+        int radixLoc = textBD.indexOf('.');
+        Integer Entereo = Integer.parseInt(textBD.substring(0, radixLoc));
+        Integer Decimal = Integer.parseInt(textBD.substring(radixLoc + 1, textBD.length()));
+        String Texto = convertirnumtext(Entereo);
+        Texto += " CON "+Decimal.toString()+"/100";
+        
+        
+        return Texto;
+    }
+    public void setTotales(){
+        try{        
+            BigDecimal SubTotal = new BigDecimal(0);
+            BigDecimal IVA = new BigDecimal(0);
+            BigDecimal Total = new BigDecimal(0);
+            DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
+            int CountRows = model.getRowCount();        
+            for (int i = 0; i<CountRows; i++){
+                if ("".equals(model.getValueAt(i, 2).toString())){ 
+                    model.setValueAt("1", i, 2);
+                }
+                BigDecimal Cantidad = new BigDecimal(model.getValueAt(i, 2).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal Stock = new BigDecimal(model.getValueAt(i, 4).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+                if(Cantidad.compareTo(Stock) == 1){
+                    model.setValueAt(Stock.setScale(2).toPlainString(), i, 2);
+                    Cantidad = Stock;
+                }
+                if (Cantidad.compareTo(BigDecimal.ZERO) == -1 ){
+                    model.setValueAt("1.00", i, 2);
+                    Cantidad = new BigDecimal("1.00");
+                }
+                BigDecimal PU = new BigDecimal(model.getValueAt(i, 5).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal total = PU.multiply(Cantidad).setScale(2,BigDecimal.ROUND_HALF_DOWN);            
+                model.setValueAt(total.setScale(2).toPlainString(), i, 6);
+                SubTotal = SubTotal.add(total).setScale(2,BigDecimal.ROUND_HALF_DOWN);            
+            }
+            IVA = SubTotal.multiply(new BigDecimal(0.16)).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+            Total = IVA.add(SubTotal).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+            String TextoTotalLetras = "";
+            if (Total.compareTo(BigDecimal.ZERO) == 1){
+                TextoTotalLetras = generarNumeroLetras(Total.setScale(2,BigDecimal.ROUND_HALF_DOWN));
+            }
+            txtSubtotal.setText(SubTotal.setScale(2,BigDecimal.ROUND_HALF_DOWN).toPlainString());
+            txtIva.setText(IVA.setScale(2,BigDecimal.ROUND_HALF_DOWN).toPlainString());
+            txtTotal.setText(Total.setScale(2,BigDecimal.ROUND_HALF_DOWN).toPlainString());
+            txtLetras.setText(TextoTotalLetras);
+            Activo = true;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        
+    }
+    
+    Boolean Activo = true;
+     public void tableChanged(TableModelEvent e) {
+         if (Activo) {
+             Activo = false;
+             setTotales();
+         }
+    }
+    public void agregarRowTablaConceptos(String IDArticulo_Lote,String Codigo,String Cantidad,String Descripcion, String Stock, String PrecioUnitario){
+        DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
+        int CountRows = model.getRowCount();
+        Boolean Repetido = false;
+        String CurrentID;
+        for (int i = 0; i<CountRows; i++){
+            CurrentID = model.getValueAt(i, 0).toString();
+            if(CurrentID.equals(IDArticulo_Lote)){
+                Repetido = true;
+            }
+        }
+        if (Repetido){
+            JOptionPane.showMessageDialog(null, "Dato Duplicado.");
+        }else{
+            DefaultTableModel mode1TablaConceptos = (DefaultTableModel) TablaConceptos.getModel();
+            BigDecimal cantidadDecimal =  new BigDecimal(Cantidad);
+            BigDecimal PUDecimal = new BigDecimal(PrecioUnitario.replaceAll(",", ""));
+            BigDecimal Total = PUDecimal.multiply(cantidadDecimal);
+            mode1TablaConceptos.addRow(new Object[]{ IDArticulo_Lote, Codigo, Cantidad, Descripcion,  Stock,  PrecioUnitario, Total.toString()});
+
+        }
     }
 
     /**
@@ -70,6 +227,11 @@ public class GenerarVenta extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SoftCake Ventas");
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -151,16 +313,17 @@ public class GenerarVenta extends javax.swing.JFrame {
 
         TablaConceptos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "IDArticulo_Lote", "Codigo", "Cantidad", "Descripción", "Stock", "Precio Unitario", "Total"
             }
         ));
+        TablaConceptos.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                TablaConceptosHierarchyChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(TablaConceptos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 680, 140));
@@ -250,18 +413,28 @@ public class GenerarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-Agregar agregar = new Agregar();
-agregar.setVisible(true);
-this.dispose();
-
-        //AgregarProducto agregar = new AgregarProducto();
-        //agregar.setVisible(true);
-        //this.dispose();
+        Agregar agregar = new Agregar();
+        agregar.setGenerarVenta(this);
+        agregar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
+        DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
+        int CountRow = TablaConceptos.getSelectedRow();
+        if (CountRow > -1){
+            model.removeRow(CountRow);
+        }else{
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void TablaConceptosHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_TablaConceptosHierarchyChanged
+    }//GEN-LAST:event_TablaConceptosHierarchyChanged
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+       setTotales();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

@@ -22,8 +22,13 @@ public class Agregar extends javax.swing.JFrame {
     /**
      * Creates new form Agregar
      */
+    GenerarVenta GV = new GenerarVenta();
     public Agregar() {
         initComponents();
+    }
+    
+    public void setGenerarVenta(GenerarVenta Ventana){
+        GV = Ventana;
     }
     private void limpiarTablaArticulo(){
         DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
@@ -37,14 +42,14 @@ public class Agregar extends javax.swing.JFrame {
         mode1TablaProductos.addRow(new Object[]{ID,Codigo,Nombre,Descripcion,Precio,Existencia,Unidad});
     }
      private void limpiarTablaLote(){
-        DefaultTableModel model = (DefaultTableModel) TablaProductos.getModel();
+        DefaultTableModel model = (DefaultTableModel) TablaLote.getModel();
         int CountRows = model.getRowCount();        
         for (int i = 0; i<CountRows; i++){
             model.removeRow(0);
         } 
     }
     private void agregarRowTablaLote(String ID, String Codigo, String Cantidad, String FechaElaboracion, String FechaCaducidad){
-        DefaultTableModel mode1TablaProductos = (DefaultTableModel) TablaProductos.getModel();
+        DefaultTableModel mode1TablaProductos = (DefaultTableModel) TablaLote.getModel();
         mode1TablaProductos.addRow(new Object[]{ID,Codigo,Cantidad,FechaElaboracion,FechaCaducidad});
     }
     private String getQueryBuscar(){
@@ -158,6 +163,11 @@ public class Agregar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        TablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TablaProductos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 590, 130));
@@ -183,7 +193,7 @@ public class Agregar extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Cantidad", "Fecha elaboración", "Fecha caducidad", "ID"
+                "ID", "Código", "Stock", "Fecha elaboración", "Fecha caducidad"
             }
         ) {
             Class[] types = new Class [] {
@@ -206,10 +216,10 @@ public class Agregar extends javax.swing.JFrame {
             TablaLote.getColumnModel().getColumn(0).setResizable(false);
             TablaLote.getColumnModel().getColumn(1).setResizable(false);
             TablaLote.getColumnModel().getColumn(2).setResizable(false);
-            TablaLote.getColumnModel().getColumn(2).setPreferredWidth(150);
             TablaLote.getColumnModel().getColumn(3).setResizable(false);
             TablaLote.getColumnModel().getColumn(3).setPreferredWidth(150);
             TablaLote.getColumnModel().getColumn(4).setResizable(false);
+            TablaLote.getColumnModel().getColumn(4).setPreferredWidth(150);
         }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 280, 590, 120));
@@ -260,7 +270,21 @@ public class Agregar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       
+        int TablaLoteRS = TablaLote.getSelectedRow();
+        Integer TablaProductoRS = this.TablaProductos.getSelectedRow();
+        if (TablaLoteRS > -1 && TablaProductoRS > -1 ){
+            String IDArticulo_Lote = TablaLote.getValueAt(TablaLoteRS, 0).toString();
+            String Codigo = TablaProductos.getValueAt(TablaProductoRS, 1).toString() + "." + TablaLote.getValueAt(TablaLoteRS, 1).toString();
+            String Cantidad = "1";
+            String Descripcion = TablaProductos.getValueAt(TablaProductoRS, 2).toString();
+            String Stock = TablaLote.getValueAt(TablaLoteRS, 2).toString();
+            String PrecioUnitario = TablaProductos.getValueAt(TablaProductoRS, 4).toString();            
+            GV.agregarRowTablaConceptos(IDArticulo_Lote,Codigo,Cantidad,Descripcion, Stock, PrecioUnitario);
+            GV.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
@@ -268,6 +292,33 @@ public class Agregar extends javax.swing.JFrame {
         generar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void TablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaProductosMouseClicked
+        int RowSeleccionado = TablaProductos.getSelectedRow();       
+        if (RowSeleccionado > -1){	
+		String IDArticulo = TablaProductos.getValueAt(RowSeleccionado, 0).toString();
+		Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `articulo_lote` WHERE  `Activo` = '1' AND `IDArticulo` = '" +IDArticulo+ "'";
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+            Statement stmt = conn.createStatement();            
+            ResultSet ResulQuery = stmt.executeQuery(Query);
+            limpiarTablaLote();
+            while(ResulQuery.next()){
+                String ID = ResulQuery.getString("ID");
+                String Codigo = ResulQuery.getString("Codigo");
+                String Cantidad = ResulQuery.getString("Cantidad");
+                String FechaElaboracion = ResulQuery.getString("FechaElaboracion");
+                String FechaCaducidad = ResulQuery.getString("FecbaCaducidad");
+                agregarRowTablaLote(ID, Codigo, Cantidad, FechaElaboracion, FechaCaducidad);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+		}else{
+            JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
+        }
+    }//GEN-LAST:event_TablaProductosMouseClicked
 
     /**
      * @param args the command line arguments
