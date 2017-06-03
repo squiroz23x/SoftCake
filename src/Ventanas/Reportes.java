@@ -67,7 +67,7 @@ public class Reportes extends javax.swing.JFrame {
                 btnReporteVentasActionPerformed(evt);
             }
         });
-        getContentPane().add(btnReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+        getContentPane().add(btnReporteVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
 
         btnReporteInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inventario.png"))); // NOI18N
         getContentPane().add(btnReporteInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
