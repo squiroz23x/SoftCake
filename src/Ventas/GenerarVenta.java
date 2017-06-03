@@ -7,13 +7,14 @@ package Ventas;
 
 import Ventanas.Menu;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.event.*;
-import javax.swing.table.TableModel;
+import Ventanas.Conexion;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.sql.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author JIGA_
@@ -120,15 +121,15 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
                 if ("".equals(model.getValueAt(i, 2).toString())){ 
                     model.setValueAt("1", i, 2);
                 }
-                BigDecimal Cantidad = new BigDecimal(model.getValueAt(i, 2).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal Cantidad = new BigDecimal(model.getValueAt(i, 2).toString()).setScale(0,BigDecimal.ROUND_HALF_DOWN);
                 BigDecimal Stock = new BigDecimal(model.getValueAt(i, 4).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
                 if(Cantidad.compareTo(Stock) == 1){
-                    model.setValueAt(Stock.setScale(2).toPlainString(), i, 2);
-                    Cantidad = Stock;
+                    model.setValueAt(Stock.setScale(0).toPlainString(), i, 2);
+                    Cantidad = Stock.setScale(0,BigDecimal.ROUND_HALF_DOWN);
                 }
                 if (Cantidad.compareTo(BigDecimal.ZERO) == -1 ){
-                    model.setValueAt("1.00", i, 2);
-                    Cantidad = new BigDecimal("1.00");
+                    model.setValueAt("1", i, 2);
+                    Cantidad = new BigDecimal("1");
                 }
                 BigDecimal PU = new BigDecimal(model.getValueAt(i, 5).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
                 BigDecimal total = PU.multiply(Cantidad).setScale(2,BigDecimal.ROUND_HALF_DOWN);            
@@ -180,6 +181,167 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
             mode1TablaConceptos.addRow(new Object[]{ IDArticulo_Lote, Codigo, Cantidad, Descripcion,  Stock,  PrecioUnitario, Total.toString()});
 
         }
+    }
+	private void insVenta(){
+        Boolean ValidadNulo = true;        
+        if (ValidadNulo){
+            updateVenta();
+            if (validadVenta()){
+                Conexion conex = new Conexion();
+                String Activo = "1";
+                String EstadoDoc = "NOPAGADO";
+                String Cliente = txtCliente.getText();
+                String RFC = txtRfc.getText();
+                String Domicilio = txtDomicilio.getText();
+                String NumExt = txtNumero.getText();
+                String NumInt = "0";
+                String CP = txtCp.getText();
+                String Colonia = txtColonia.getText();
+                String Telefono = txtTelefono.getText();
+                String SubTotal = txtSubtotal.getText();
+                String IVA = txtIva.getText();
+                String Total = txtTotal.getText();
+                String Query = "INSERT INTO `venta`(`Activo`, `EstadoDoc`, `Cliente`, `RFC`, `Domicilio`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Telefono`, `SubTotal`, `IVA`, `Total`, `FechaElaboracion`, `FechaCreacion`, `FechaMod`) VALUES ("
+                        + "'" + Activo + "',"
+                        + "'" + EstadoDoc + "',"
+                        + "'" + Cliente + "',"
+                        + "'" + RFC + "',"
+                        + "'" + Domicilio + "',"
+                        + "'" + NumExt + "',"
+                        + "'" + NumInt + "',"
+                        + "'" + CP + "',"
+                        + "'" + Colonia + "',"
+                        + "'" + Telefono + "',"
+                        + "'" + SubTotal + "',"
+                        + "'" + IVA + "',"
+                        + "'" + Total + "',"
+                        + "CURRENT_TIMESTAMP,"
+                        + "CURRENT_TIMESTAMP,"
+                        + "CURRENT_TIMESTAMP)";
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                    PreparedStatement  stmt = conn.prepareStatement(Query, Statement.RETURN_GENERATED_KEYS);
+                    Integer IDFuera;
+                    IDFuera = stmt.executeUpdate();
+                    ResultSet ResulQuery = stmt.getGeneratedKeys();
+                    while(ResulQuery.next()){
+                        Integer ID = ResulQuery.getInt(1);
+                        insVentaConcepto(ID);
+                    }
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+            }
+        }
+    }
+    
+    private void insVentaConcepto(Integer IDVenta){
+        DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            Conexion conex = new Conexion();
+            String IDArticulo_Lote = model.getValueAt(i, 0).toString();
+            String Activo = "1";
+            String ProdCodigo = model.getValueAt(i, 1).toString();
+            Integer Cantidad = Integer.parseInt(model.getValueAt(i, 2).toString());
+            String Descripcion = model.getValueAt(i, 3).toString();
+            Integer Stock = Integer.parseInt(model.getValueAt(i, 4).toString());
+            String PrecioUnitario = model.getValueAt(i, 5).toString();
+            Integer CantidadRestante = Stock - Cantidad;
+            String Query = "INSERT INTO `venta_concepto`(`IDVenta`, `IDArticulo_Lote`, `Activo`, `ProdCodigo`, `Cantidad`, `Drescripcion`, `PrecioUnitario`, `FechaCreacion`, `FechaMod`) VALUES ("
+                    + "'" + IDVenta + "',"
+                    + "'" + IDArticulo_Lote + "',"
+                    + "'" + Activo + "',"
+                    + "'" + ProdCodigo + "',"
+                    + "'" + Cantidad + "',"
+                    + "'" + Descripcion + "',"
+                    + "'" + PrecioUnitario + "',"
+                    + "CURRENT_TIMESTAMP,"
+                    + "CURRENT_TIMESTAMP)";
+            MysqlDataSource dataSource = conex.getConnection();        
+            try(Connection conn = dataSource.getConnection()){
+                    Statement stmt = conn.createStatement();            
+                    stmt.executeUpdate(Query);
+            }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,e);
+            }
+
+            String Query1 = "UPDATE `articulo_lote` SET ";
+            if (CantidadRestante == 0){
+                Query1 += "`Activo` = '0', ";
+            }
+            Query1 += "`Cantidad` = '"+ CantidadRestante +"' WHERE `articulo_lote`.`ID` = "+IDArticulo_Lote;
+            try(Connection conn1 = dataSource.getConnection()){
+                    Statement stmt1 = conn1.createStatement();            
+                    stmt1.executeUpdate(Query1);
+            }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,e);
+            }
+        }
+         
+    }
+    private void modVenta(){
+        Boolean ValidadNulo = true;        
+        if (ValidadNulo){
+            updateVenta();
+            if (validadVenta()){
+                Conexion conex = new Conexion();
+                String Query = "";
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                        Statement stmt = conn.createStatement();            
+                        stmt.executeUpdate(Query);
+                }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null,e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El codigo del Venta esta en uso. Favor de proporcionar otro codigo.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+        }
+        
+    }
+    private void eliVenta(){
+        Conexion conex = new Conexion();
+        String Query = "";
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                stmt.executeUpdate(Query);
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+        
+    }
+    private void updateVenta(){
+	}
+    public void prepararModVenta(){
+        Conexion conex = new Conexion();
+        String Query = "";
+		MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                while(ResulQuery.next()){
+
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        } 
+    }
+    public void prepararInsVenta(){
+        
+    }
+    private boolean validadVenta(){
+        
+        return true;        
+    }
+    private void fillArticuloVenta(){
+    }    
+    private void fillFormulario(){
     }
 
     /**
@@ -407,9 +569,10 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-       CompletarVenta completar = new CompletarVenta();
-       completar.setVisible(true);
-       this.dispose();
+        insVenta();     
+        CompletarVenta completar = new CompletarVenta();
+        completar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
