@@ -116,7 +116,7 @@ public class Agregar extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, -1, -1));
 
         TablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
