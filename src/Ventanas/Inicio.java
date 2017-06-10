@@ -1,6 +1,6 @@
 package Ventanas;
 
-import static Ventanas.Conexion.MENSAJEERROR;
+
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.awt.Image;
 import java.awt.Toolkit;

@@ -15,12 +15,12 @@ import javax.swing.JOptionPane;
  * @author JIGA1UP
  */
 public class Conexion {    
-    public static final String SERVER = "localhost";
-    public static final String PORT = "3306";
-    public static final String DATABASE = "softcake";
-    public static final String USERNAME = "softcake";
-    public static final String PASSWORD = "12345";    
-    public static final String MENSAJEERROR = "Cannot connect the database! ";
+    private static final String SERVER = "localhost";
+    private static final String PORT = "3306";
+    private static final String DATABASE = "softcake";
+    private static final String USERNAME = "softcake";
+    private static final String PASSWORD = "12345";    
+    private static final String MENSAJEERROR = "Cannot connect the database! ";
 
     
     public MysqlDataSource getConnection()

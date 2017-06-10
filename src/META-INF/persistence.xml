@@ -7,6 +7,10 @@
     <class>DataBase.ArticuloUnidad</class>
     <class>DataBase.Articulo</class>
     <class>DataBase.ArticuloLote</class>
+    <class>DataBase.VentaPago</class>
+    <class>DataBase.VentaConcepto</class>
+    <class>DataBase.Venta</class>
+    <class>DataBase.VentaMp</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
       <property name="javax.persistence.jdbc.user" value="app"/>

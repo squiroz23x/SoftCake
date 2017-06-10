@@ -6,8 +6,10 @@
 package DataBase;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ArticuloLote.findByFechaCreacion", query = "SELECT a FROM ArticuloLote a WHERE a.fechaCreacion = :fechaCreacion")
     , @NamedQuery(name = "ArticuloLote.findByFechaMod", query = "SELECT a FROM ArticuloLote a WHERE a.fechaMod = :fechaMod")})
 public class ArticuloLote implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDArticuloLote")
+    private Collection<VentaConcepto> ventaConceptoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -189,6 +196,15 @@ public class ArticuloLote implements Serializable {
     @Override
     public String toString() {
         return "DataBase.ArticuloLote[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<VentaConcepto> getVentaConceptoCollection() {
+        return ventaConceptoCollection;
+    }
+
+    public void setVentaConceptoCollection(Collection<VentaConcepto> ventaConceptoCollection) {
+        this.ventaConceptoCollection = ventaConceptoCollection;
     }
     
 }
