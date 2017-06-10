@@ -39,7 +39,7 @@ public class Inventario extends javax.swing.JFrame {
     }
     
     private void insArticulo(){
-       if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText()) && !"".equals(txtExistencia.getText()) ){
+       if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText())){
              updateArticulo();
            if (validadArticulo(articulo.getCodigo())){
                 Conexion conex = new Conexion();
@@ -75,7 +75,7 @@ public class Inventario extends javax.swing.JFrame {
         }
     }    
     private void modArticulo(){
-        if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText()) && !"".equals(txtExistencia.getText())){
+        if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText())){
             updateArticulo();
             if (validadArticulo(articulo.getCodigo())){
                 Conexion conex = new Conexion();

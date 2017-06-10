@@ -288,8 +288,7 @@ public class Agregar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-         GenerarVenta generar = new GenerarVenta();
-        generar.setVisible(true);
+        GV.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel7MouseClicked
 
