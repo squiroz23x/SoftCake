@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package Ventas;
-
+import DataBase.VentaMp;
+import Ventanas.Conexion;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.sql.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author JIGA_
@@ -16,6 +20,142 @@ public class MetodosPago extends javax.swing.JFrame {
      */
     public MetodosPago() {
         initComponents();
+    }
+    
+    
+    CompletarVenta completarventa = new CompletarVenta();
+    VentaMp ventamp = new VentaMp();
+    
+    public void setCompletarVenta(CompletarVenta parametro){
+        completarventa = parametro;
+    }
+    
+    	private void insMDPago(){
+        Boolean ValidadNulo = true;        
+        if (ValidadNulo){
+            updateMDPago();
+            if (validadMDPago()){
+                Conexion conex = new Conexion();
+                String Query = "INSERT INTO `venta_mp`(`Activo`, `Codigo`, `Descripcion`, `FechaCreacion`, `FechaMod`) VALUES ( "
+                        + "'1',"
+                        + "'" + ventamp.getCodigo() + "',"
+                        + "'" + ventamp.getDescripcion() + "',"
+                        + "CURRENT_TIMESTAMP,"
+                        + "CURRENT_TIMESTAMP)";
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                        Statement stmt = conn.createStatement();            
+                        stmt.executeUpdate(Query);
+                        completarventa.fillCmbMetodoPago();
+                        completarventa.setVisible(true);
+                        this.dispose();
+                }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null,e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El codigo del MDPago esta en uso. Favor de proporcionar otro codigo.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+        }
+    }    
+    private void modMDPago(){
+        Boolean ValidadNulo = true;        
+        if (ValidadNulo){
+            updateMDPago();
+            if (validadMDPago()){
+                Conexion conex = new Conexion();
+                String Query = "UPDATE `venta_mp` SET "
+                        + "`Activo`='1',"
+                        + "`Codigo`='" + ventamp.getCodigo() + "',"
+                        + "`Descripcion`='" + ventamp.getDescripcion() + "' "
+                        + "WHERE "
+                        + "`ID` = '" + ventamp.getId() + "'";
+                MysqlDataSource dataSource = conex.getConnection();        
+                try(Connection conn = dataSource.getConnection()){
+                        Statement stmt = conn.createStatement();            
+                        stmt.executeUpdate(Query);
+                        completarventa.fillCmbMetodoPago();
+                        completarventa.setVisible(true);
+                        this.dispose();
+                }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null,e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El codigo del MDPago esta en uso. Favor de proporcionar otro codigo.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
+        }
+        
+    }
+    private void eliMDPago(){
+        Conexion conex = new Conexion();
+        String Query = "UPDATE `venta_mp` SET "
+                        + "`Activo`='0'"
+                        + "WHERE "
+                        + "`ID` = '" + ventamp.getId() + "'";
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                stmt.executeUpdate(Query);
+                completarventa.fillCmbMetodoPago();
+                completarventa.setVisible(true);
+                this.dispose();
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+        
+    }
+    private void updateMDPago(){
+        String Codigo = this.txtCodigo.getText();
+        String Descripcion = this.txtDescripcion.getText();
+        
+        ventamp.setCodigo(Codigo);
+        ventamp.setDescripcion(Descripcion);        
+    }
+
+    public void prepararModMDPago(String IDVentaMP){
+        this.btnAgregar.setVisible(false);
+        this.btnAgregar.setEnabled(false);
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `venta_mp` WHERE `ID` = " + IDVentaMP;
+	MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                while(ResulQuery.next()){
+                    Integer id = ResulQuery.getInt("ID");
+                    Integer activo = ResulQuery.getInt("Activo");
+                    String codigo = ResulQuery.getString("Codigo");
+                    String descripcion = ResulQuery.getString("Descripcion");
+                    Date fechaCreacion = ResulQuery.getDate("FechaCreacion");
+                    Date fechaMod = ResulQuery.getDate("FechaMod");
+                    fillVentaMP( id, activo,  codigo,  descripcion,  fechaCreacion,  fechaMod);
+                    fillFormulario();
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        } 
+    }
+    public void prepararInsMDPago(){
+        this.btnEliminar.setVisible(false);
+        this.btnEliminar.setEnabled(false);
+        this.btnModificar.setVisible(false);
+        this.btnModificar.setEnabled(false);    
+        
+    }
+    private boolean validadMDPago(){
+        
+        
+        return true;        
+    }
+    private void fillVentaMP(Integer id, Integer activo, String codigo, String descripcion, Date fechaCreacion, Date fechaMod){
+        ventamp = new VentaMp( id, activo, codigo,  descripcion,  fechaCreacion,  fechaMod);
+    }     
+    private void fillFormulario(){
+        this.txtCodigo.setText(ventamp.getCodigo());
+        this.txtDescripcion.setText(ventamp.getDescripcion());
     }
 
     /**
@@ -35,6 +175,9 @@ public class MetodosPago extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtDescripcion = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,6 +230,30 @@ public class MetodosPago extends javax.swing.JFrame {
         });
         getContentPane().add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 180, -1));
 
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, -1, -1));
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, -1, -1));
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, 690, 390));
 
@@ -94,8 +261,7 @@ public class MetodosPago extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        GenerarVenta generar = new GenerarVenta();
-        generar.setVisible(true);
+        completarventa.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel7MouseClicked
 
@@ -108,6 +274,18 @@ public class MetodosPago extends javax.swing.JFrame {
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
     }//GEN-LAST:event_txtCodigoKeyTyped
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        insMDPago();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        modMDPago();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliMDPago();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +323,9 @@ public class MetodosPago extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

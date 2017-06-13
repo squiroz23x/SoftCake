@@ -8,6 +8,7 @@ package Ventas;
 import DataBase.*;
 import javax.swing.ImageIcon;
 import Ventanas.Conexion;
+import Ventanas.Menu;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -30,6 +31,7 @@ public class CompletarVenta extends javax.swing.JFrame {
      ArrayList<VentaPago> ventapago = new ArrayList<VentaPago>();
      VentaMp ventamp = new VentaMp();
      ArticuloLote articulolote = new ArticuloLote();
+     VentaPago indventapago = new VentaPago();
      
     public CompletarVenta() {
         initComponents();
@@ -42,11 +44,23 @@ public class CompletarVenta extends javax.swing.JFrame {
             updatePago();
             if (validadPago()){
                 Conexion conex = new Conexion();
-                String Query = "";
+                String Query = "INSERT INTO `venta_pago`(`IDVenta`, `Activo`, `Monto`, `Autorizo`, `IDVenta_MP`, `FechaPago`, `FechaCreacion`, `FechaMod`) VALUES ("
+                        + "'" + venta.getId() + "',"
+                        + "'1',"
+                        + "'" + indventapago.getMonto() + "',"
+                        + "'" + indventapago.getAutorizo() + "',"
+                        + "'" + indventapago.getIDVentaMP().getId() + "',"
+                        + "CURRENT_TIMESTAMP,"
+                        + "CURRENT_TIMESTAMP,"
+                        + "CURRENT_TIMESTAMP)";
                 MysqlDataSource dataSource = conex.getConnection();        
                 try(Connection conn = dataSource.getConnection()){
                         Statement stmt = conn.createStatement();            
                         stmt.executeUpdate(Query);
+                        JOptionPane.showMessageDialog(null,"El pago se registro satisfactoriamente");
+                        Menu vMenu = new Menu();
+                        vMenu.setVisible(true);
+                        this.dispose();
                 }catch(SQLException e){
                         JOptionPane.showMessageDialog(null,e);
                 }
@@ -91,22 +105,37 @@ public class CompletarVenta extends javax.swing.JFrame {
         }
         
     }
+    private String getIDVentaMPcmb(){
+        Integer Index;
+        String ID;
+        String Texto;        
+        Texto = cmbMetodoPago.getSelectedItem().toString();
+        Index = Texto.indexOf(";")+1;
+        ID = Texto.substring(Index);  
+        
+        return ID;
+    }
     private void updatePago(){
+        Integer IDVenta = venta.getId();
+        Integer Activo = 1;
+        BigDecimal Monto = new BigDecimal(this.txtMonto.getText());
+        String Autorizo = this.txtVendedor.getText();
+        Integer IDVentaMP = Integer.parseInt(getIDVentaMPcmb());
+        VentaMp vmp = new VentaMp();
+        vmp.setId(IDVentaMP);
+        
+        indventapago.setActivo(Activo);
+        indventapago.setMonto(Monto);
+        indventapago.setAutorizo(Autorizo);
+        indventapago.setIDVentaMP(vmp);
+        
+        
+        
+        
         
 	}
     public void prepararModPago(){
-        Conexion conex = new Conexion();
-        String Query = "";
-		MysqlDataSource dataSource = conex.getConnection();        
-        try(Connection conn = dataSource.getConnection()){
-                Statement stmt = conn.createStatement();            
-                ResultSet ResulQuery = stmt.executeQuery(Query);
-                while(ResulQuery.next()){
 
-                }
-        }catch(SQLException e){
-                JOptionPane.showMessageDialog(null,e);
-        } 
     }
     public void prepararInsPago(String IDVenta){
         prepararVenta(IDVenta);
@@ -331,7 +360,7 @@ public class CompletarVenta extends javax.swing.JFrame {
                 cmbMetodoPago.removeAllItems();
                 cmbMetodoPago.addItem("Seleccionar");
                 while(ResulQuery.next()){
-                    cmbMetodoPago.addItem(ResulQuery.getString("Descripcion"));
+                    cmbMetodoPago.addItem(ResulQuery.getString("Descripcion")+";"+ResulQuery.getString("ID"));
                 }
                 cmbMetodoPago.addItem("Nuevo...");
         }catch(SQLException e){
@@ -491,6 +520,11 @@ public class CompletarVenta extends javax.swing.JFrame {
         btnPagar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnPagar.setForeground(new java.awt.Color(255, 255, 255));
         btnPagar.setText("PAGAR");
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, -1, -1));
 
         btnCerrar.setBackground(new java.awt.Color(153, 51, 0));
@@ -555,7 +589,7 @@ public class CompletarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTotalPAgadoActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        // TODO add your handling code here:
+           JOptionPane.showMessageDialog(null,this.getIDVentaMPcmb());     // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
@@ -571,14 +605,27 @@ public class CompletarVenta extends javax.swing.JFrame {
     private void btnMetodoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMetodoPagoActionPerformed
         String Texto = cmbMetodoPago.getSelectedItem().toString();
         Integer Index = cmbMetodoPago.getSelectedIndex();
+        MetodosPago ventanaMP = new MetodosPago();
+        ventanaMP.setCompletarVenta(this);
         if(Texto == "Nuevo..."){
+            ventanaMP.prepararInsMDPago();
+            ventanaMP.setVisible(true);
+            this.dispose();
 
         }else if (Index > 0) {
+            String ID = this.getIDVentaMPcmb();
+            ventanaMP.prepararModMDPago(ID);
+            ventanaMP.setVisible(true);
+            this.dispose();
 
         }else{
             JOptionPane.showMessageDialog(null, "Favor de seleccionar un dato.");
         } 
     }//GEN-LAST:event_btnMetodoPagoActionPerformed
+
+    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
+      insPago();  // TODO add your handling code here:
+    }//GEN-LAST:event_btnPagarActionPerformed
 
     /**
      * @param args the command line arguments

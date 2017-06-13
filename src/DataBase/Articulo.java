@@ -49,6 +49,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Articulo.findByFechaMod", query = "SELECT a FROM Articulo a WHERE a.fechaMod = :fechaMod")})
 public class Articulo implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDArticulo")
+    private Collection<VentaConcepto> ventaConceptoCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -243,6 +246,15 @@ public class Articulo implements Serializable {
     @Override
     public String toString() {
         return "DataBase.Articulo[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<VentaConcepto> getVentaConceptoCollection() {
+        return ventaConceptoCollection;
+    }
+
+    public void setVentaConceptoCollection(Collection<VentaConcepto> ventaConceptoCollection) {
+        this.ventaConceptoCollection = ventaConceptoCollection;
     }
     
 }

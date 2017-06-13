@@ -273,13 +273,14 @@ public class Agregar extends javax.swing.JFrame {
         int TablaLoteRS = TablaLote.getSelectedRow();
         Integer TablaProductoRS = this.TablaProductos.getSelectedRow();
         if (TablaLoteRS > -1 && TablaProductoRS > -1 ){
+            String IDArticulo = TablaProductos.getValueAt(TablaProductoRS, 0).toString();
             String IDArticulo_Lote = TablaLote.getValueAt(TablaLoteRS, 0).toString();
             String Codigo = TablaProductos.getValueAt(TablaProductoRS, 1).toString() + "." + TablaLote.getValueAt(TablaLoteRS, 1).toString();
             String Cantidad = "1";
             String Descripcion = TablaProductos.getValueAt(TablaProductoRS, 2).toString();
             String Stock = TablaLote.getValueAt(TablaLoteRS, 2).toString();
             String PrecioUnitario = TablaProductos.getValueAt(TablaProductoRS, 4).toString();            
-            GV.agregarRowTablaConceptos(IDArticulo_Lote,Codigo,Cantidad,Descripcion, Stock, PrecioUnitario);
+            GV.agregarRowTablaConceptos(IDArticulo, IDArticulo_Lote,Codigo,Cantidad,Descripcion, Stock, PrecioUnitario);
             GV.setVisible(true);
             this.dispose();
         }else{

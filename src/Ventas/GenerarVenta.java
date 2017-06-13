@@ -5,6 +5,7 @@
  */
 package Ventas;
 
+import DataBase.*;
 import Ventanas.Menu;
 import java.math.BigDecimal;
 import javax.swing.ImageIcon;
@@ -36,6 +37,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private char[] nValor;
     String valorLetras="",rta="";
     int bloqueTres=0;
+    Venta venta = new Venta();
 
    public String convertirnumtext(int valor){ 
       
@@ -116,24 +118,28 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
             BigDecimal IVA = new BigDecimal(0);
             BigDecimal Total = new BigDecimal(0);
             DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
-            int CountRows = model.getRowCount();        
+            int CountRows = model.getRowCount();
+            int indCantidad = 3;
+            int indStock = 5;
+            int indPU = 6;
+            int indTotal = 7;
             for (int i = 0; i<CountRows; i++){
-                if ("".equals(model.getValueAt(i, 2).toString())){ 
+                if ("".equals(model.getValueAt(i, 3).toString())){ 
                     model.setValueAt("1", i, 2);
                 }
-                BigDecimal Cantidad = new BigDecimal(model.getValueAt(i, 2).toString()).setScale(0,BigDecimal.ROUND_HALF_DOWN);
-                BigDecimal Stock = new BigDecimal(model.getValueAt(i, 4).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal Cantidad = new BigDecimal(model.getValueAt(i, indCantidad).toString()).setScale(0,BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal Stock = new BigDecimal(model.getValueAt(i, indStock).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
                 if(Cantidad.compareTo(Stock) == 1){
-                    model.setValueAt(Stock.setScale(0).toPlainString(), i, 2);
+                    model.setValueAt(Stock.setScale(0).toPlainString(), i, indCantidad);
                     Cantidad = Stock.setScale(0,BigDecimal.ROUND_HALF_DOWN);
                 }
                 if (Cantidad.compareTo(BigDecimal.ZERO) == -1 ){
-                    model.setValueAt("1", i, 2);
+                    model.setValueAt("1", i, indCantidad);
                     Cantidad = new BigDecimal("1");
                 }
-                BigDecimal PU = new BigDecimal(model.getValueAt(i, 5).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal PU = new BigDecimal(model.getValueAt(i, indPU).toString()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
                 BigDecimal total = PU.multiply(Cantidad).setScale(2,BigDecimal.ROUND_HALF_DOWN);            
-                model.setValueAt(total.setScale(2).toPlainString(), i, 6);
+                model.setValueAt(total.setScale(2).toPlainString(), i, indTotal);
                 SubTotal = SubTotal.add(total).setScale(2,BigDecimal.ROUND_HALF_DOWN);            
             }
             IVA = SubTotal.multiply(new BigDecimal(0.16)).setScale(2,BigDecimal.ROUND_HALF_DOWN);
@@ -160,7 +166,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
              setTotales();
          }
     }
-    public void agregarRowTablaConceptos(String IDArticulo_Lote,String Codigo,String Cantidad,String Descripcion, String Stock, String PrecioUnitario){
+    public void agregarRowTablaConceptos(String IDArticulo,String IDArticulo_Lote,String Codigo,String Cantidad,String Descripcion, String Stock, String PrecioUnitario){
         DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
         int CountRows = model.getRowCount();
         Boolean Repetido = false;
@@ -178,43 +184,30 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
             BigDecimal cantidadDecimal =  new BigDecimal(Cantidad);
             BigDecimal PUDecimal = new BigDecimal(PrecioUnitario.replaceAll(",", ""));
             BigDecimal Total = PUDecimal.multiply(cantidadDecimal);
-            mode1TablaConceptos.addRow(new Object[]{ IDArticulo_Lote, Codigo, Cantidad, Descripcion,  Stock,  PrecioUnitario, Total.toString()});
+            mode1TablaConceptos.addRow(new Object[]{ IDArticulo, IDArticulo_Lote, Codigo, Cantidad, Descripcion,  Stock,  PrecioUnitario, Total.toString()});
 
         }
     }
-	private void insVenta(){
+	private Integer insVenta(){
         Boolean ValidadNulo = true;        
         if (ValidadNulo){
             updateVenta();
             if (validadVenta()){
-                Conexion conex = new Conexion();
-                String Activo = "1";
-                String EstadoDoc = "NOPAGADO";
-                String Cliente = txtCliente.getText();
-                String RFC = txtRfc.getText();
-                String Domicilio = txtDomicilio.getText();
-                String NumExt = txtNumero.getText();
-                String NumInt = "0";
-                String CP = txtCp.getText();
-                String Colonia = txtColonia.getText();
-                String Telefono = txtTelefono.getText();
-                String SubTotal = txtSubtotal.getText();
-                String IVA = txtIva.getText();
-                String Total = txtTotal.getText();
+                Conexion conex = new Conexion();                
                 String Query = "INSERT INTO `venta`(`Activo`, `EstadoDoc`, `Cliente`, `RFC`, `Domicilio`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Telefono`, `SubTotal`, `IVA`, `Total`, `FechaElaboracion`, `FechaCreacion`, `FechaMod`) VALUES ("
-                        + "'" + Activo + "',"
-                        + "'" + EstadoDoc + "',"
-                        + "'" + Cliente + "',"
-                        + "'" + RFC + "',"
-                        + "'" + Domicilio + "',"
-                        + "'" + NumExt + "',"
-                        + "'" + NumInt + "',"
-                        + "'" + CP + "',"
-                        + "'" + Colonia + "',"
-                        + "'" + Telefono + "',"
-                        + "'" + SubTotal + "',"
-                        + "'" + IVA + "',"
-                        + "'" + Total + "',"
+                        + "'" + venta.getActivo() + "',"
+                        + "'" + venta.getEstadoDoc() + "',"
+                        + "'" + venta.getCliente()  + "',"
+                        + "'" + venta.getRfc() + "',"
+                        + "'" + venta.getDomicilio() + "',"
+                        + "'" + venta.getNumExt() + "',"
+                        + "'" + venta.getNumInt() + "',"
+                        + "'" + venta.getCp() + "',"
+                        + "'" + venta.getColonia() + "',"
+                        + "'" + venta.getTelefono() + "',"
+                        + "'" + venta.getSubTotal() + "',"
+                        + "'" + venta.getIva() + "',"
+                        + "'" + venta.getTotal() + "',"
                         + "CURRENT_TIMESTAMP,"
                         + "CURRENT_TIMESTAMP,"
                         + "CURRENT_TIMESTAMP)";
@@ -227,6 +220,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
                     while(ResulQuery.next()){
                         Integer ID = ResulQuery.getInt(1);
                         insVentaConcepto(ID);
+                        return ID;
                     }
                 }catch(SQLException e){
                     JOptionPane.showMessageDialog(null,e);
@@ -235,6 +229,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
                 JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
             }
         }
+        return 0;
     }
     
     private void insVentaConcepto(Integer IDVenta){
@@ -242,16 +237,18 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         int CountRows = model.getRowCount();        
         for (int i = 0; i<CountRows; i++){
             Conexion conex = new Conexion();
-            String IDArticulo_Lote = model.getValueAt(i, 0).toString();
+            String IDArticulo = model.getValueAt(i, 0).toString();
+            String IDArticulo_Lote = model.getValueAt(i, 1).toString();
             String Activo = "1";
-            String ProdCodigo = model.getValueAt(i, 1).toString();
-            Integer Cantidad = Integer.parseInt(model.getValueAt(i, 2).toString());
-            String Descripcion = model.getValueAt(i, 3).toString();
-            Integer Stock = Integer.parseInt(model.getValueAt(i, 4).toString());
-            String PrecioUnitario = model.getValueAt(i, 5).toString();
+            String ProdCodigo = model.getValueAt(i, 2).toString();
+            Integer Cantidad = Integer.parseInt(model.getValueAt(i, 3).toString());
+            String Descripcion = model.getValueAt(i, 4).toString();
+            Integer Stock = Integer.parseInt(model.getValueAt(i, 5).toString());
+            String PrecioUnitario = model.getValueAt(i, 6).toString();
             Integer CantidadRestante = Stock - Cantidad;
-            String Query = "INSERT INTO `venta_concepto`(`IDVenta`, `IDArticulo_Lote`, `Activo`, `ProdCodigo`, `Cantidad`, `Drescripcion`, `PrecioUnitario`, `FechaCreacion`, `FechaMod`) VALUES ("
+            String Query = "INSERT INTO `venta_concepto`(`IDVenta`, `IDArticulo`, `IDArticulo_Lote`, `Activo`, `ProdCodigo`, `Cantidad`, `Drescripcion`, `PrecioUnitario`, `FechaCreacion`, `FechaMod`) VALUES ("
                     + "'" + IDVenta + "',"
+                    + "'" + IDArticulo + "',"
                     + "'" + IDArticulo_Lote + "',"
                     + "'" + Activo + "',"
                     + "'" + ProdCodigo + "',"
@@ -317,6 +314,35 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         
     }
     private void updateVenta(){
+        Integer Activo = 1;
+        String EstadoDoc = "NOPAGADO";
+        String Cliente = txtCliente.getText();
+        String RFC = txtRfc.getText();
+        String Domicilio = txtDomicilio.getText();
+        String NumExt = txtNumero.getText();
+        String NumInt = "0";
+        String CP = txtCp.getText();
+        String Colonia = txtColonia.getText();
+        String Telefono = txtTelefono.getText();
+        BigDecimal SubTotal = new BigDecimal(txtSubtotal.getText()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+        BigDecimal IVA = new BigDecimal(txtIva.getText()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+        BigDecimal Total = new BigDecimal(txtTotal.getText()).setScale(2,BigDecimal.ROUND_HALF_DOWN);
+        
+        venta.setActivo(Activo);
+        venta.setEstadoDoc(EstadoDoc);
+        venta.setCliente(Cliente);
+        venta.setRfc(RFC);
+        venta.setDomicilio(Domicilio);
+        venta.setNumExt(NumExt);
+        venta.setNumInt(NumInt);
+        venta.setCp(CP);
+        venta.setColonia(Colonia);
+        venta.setTelefono(Telefono);
+        venta.setSubTotal(SubTotal);
+        venta.setIva(IVA);
+        venta.setTotal(Total);
+        
+        
 	}
     public void prepararModVenta(){
         Conexion conex = new Conexion();
@@ -479,7 +505,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
 
             },
             new String [] {
-                "IDArticulo_Lote", "Codigo", "Cantidad", "Descripción", "Stock", "Precio Unitario", "Total"
+                "IDArticulo", "IDArticulo_Lote", "Codigo", "Cantidad", "Descripción", "Stock", "Precio Unitario", "Total"
             }
         ));
         TablaConceptos.addHierarchyListener(new java.awt.event.HierarchyListener() {
@@ -578,8 +604,9 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        insVenta();     
+        Integer ID = insVenta();     
         CompletarVenta completar = new CompletarVenta();
+        completar.prepararInsPago(ID.toString());
         completar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGenerarActionPerformed
@@ -610,7 +637,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CompletarVenta cv = new CompletarVenta();
-        cv.prepararInsPago("3");
+        cv.prepararInsPago("1");
         cv.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -42,6 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "VentaConcepto.findByFechaMod", query = "SELECT v FROM VentaConcepto v WHERE v.fechaMod = :fechaMod")})
 public class VentaConcepto implements Serializable {
 
+    @JoinColumn(name = "IDArticulo", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Articulo iDArticulo;
+
     @JoinColumn(name = "IDArticulo_Lote", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private ArticuloLote iDArticuloLote;
@@ -201,6 +205,14 @@ public class VentaConcepto implements Serializable {
 
     public void setIDArticuloLote(ArticuloLote iDArticuloLote) {
         this.iDArticuloLote = iDArticuloLote;
+    }
+
+    public Articulo getIDArticulo() {
+        return iDArticulo;
+    }
+
+    public void setIDArticulo(Articulo iDArticulo) {
+        this.iDArticulo = iDArticulo;
     }
     
 }
