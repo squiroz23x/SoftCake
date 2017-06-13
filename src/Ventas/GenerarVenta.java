@@ -273,6 +273,9 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
             try(Connection conn1 = dataSource.getConnection()){
                     Statement stmt1 = conn1.createStatement();            
                     stmt1.executeUpdate(Query1);
+                    Query1 = "UPDATE `articulo` SET `Existencia` = ( SELECT SUM(`Cantidad`) As Total FROM `articulo_lote` WHERE `Activo` = 1 AND `IDArticulo` = '" + IDArticulo + "' ) WHERE `ID` = '" + IDArticulo + "' ";
+                    stmt1 = conn1.createStatement();            
+                    stmt1.executeUpdate(Query1);
             }catch(SQLException e){
                     JOptionPane.showMessageDialog(null,e);
             }

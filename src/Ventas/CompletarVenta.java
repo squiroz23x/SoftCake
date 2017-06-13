@@ -57,6 +57,9 @@ public class CompletarVenta extends javax.swing.JFrame {
                 try(Connection conn = dataSource.getConnection()){
                         Statement stmt = conn.createStatement();            
                         stmt.executeUpdate(Query);
+                        Query = "UPDATE `venta` SET `EstadoDoc`='PAGADO' WHERE `Total` = (SELECT SUM(`Monto`) AS Total FROM `venta_pago` WHERE `Activo` = 1 AND `IDVenta` = '" + venta.getId() + "') AND `ID` = '" + venta.getId() + "'";
+                        stmt = conn.createStatement();            
+                        stmt.executeUpdate(Query);
                         JOptionPane.showMessageDialog(null,"El pago se registro satisfactoriamente");
                         Menu vMenu = new Menu();
                         vMenu.setVisible(true);
