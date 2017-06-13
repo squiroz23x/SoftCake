@@ -165,7 +165,7 @@ public class Inicio extends javax.swing.JFrame {
                     menu.setVisible(true);
                     this.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(frame,"Login incorrecto, favor de verificar Usuario y Contraseña");
+                    JOptionPane.showMessageDialog(frame,"Login incorrecto, favor de verificar Usuario y Contraseña", "Error", JOptionPane.ERROR_MESSAGE);
                     txtUsuario.setText("");
                     txtPassword.setText("");
                 }
@@ -174,7 +174,7 @@ public class Inicio extends javax.swing.JFrame {
             } 
             count--;
        }else{
-           JOptionPane.showMessageDialog(null,"Haz superado el limete de intentos. El programa se cerrara");
+           JOptionPane.showMessageDialog(null,"Haz superado el limete de intentos. El programa se cerrara", "Error", JOptionPane.ERROR_MESSAGE);
            System.exit(0);
        }
        
@@ -191,11 +191,28 @@ public class Inicio extends javax.swing.JFrame {
         char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
         
+        int longitud = 5;
+        if(txtPassword.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "La contraseña debe ser menor a 5 caracteres, intente de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPassword.setText("");
+        }
+        
     }//GEN-LAST:event_txtPasswordKeyTyped
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+
         char c = evt.getKeyChar();
         if(c<'A'||c>'Z')evt.consume();
+        
+        int longitud = 15;
+        if(txtUsuario.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "El usuario debe ser menor a 15 caracteres, intente de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
+            txtUsuario.setText("");
+        }
     }//GEN-LAST:event_txtUsuarioKeyTyped
 
     /**

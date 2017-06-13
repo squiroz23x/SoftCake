@@ -414,6 +414,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         txtEfectivo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -593,6 +594,17 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 580, -1, -1));
 
+        jButton2.setBackground(new java.awt.Color(153, 51, 0));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Cancelar Venta");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, 130, -1));
+
         txtEfectivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(txtEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 650));
@@ -644,6 +656,12 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         cv.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        BuscarVenta buscar = new BuscarVenta();
+        buscar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -686,6 +704,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGenerar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

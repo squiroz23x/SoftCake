@@ -774,7 +774,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
         char c = evt.getKeyChar();
-        if(c<'0'||c>'9')evt.consume();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
     }//GEN-LAST:event_txtPasswordKeyTyped
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
