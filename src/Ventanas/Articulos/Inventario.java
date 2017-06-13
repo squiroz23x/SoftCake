@@ -141,7 +141,7 @@ public class Inventario extends javax.swing.JFrame {
         Date fechaCreacion = articulo.getFechaCreacion();
         Date fechaMod = articulo.getFechaMod();
         fillArticulo(id,activo,codigo,nombre,descripcion,precio,sMaximo,sMinimo,existencia,fechaCreacion,fechaMod);
-        Integer IDUnidad = cmbUnidad.getSelectedIndex();
+        Integer IDUnidad = Integer.parseInt(getIdUnidadcmb());
         articulounidad.setId(IDUnidad);
         articulo.setIDUnidad(articulounidad);
     }
@@ -318,7 +318,7 @@ public class Inventario extends javax.swing.JFrame {
                 cmbUnidad.removeAllItems();
                 cmbUnidad.addItem("Seleccionar");
                 while(ResulQuery.next()){
-                    cmbUnidad.addItem(ResulQuery.getString("Descripcion"));
+                    cmbUnidad.addItem(ResulQuery.getString("Descripcion")+";"+ResulQuery.getString("ID"));
                 }
                 cmbUnidad.addItem("Nuevo...");
         }catch(SQLException e){
@@ -809,6 +809,16 @@ public class Inventario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarLoteActionPerformed
 
+    private String getIdUnidadcmb(){
+        Integer Index;
+        String ID;
+        String Texto;        
+        Texto = cmbUnidad.getSelectedItem().toString();
+        Index = Texto.indexOf(";")+1;
+        ID = Texto.substring(Index);  
+        
+        return ID;
+    }
     private void btnUnidadNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidadNuevoActionPerformed
         String Texto = cmbUnidad.getSelectedItem().toString();
         Integer Index = cmbUnidad.getSelectedIndex();
@@ -819,9 +829,10 @@ public class Inventario extends javax.swing.JFrame {
             unidad.setVisible(true);   
             this.dispose();
         }else if (Index > 0) {
+            String ID = getIdUnidadcmb();
             Unidad unidad = new Unidad();
             unidad.setInventario(this);
-            unidad.prepararModUnidad(Index);
+            unidad.prepararModUnidad(Integer.parseInt(ID));
             unidad.setVisible(true);
             this.dispose();
         }else{
