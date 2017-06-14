@@ -323,7 +323,7 @@ public class ConversionProductos extends javax.swing.JFrame {
         {
             evt.consume();
             JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
-            txtNombreDestino.setText("");
+            txtNombreDestino.setText(""); ////prueba commit git
         }
     }//GEN-LAST:event_txtNombreDestinoKeyTyped
 
