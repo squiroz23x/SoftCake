@@ -8,6 +8,7 @@ package Empleados;
 import Ventanas.Conexion;
 import Ventanas.Menu;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -86,9 +87,19 @@ public class ControlEmpleados extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
 
         txtIdEmpleado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtIdEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdEmpleadoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtIdEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 130, -1));
 
         txtNombreEmpleado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNombreEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreEmpleadoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtNombreEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 130, -1));
 
         btnBuscar.setBackground(new java.awt.Color(153, 51, 0));
@@ -172,12 +183,24 @@ public class ControlEmpleados extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Apellido Paterno:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
+
+        txtPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPaternoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 130, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Apellido Materno:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
+
+        txtMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMaternoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 130, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -298,6 +321,58 @@ public class ControlEmpleados extends javax.swing.JFrame {
             registro.setVisible(true);
         
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void txtIdEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdEmpleadoKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 10;
+        if(txtIdEmpleado.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtIdEmpleado.setText("");
+        }
+    }//GEN-LAST:event_txtIdEmpleadoKeyTyped
+
+    private void txtNombreEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreEmpleadoKeyTyped
+        char c = evt.getKeyChar();
+        if((c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtNombreEmpleado.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtNombreEmpleado.setText("");
+        }
+    }//GEN-LAST:event_txtNombreEmpleadoKeyTyped
+
+    private void txtPaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPaternoKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'A'||c>'Z')evt.consume();
+        
+        int longitud = 25;
+        if(txtPaterno.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtPaterno.setText("");
+        }
+    }//GEN-LAST:event_txtPaternoKeyTyped
+
+    private void txtMaternoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaternoKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'A'||c>'Z')evt.consume();
+        
+        int longitud = 25;
+        if(txtMaterno.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtMaterno.setText("");
+        }
+    }//GEN-LAST:event_txtMaternoKeyTyped
 
     /**
      * @param args the command line arguments

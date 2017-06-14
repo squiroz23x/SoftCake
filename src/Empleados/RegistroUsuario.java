@@ -703,83 +703,210 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
         if((c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtNombre.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtNombre.setText("");
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoPKeyTyped
         char c = evt.getKeyChar();
         if(c<'A'||c>'Z')evt.consume();
+        
+        int longitud = 25;
+        if(txtApellidoP.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtApellidoP.setText("");
+        }
     }//GEN-LAST:event_txtApellidoPKeyTyped
 
     private void txtApellidoMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoMKeyTyped
         char c = evt.getKeyChar();
         if(c<'A'||c>'Z')evt.consume();
+        
+         int longitud = 25;
+        if(txtApellidoM.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtApellidoM.setText("");
+        }
     }//GEN-LAST:event_txtApellidoMKeyTyped
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
         
+        int longitud = 80;
+        if(txtDireccion.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 80 caracteres, intente de nuevo", "Error", 0);
+            txtDireccion.setText("");
+        }
+        
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void txtNumeroEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroEKeyTyped
          char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 10;
+        if(txtNumeroE.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtNumeroE.setText("");
+        }
     }//GEN-LAST:event_txtNumeroEKeyTyped
 
     private void txtNumeroIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroIKeyTyped
        char c = evt.getKeyChar();
        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
        
+       int longitud = 10;
+        if(txtNumeroI.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtNumeroI.setText("");
+        }
+       
     }//GEN-LAST:event_txtNumeroIKeyTyped
 
     private void txtCpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpKeyTyped
         char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 10;
+        if(txtCp.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtCp.setText("");
+        }
     }//GEN-LAST:event_txtCpKeyTyped
 
     private void txtColoniaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyTyped
          char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 25;
+        if(txtColonia.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtColonia.setText("");
+        }
     }//GEN-LAST:event_txtColoniaKeyTyped
 
     private void txtMunicipioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMunicipioKeyTyped
          char c = evt.getKeyChar();
         if((c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 25;
+        if(txtMunicipio.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtMunicipio.setText("");
+        }
     }//GEN-LAST:event_txtMunicipioKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 25;
+        if(txtTelefono.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtTelefono.setText("");
+        }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtExtensionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExtensionKeyTyped
          char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 10;
+        if(txtExtension.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtExtension.setText("");
+        }
     }//GEN-LAST:event_txtExtensionKeyTyped
 
     private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
          char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 25;
+        if(txtCelular.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtCelular.setText("");
+        }
     }//GEN-LAST:event_txtCelularKeyTyped
 
     private void txtFacebookKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFacebookKeyTyped
          char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        int longitud = 50;
+        if(txtFacebook.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtFacebook.setText("");
+        }
     }//GEN-LAST:event_txtFacebookKeyTyped
 
     private void txtIdentificadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdentificadorKeyTyped
        char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 10;
+        if(txtIdentificador.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtIdentificador.setText("");
+        }
     }//GEN-LAST:event_txtIdentificadorKeyTyped
 
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        
+        int longitud = 5;
+        if(txtPassword.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 5 caracteres, intente de nuevo", "Error", 0);
+            txtPassword.setText("");
+        }
     }//GEN-LAST:event_txtPasswordKeyTyped
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
          char c = evt.getKeyChar();
         if(c<'A'||c>'Z')evt.consume();
+        int longitud = 15;
+        if(txtUsuario.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 15 caracteres, intente de nuevo", "Error", 0);
+            txtUsuario.setText("");
+        }
+        
     }//GEN-LAST:event_txtUsuarioKeyTyped
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed

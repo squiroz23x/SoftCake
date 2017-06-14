@@ -5,7 +5,9 @@
  */
 package Ventanas.Articulos;
 
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,7 +48,7 @@ public class ConversionProductos extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtCodigoDestino = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNombreDestino = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaProducto1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -167,13 +169,13 @@ public class ConversionProductos extends javax.swing.JFrame {
         jLabel9.setText("Nombre:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNombreDestino.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNombreDestino.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                txtNombreDestinoKeyTyped(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 150, -1));
+        getContentPane().add(txtNombreDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 150, -1));
 
         TablaProducto1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -276,22 +278,54 @@ public class ConversionProductos extends javax.swing.JFrame {
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
          char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        
+        int longitud = 25;
+        if(txtCodigo.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtCodigo.setText("");
+        }
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void txtCodigoDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoDestinoKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        
+        int longitud = 25;
+        if(txtCodigoDestino.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtCodigoDestino.setText("");
+        }
     }//GEN-LAST:event_txtCodigoDestinoKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
-        if(c<'A'||c>'Z')evt.consume();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtNombre.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtNombre.setText("");
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void txtNombreDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreDestinoKeyTyped
         char c = evt.getKeyChar();
-        if(c<'A'||c>'Z')evt.consume();
-    }//GEN-LAST:event_jTextField1KeyTyped
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtNombreDestino.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtNombreDestino.setText("");
+        }
+    }//GEN-LAST:event_txtNombreDestinoKeyTyped
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char c = evt.getKeyChar();
@@ -356,10 +390,10 @@ public class ConversionProductos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCodigoDestino;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombreDestino;
     // End of variables declaration//GEN-END:variables
 }

@@ -309,6 +309,14 @@ public class Unidad extends javax.swing.JFrame {
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
           char c = evt.getKeyChar();
         if(c<'A'||c>'Z')evt.consume();
+        
+        int longitud = 50;
+        if(txtDescripcion.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtDescripcion.setText("");
+        }
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
     private void txtNombreCortoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCortoActionPerformed
@@ -316,8 +324,16 @@ public class Unidad extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreCortoActionPerformed
 
     private void txtNombreCortoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCortoKeyTyped
-          char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if(c<'A'||c>'Z')evt.consume();
+        
+        int longitud = 5;
+        if(txtNombreCorto.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 5 caracteres, intente de nuevo", "Error", 0);
+            txtNombreCorto.setText("");
+        }
     }//GEN-LAST:event_txtNombreCortoKeyTyped
 
     private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed

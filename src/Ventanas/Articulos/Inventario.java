@@ -719,16 +719,40 @@ public class Inventario extends javax.swing.JFrame {
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        
+        int longitud = 25;
+        if(txtCodigo.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtCodigo.setText("");
+        }
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtNombre.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtNombre.setText("");
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtDescripcion.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtDescripcion.setText("");
+        }
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
     private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
@@ -743,22 +767,42 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrecioKeyTyped
 
     private void txtMaximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaximoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtMaximoActionPerformed
 
     private void txtMaximoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaximoKeyTyped
-        char c = evt.getKeyChar();
+       char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 11;
+        if(txtMaximo.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 11 caracteres, intente de nuevo", "Error", 0);
+            txtMaximo.setText("");
+        }
+        
+        
     }//GEN-LAST:event_txtMaximoKeyTyped
 
     private void txtMinimoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMinimoKeyTyped
         char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 11;
+        if(txtMinimo.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 11 caracteres, intente de nuevo", "Error", 0);
+            txtMinimo.setText("");
+        }
     }//GEN-LAST:event_txtMinimoKeyTyped
 
     private void txtExistenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExistenciaKeyTyped
         char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        txtExistencia.setEditable(false);
     }//GEN-LAST:event_txtExistenciaKeyTyped
 
     private void lblFondo1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_lblFondo1ComponentShown

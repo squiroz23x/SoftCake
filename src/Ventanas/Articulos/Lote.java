@@ -181,11 +181,27 @@ public class Lote extends javax.swing.JFrame {
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        
+        int longitud = 25;
+        if(txtCodigo.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtCodigo.setText("");
+        }
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         char c = evt.getKeyChar();
         if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 10;
+        if(txtCantidad.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtCantidad.setText("");
+        }
     }//GEN-LAST:event_txtCantidadKeyTyped
     
     private void insLote(){
