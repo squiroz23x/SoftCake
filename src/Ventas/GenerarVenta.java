@@ -761,15 +761,35 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 400, -1, -1));
 
         txtLetras.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtLetras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLetrasKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtLetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 510, 490, -1));
 
         txtSubtotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtSubtotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSubtotalKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 100, -1));
 
         txtIva.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtIva.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIvaKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, 100, -1));
 
         txtTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, 100, -1));
 
         btnGenerar.setBackground(new java.awt.Color(153, 51, 0));
@@ -866,6 +886,22 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         buscar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtSubtotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtotalKeyTyped
+        txtSubtotal.setEditable(false);
+    }//GEN-LAST:event_txtSubtotalKeyTyped
+
+    private void txtIvaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIvaKeyTyped
+        txtIva.setEditable(false);
+    }//GEN-LAST:event_txtIvaKeyTyped
+
+    private void txtTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyTyped
+        txtTotal.setEditable(false);
+    }//GEN-LAST:event_txtTotalKeyTyped
+
+    private void txtLetrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLetrasKeyTyped
+        txtLetras.setEditable(false);
+    }//GEN-LAST:event_txtLetrasKeyTyped
 
     /**
      * @param args the command line arguments

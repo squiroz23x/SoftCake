@@ -361,6 +361,7 @@ public class BuscarVenta extends javax.swing.JFrame {
         {
             evt.consume();
             JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 15 caracteres, intente de nuevo", "Error", 0);
+            txtRFC.setEditable(false);
         }
     }//GEN-LAST:event_txtRFCKeyTyped
 
