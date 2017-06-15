@@ -184,6 +184,7 @@ public class ControlEmpleados extends javax.swing.JFrame {
         jLabel7.setText("Apellido Paterno:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
 
+        txtPaterno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtPaterno.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPaternoKeyTyped(evt);
@@ -196,6 +197,7 @@ public class ControlEmpleados extends javax.swing.JFrame {
         jLabel9.setText("Apellido Materno:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
 
+        txtMaterno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtMaterno.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMaternoKeyTyped(evt);
@@ -319,12 +321,13 @@ public class ControlEmpleados extends javax.swing.JFrame {
         RegistroUsuario registro = new RegistroUsuario();
             registro.prepararInsEmpleado();
             registro.setVisible(true);
+            this.dispose();
         
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void txtIdEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdEmpleadoKeyTyped
         char c = evt.getKeyChar();
-        if(c<'0'||c>'9')evt.consume();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
         
         int longitud = 10;
         if(txtIdEmpleado.getText().length()>=longitud)

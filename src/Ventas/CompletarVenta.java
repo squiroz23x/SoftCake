@@ -437,6 +437,7 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
         txtCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtCliente.setEnabled(false);
         txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtClienteKeyTyped(evt);
@@ -675,7 +676,7 @@ public class CompletarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtVentaNumeroKeyTyped
 
     private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
-        txtCliente.setEditable(false);
+       // txtCliente.setEditable(false);
     }//GEN-LAST:event_txtClienteKeyTyped
 
     private void txtRFCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRFCKeyTyped
@@ -695,7 +696,13 @@ public class CompletarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTotalPagarKeyTyped
 
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
-        txtMonto.setEditable(false);
+        if(!Character.isDigit(evt.getKeyChar())&& evt.getKeyChar()!='.')
+            evt.consume();
+        
+        if(evt.getKeyChar()=='.' && txtMonto.getText().contains("."))
+        {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtMontoKeyTyped
 
     private void txtVendedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVendedorKeyTyped

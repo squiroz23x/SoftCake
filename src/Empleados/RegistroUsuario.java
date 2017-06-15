@@ -872,7 +872,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
 
     private void txtIdentificadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdentificadorKeyTyped
        char c = evt.getKeyChar();
-        if(c<'0'||c>'9')evt.consume();
+       if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
         
         int longitud = 10;
         if(txtIdentificador.getText().length()>=longitud)
@@ -921,20 +921,21 @@ public class RegistroUsuario extends javax.swing.JFrame {
         eliEmpleado();        // TODO add your handling code here:
     }//GEN-LAST:event_btnBorrarActionPerformed
     
-    public boolean verifyEmail (String correo)
-    {
-        Pattern pat = null;
-        Matcher mat = null;
-        pat = Pattern.compile("^[\\w\\-\\_\\+]+(\\.[\\w\\-\\_]+)*@[A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$");   
-        mat = pat.matcher(correo);
-        if(mat.find())
-            {
+    public boolean verifyEmail (String correo)  {
+        //try{
+            Pattern pat = null;
+            Matcher mat = null;
+            pat = Pattern.compile("^[\\w\\-\\_\\+]+(\\.[\\w\\-\\_]+)*@[A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$");   
+            mat = pat.matcher(correo);
+            if(mat.find()){
                 return true;
+            }else{
+            return false;
             }
-                else
-                {
-                    return false;
-                }
+        //}catch(Exception e){
+           // JOptionPane.showMessageDialog(this, e);
+         //   return false;
+        //}        
     }
     
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost

@@ -26,6 +26,8 @@ public class Agregar extends javax.swing.JFrame {
     GenerarVenta GV = new GenerarVenta();
     public Agregar() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
+        this.setLocationRelativeTo(null);
     }
     
     public void setGenerarVenta(GenerarVenta Ventana){

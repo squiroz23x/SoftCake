@@ -230,7 +230,7 @@ public class Unidad extends javax.swing.JFrame {
     private void eliUnidad(){
         Conexion conex = new Conexion();
         String Query = "UPDATE `articulo_unidad` SET "
-                + "`Activo`='0',"
+                + "`Activo`='0'"
                 + "WHERE `ID` = '" + articulounidad.getId() + "'";
         MysqlDataSource dataSource = conex.getConnection();        
         try(Connection conn = dataSource.getConnection()){

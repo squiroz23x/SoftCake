@@ -377,7 +377,6 @@ public class Inventario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -474,12 +473,6 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 490, -1, -1));
-
-        jButton4.setBackground(new java.awt.Color(153, 51, 0));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Buscar");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 490, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(113, 22, 2));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PRODUCTO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -932,7 +925,6 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton btnModificarLote;
     private javax.swing.JButton btnUnidadNuevo;
     private javax.swing.JComboBox<String> cmbUnidad;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
