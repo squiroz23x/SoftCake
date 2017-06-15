@@ -7,6 +7,7 @@ package Ventas;
 import DataBase.VentaMp;
 import Ventanas.Conexion;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.JOptionPane;
 /**
@@ -267,12 +268,28 @@ public class MetodosPago extends javax.swing.JFrame {
 
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
         char c = evt.getKeyChar();
-        if(c<'A'||c>'Z')evt.consume();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtDescripcion.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtDescripcion.setText("");
+        }
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        
+        int longitud = 10;
+        if(txtCodigo.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtCodigo.setText("");
+        }
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed

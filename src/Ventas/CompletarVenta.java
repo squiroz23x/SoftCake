@@ -419,6 +419,11 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         txtVentaNumero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtVentaNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtVentaNumeroKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtVentaNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 150, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -432,9 +437,19 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
         txtCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtClienteKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 150, -1));
 
         txtRFC.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtRFC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRFCKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 150, -1));
 
         TablaVenta.setModel(new javax.swing.table.DefaultTableModel(
@@ -485,6 +500,11 @@ public class CompletarVenta extends javax.swing.JFrame {
                 txtTotalFacturadoActionPerformed(evt);
             }
         });
+        txtTotalFacturado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalFacturadoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTotalFacturado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 150, -1));
 
         txtTotalPAgado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -493,9 +513,19 @@ public class CompletarVenta extends javax.swing.JFrame {
                 txtTotalPAgadoActionPerformed(evt);
             }
         });
+        txtTotalPAgado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalPAgadoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTotalPAgado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 150, -1));
 
         txtTotalPagar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtTotalPagar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTotalPagarKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTotalPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 150, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -517,6 +547,11 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
 
         txtVendedor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtVendedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtVendedorKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 250, -1));
 
         btnPagar.setBackground(new java.awt.Color(153, 51, 0));
@@ -558,6 +593,11 @@ public class CompletarVenta extends javax.swing.JFrame {
         txtMonto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMontoActionPerformed(evt);
+            }
+        });
+        txtMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoKeyTyped(evt);
             }
         });
         getContentPane().add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 150, -1));
@@ -629,6 +669,38 @@ public class CompletarVenta extends javax.swing.JFrame {
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
       insPago();  // TODO add your handling code here:
     }//GEN-LAST:event_btnPagarActionPerformed
+
+    private void txtVentaNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVentaNumeroKeyTyped
+        txtVentaNumero.setEditable(false);
+    }//GEN-LAST:event_txtVentaNumeroKeyTyped
+
+    private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
+        txtCliente.setEditable(false);
+    }//GEN-LAST:event_txtClienteKeyTyped
+
+    private void txtRFCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRFCKeyTyped
+       txtRFC.setEditable(false);
+    }//GEN-LAST:event_txtRFCKeyTyped
+
+    private void txtTotalFacturadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalFacturadoKeyTyped
+        txtTotalFacturado.setEditable(false);
+    }//GEN-LAST:event_txtTotalFacturadoKeyTyped
+
+    private void txtTotalPAgadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalPAgadoKeyTyped
+        txtTotalPAgado.setEditable(false);
+    }//GEN-LAST:event_txtTotalPAgadoKeyTyped
+
+    private void txtTotalPagarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalPagarKeyTyped
+        txtTotalPagar.setEditable(false);
+    }//GEN-LAST:event_txtTotalPagarKeyTyped
+
+    private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
+        txtMonto.setEditable(false);
+    }//GEN-LAST:event_txtMontoKeyTyped
+
+    private void txtVendedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVendedorKeyTyped
+        txtVendedor.setEditable(false);
+    }//GEN-LAST:event_txtVendedorKeyTyped
 
     /**
      * @param args the command line arguments
