@@ -227,6 +227,8 @@ public class Lote extends javax.swing.JFrame {
                 try(Connection conn = dataSource.getConnection()){
                         Statement stmt = conn.createStatement();            
                         stmt.executeUpdate(Query);
+                        Query = "UPDATE `articulo` SET `Existencia` = ( SELECT SUM(`Cantidad`) As Total FROM `articulo_lote` WHERE `Activo` = 1 AND `IDArticulo` = '" + IDArticulo + "' ) WHERE `ID` = '" + IDArticulo + "'";
+                        stmt.executeUpdate(Query);
                         JOptionPane.showMessageDialog(null,"Agregado Correctamente.");
                         inventario.prepararArticuloLote(inventario.articulo.getId().toString());
                         inventario.fillTablaLote();

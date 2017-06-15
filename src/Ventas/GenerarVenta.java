@@ -15,6 +15,9 @@ import javax.swing.event.*;
 import Ventanas.Conexion;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 /**
  *
@@ -38,6 +41,12 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     String valorLetras="",rta="";
     int bloqueTres=0;
     Venta venta = new Venta();
+    ArrayList<VentaConcepto> ventaconcepto = new ArrayList<VentaConcepto>();
+    ArrayList<VentaPago> ventapago = new ArrayList<VentaPago>();
+    VentaMp ventamp = new VentaMp();
+    ArticuloLote articulolote = new ArticuloLote();
+    VentaPago indventapago = new VentaPago();
+    Articulo articulo = new Articulo();
 
    public String convertirnumtext(int valor){ 
       
@@ -347,19 +356,188 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         
         
 	}
-    public void prepararModVenta(){
+    public void prepararModVenta(String ID){
+        prepararVenta(ID);
+        prepararVentaConcepto(venta.getId().toString());
+        venta.setVentaConceptoCollection(ventaconcepto);
+        prepararVentaPago(venta.getId().toString());
+        venta.setVentaPagoCollection(ventapago);
+        fillFormulario();
+    }
+    public void prepararVenta(String IDVenta){
         Conexion conex = new Conexion();
-        String Query = "";
-		MysqlDataSource dataSource = conex.getConnection();        
+        String Query = "SELECT * FROM `venta` WHERE `ID` = " + IDVenta;
+	MysqlDataSource dataSource = conex.getConnection();        
         try(Connection conn = dataSource.getConnection()){
                 Statement stmt = conn.createStatement();            
                 ResultSet ResulQuery = stmt.executeQuery(Query);
                 while(ResulQuery.next()){
-
+                    Integer id = ResulQuery.getInt("ID");
+                    int activo = ResulQuery.getInt("Activo");
+                    String estadoDoc = ResulQuery.getString("EstadoDoc");
+                    String cliente = ResulQuery.getString("Cliente");
+                    String rfc = ResulQuery.getString("RFC");
+                    String domicilio = ResulQuery.getString("Domicilio");
+                    String numExt = ResulQuery.getString("NumExt");
+                    String numInt = ResulQuery.getString("NumInt");
+                    String cp = ResulQuery.getString("CP");
+                    String colonia = ResulQuery.getString("Colonia");
+                    String telefono = ResulQuery.getString("Telefono");
+                    BigDecimal subTotal = ResulQuery.getBigDecimal("SubTotal");
+                    BigDecimal iva = ResulQuery.getBigDecimal("IVA");
+                    BigDecimal total = ResulQuery.getBigDecimal("Total");
+                    Date fechaElaboracion = ResulQuery.getDate("FechaElaboracion");
+                    Date fechaCreacion = ResulQuery.getDate("FechaCreacion");
+                    Date fechaMod = ResulQuery.getDate("FechaMod");
+                    fillVenta(id, activo,  estadoDoc,  cliente,  rfc,  domicilio,  numExt,  numInt,  cp,  colonia,  telefono,  subTotal,  iva,  total,  fechaElaboracion,  fechaCreacion,  fechaMod);
                 }
         }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e);
-        } 
+        }
+        
+    }
+    public void prepararVentaConcepto(String IDVenta){
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `venta_concepto` WHERE `IDVenta` = " + IDVenta;
+	MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                ventaconcepto.clear();
+                while(ResulQuery.next()){
+                    Integer id = ResulQuery.getInt("ID");
+                    int activo = ResulQuery.getInt("Activo");
+                    String prodCodigo = ResulQuery.getString("ProdCodigo");
+                    int cantidad = ResulQuery.getInt("Cantidad");
+                    String drescripcion = ResulQuery.getString("Drescripcion");
+                    BigDecimal precioUnitario = ResulQuery.getBigDecimal("PrecioUnitario");
+                    Date fechaCreacion = ResulQuery.getDate("FechaCreacion");
+                    Date fechaMod = ResulQuery.getDate("FechaMod");
+                    Integer IDArticuloLote = ResulQuery.getInt("IDArticulo_Lote");
+                    Integer IDArticulo = ResulQuery.getInt("IDArticulo");
+                    prepararArticuloLote(IDArticuloLote.toString());
+                    prepararArticulo(IDArticulo.toString());
+                    fillVentaConcepto( id,  activo,  prodCodigo,  cantidad,  drescripcion,  precioUnitario,  fechaCreacion,  fechaMod);
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    public void prepararVentaMP(String IDVentaMP){
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `venta_mp` WHERE `ID` = " + IDVentaMP;
+	MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                while(ResulQuery.next()){
+                    Integer id = ResulQuery.getInt("ID");
+                    Integer activo = ResulQuery.getInt("Activo");
+                    String codigo = ResulQuery.getString("Codigo");
+                    String descripcion = ResulQuery.getString("Descripcion");
+                    Date fechaCreacion = ResulQuery.getDate("FechaCreacion");
+                    Date fechaMod = ResulQuery.getDate("FechaMod");
+                    fillVentaMP( id, activo,  codigo,  descripcion,  fechaCreacion,  fechaMod);          
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    public void prepararVentaPago(String IDVenta){
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `venta_pago` WHERE `IDVenta` = " + IDVenta;
+	MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                ventapago.clear();
+                while(ResulQuery.next()){
+                    Integer id = ResulQuery.getInt("ID");
+                    int activo = ResulQuery.getInt("Activo");
+                    BigDecimal monto = ResulQuery.getBigDecimal("Monto");
+                    String autorizo = ResulQuery.getString("Autorizo");
+                    Date fechaPago = ResulQuery.getDate("FechaPago");
+                    Date fechaCreacion = ResulQuery.getDate("FechaCreacion");
+                    Date fechaMod = ResulQuery.getDate("FechaMod");
+                    Integer IDVentaMP = ResulQuery.getInt("IDVenta_MP");
+                    prepararVentaMP(IDVentaMP.toString());
+                    fillVentaPago( id,  activo,  monto, autorizo,  fechaPago,  fechaCreacion,  fechaMod);
+                  }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    public void prepararArticulo(String Index){
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `articulo` WHERE `ID`='"+Index+"'";
+        MysqlDataSource dataSourceArticulo = conex.getConnection();
+        try(Connection conn = dataSourceArticulo.getConnection()){
+                Statement stmtArticulo = conn.createStatement();            
+                ResultSet ResulQueryArticulo = stmtArticulo.executeQuery(Query);
+                while(ResulQueryArticulo.next()){
+                    Integer id = ResulQueryArticulo.getInt("ID");
+                    short activo = ResulQueryArticulo.getShort("Activo");
+                    String codigo = ResulQueryArticulo.getString("Codigo");
+                    String nombre = ResulQueryArticulo.getString("Nombre");
+                    String descripcion = ResulQueryArticulo.getString("Descripcion");
+                    BigDecimal precio = ResulQueryArticulo.getBigDecimal("Precio");
+                    int sMaximo = ResulQueryArticulo.getInt("SMaximo");
+                    int sMinimo = ResulQueryArticulo.getInt("SMinimo");
+                    int existencia = ResulQueryArticulo.getInt("Existencia");
+                    Date fechaCreacion = ResulQueryArticulo.getDate("FechaCreacion");
+                    Date fechaMod = ResulQueryArticulo.getDate("FechaMod");
+              
+                    fillArticulo(id,activo,codigo,nombre,descripcion,precio,sMaximo,sMinimo,existencia,fechaCreacion,fechaMod);
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+        public void prepararArticuloLote(String Index){
+        Conexion conex = new Conexion();
+        String Query = "SELECT * FROM `articulo_lote` WHERE `ID` = '" + Index + "'";
+        MysqlDataSource dataSourceArticuloLote = conex.getConnection();        
+        try(Connection conn = dataSourceArticuloLote.getConnection()){
+                Statement stmtArticuloLote = conn.createStatement();            
+                ResultSet ResulQueryArticuloLote = stmtArticuloLote.executeQuery(Query);
+                while(ResulQueryArticuloLote.next()){
+                    Integer id = ResulQueryArticuloLote.getInt("ID");
+                    short activo = ResulQueryArticuloLote.getShort("Activo");
+                    String codigo = ResulQueryArticuloLote.getString("Codigo");
+                    long cantidad = ResulQueryArticuloLote.getLong("Cantidad");
+                    Date fechaElaboracion = ResulQueryArticuloLote.getDate("FechaElaboracion");
+                    Date fecbaCaducidad = ResulQueryArticuloLote.getDate("FecbaCaducidad");
+                    Date fechaCreacion = ResulQueryArticuloLote.getDate("FechaCreacion");
+                    Date fechaMod = ResulQueryArticuloLote.getDate("FechaMod");                    
+                    fillArticuloLote( id,  activo,  codigo,  cantidad,  fechaElaboracion,  fecbaCaducidad,  fechaCreacion,  fechaMod);        
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    private void fillVenta(Integer id, int activo, String estadoDoc, String cliente, String rfc, String domicilio, String numExt, String numInt, String cp, String colonia, String telefono, BigDecimal subTotal, BigDecimal iva, BigDecimal total, Date fechaElaboracion, Date fechaCreacion, Date fechaMod){
+        venta = new Venta( id,  activo,  estadoDoc,  cliente,  rfc,  domicilio,  numExt,  numInt,  cp,  colonia,  telefono,  subTotal,  iva,  total,  fechaElaboracion,  fechaCreacion,  fechaMod);
+    } 
+    private void fillVentaConcepto(Integer id, int activo, String prodCodigo, int cantidad, String drescripcion, BigDecimal precioUnitario, Date fechaCreacion, Date fechaMod){
+        VentaConcepto vc = new VentaConcepto( id, activo,  prodCodigo,  cantidad,  drescripcion,  precioUnitario,  fechaCreacion,  fechaMod);
+        vc.setIDArticuloLote(articulolote);
+        vc.setIDArticulo(articulo);
+        ventaconcepto.add(vc);
+    } 
+    private void fillVentaMP(Integer id, Integer activo, String codigo, String descripcion, Date fechaCreacion, Date fechaMod){
+        ventamp = new VentaMp( id, activo, codigo,  descripcion,  fechaCreacion,  fechaMod);
+    } 
+    private void fillVentaPago(Integer id, int activo, BigDecimal monto, String autorizo, Date fechaPago, Date fechaCreacion, Date fechaMod){
+        VentaPago vp = new VentaPago( id,  activo,  monto, autorizo,  fechaPago,  fechaCreacion,  fechaMod);
+        vp.setIDVentaMP(ventamp);
+        ventapago.add(vp);
+    }
+    private void fillArticulo(Integer id, short activo, String codigo, String nombre, String descripcion, BigDecimal precio, int sMaximo, int sMinimo, int existencia, Date fechaCreacion, Date fechaMod){
+        articulo = new Articulo(id,activo,codigo,nombre,descripcion,precio,sMaximo,sMinimo,existencia,fechaCreacion,fechaMod);
+    }
+    private void fillArticuloLote(Integer id, short activo, String codigo, long cantidad, Date fechaElaboracion, Date fecbaCaducidad, Date fechaCreacion, Date fechaMod){
+        articulolote = new ArticuloLote(id,activo,codigo,cantidad,fechaElaboracion,fecbaCaducidad,fechaCreacion,fechaMod);
     }
     public void prepararInsVenta(){
         
@@ -368,9 +546,51 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         
         return true;        
     }
-    private void fillArticuloVenta(){
-    }    
+    private void limpiarTablaTablaConceptos(){
+        DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            model.removeRow(0);
+        } 
+    }
+    private void agregarRowTTablaConceptos(String IDArticulo, String IDArticuloLote, String Codigo, String Cantidad, String Descripcion, String Stock, String PrecioU, String Total){
+        DefaultTableModel model = (DefaultTableModel) TablaConceptos.getModel();
+        model.addRow(new Object[]{IDArticulo,IDArticuloLote,Codigo,Cantidad,Descripcion,Stock,PrecioU,Total});
+    }
+    
+    private void fillTablaConceptos(){
+        try{
+            limpiarTablaTablaConceptos();
+        Iterator<VentaConcepto> itVentaConceto = venta.getVentaConceptoCollection().iterator();
+        while (itVentaConceto.hasNext()){
+            VentaConcepto vc = itVentaConceto.next();
+            String IDArticulo = vc.getIDArticulo().getId().toString();
+            String IDArticuloLote = vc.getIDArticuloLote().getId().toString();
+            String Codigo = vc.getProdCodigo();
+            Integer Cantidad = vc.getCantidad();
+            String Descripcion = vc.getDrescripcion();
+            Integer Stock = vc.getCantidad();
+            String PrecioU = vc.getPrecioUnitario().toString();            
+            agregarRowTTablaConceptos(IDArticulo, IDArticuloLote, Codigo, Cantidad.toString(), Descripcion, Stock.toString(), PrecioU, "0");          
+        }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }       
+        
+    }
     private void fillFormulario(){
+        txtCliente.setText(venta.getCliente());
+        txtRfc.setText(venta.getRfc());
+        txtDomicilio.setText(venta.getDomicilio());
+        txtNumero.setText(venta.getNumExt());
+        txtCp.setText(venta.getCp());
+        txtColonia.setText(venta.getColonia());
+        txtTelefono.setText(venta.getTelefono());
+        txtSubtotal.setText(venta.getSubTotal().toString());
+        txtIva.setText(venta.getIva().toString());
+        txtTotal.setText(venta.getTotal().toString());
+        txtLetras.setText(generarNumeroLetras(venta.getTotal().setScale(2,BigDecimal.ROUND_HALF_DOWN)));
+        fillTablaConceptos();
     }
 
     /**
@@ -413,7 +633,6 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         btnGenerar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         txtEfectivo = new javax.swing.JLabel();
 
@@ -586,14 +805,6 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, -1, -1));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 580, -1, -1));
-
         jButton2.setBackground(new java.awt.Color(153, 51, 0));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -603,7 +814,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, 130, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 560, 130, -1));
 
         txtEfectivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
@@ -649,12 +860,6 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        setTotales();
     }//GEN-LAST:event_formWindowOpened
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CompletarVenta cv = new CompletarVenta();
-        cv.prepararInsPago("1");
-        cv.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         BuscarVenta buscar = new BuscarVenta();
@@ -703,7 +908,6 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGenerar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

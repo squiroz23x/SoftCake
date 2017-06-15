@@ -6,7 +6,14 @@
 package Ventas;
 
 import Ventanas.Menu;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import Ventanas.Conexion;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.math.BigDecimal;
+import java.sql.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +31,81 @@ public class BuscarVenta extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
         this.setLocationRelativeTo(null);
     }
+    private void limpiarTablaVentas(){
+        DefaultTableModel model = (DefaultTableModel) TablaVentas.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            model.removeRow(0);
+        } 
+    }
+    private void agregarRowTablaVentas(String ID, String EstadoV, String Cliente, String RFC, String SubTotal, String IVA, String Total, String Fecha){
+        DefaultTableModel model = (DefaultTableModel) TablaVentas.getModel();
+        model.addRow(new Object[]{ID,EstadoV,Cliente,RFC,SubTotal,IVA,Total,Fecha});
+    }
+    private String getQuery(String ID,String Cliente, String RFC, String EstadoV, String FechaInicio, String FechaFin){
+        String Query = "SELECT * FROM `venta` WHERE 1 ";
+        
+        if ("".equals(ID)){
+            Query += "AND `FechaElaboracion`> '" + FechaInicio + " 00:00:00' AND `FechaElaboracion` < '" + FechaFin + " 23:59:59' ";
+            if (!"".equals(Cliente)){
+                Query += "AND `Cliente` LIKE '%" + Cliente + "%' ";
+            }
+            if (!"".equals(RFC)){
+                Query += "AND `RFC` LIKE '%" + RFC + "%' ";
+            }
+            if (!"Todos los atributos".equals(EstadoV)){
+                Query += "AND `EstadoDoc` = '" + EstadoV + "'";
+            }        
+                
+        }else{
+            Query += "AND `ID` = '" + ID + "' ";
+        }
+        Query += "ORDER BY `FechaElaboracion`";
+        
+        
+        
+        return Query;
+    }
+    private void realizarBusqueda(){
+        limpiarTablaVentas();
+        String ID = "";
+        String Cliente = "";
+        String RFC = "";
+        String EstadoVenta = "";
+        Calendar FI = Calendar.getInstance();
+        FI.set(Calendar.DAY_OF_MONTH, 1);
+        String FechaInicio = new SimpleDateFormat("yyyy-MM-dd").format(dcFechaInicio.getDate());
+        String FechaFin = new SimpleDateFormat("yyyy-MM-dd").format(dcFechaFin.getDate());
+        Boolean Valida = true;
+        if (Valida){
+            ID = txtCodigo.getText();
+            Cliente = txtCliente.getText();
+            RFC = txtRFC.getText();
+            EstadoVenta = cmbEstado.getSelectedItem().toString();
+            Conexion conex = new Conexion();
+            String Query = getQuery(ID,Cliente,RFC,EstadoVenta,FechaInicio,FechaFin);
+            MysqlDataSource dataSource = conex.getConnection();        
+            try(Connection conn = dataSource.getConnection()){
+                    Statement stmt = conn.createStatement();            
+                    ResultSet ResulQuery = stmt.executeQuery(Query);
+                    while(ResulQuery.next()){
+                        Integer IDq = ResulQuery.getInt("ID");
+                        String EstadoVq = ResulQuery.getString("EstadoDoc");
+                        String Clienteq = ResulQuery.getString("Cliente");
+                        String RFCq = ResulQuery.getString("RFC");
+                        BigDecimal SubTotalq = ResulQuery.getBigDecimal("SubTotal");
+                        BigDecimal IVAq = ResulQuery.getBigDecimal("IVA");
+                        BigDecimal Totalq = ResulQuery.getBigDecimal("Total");
+                        Date Fechaq = ResulQuery.getDate("FechaElaboracion");
+                        String FechaS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Fechaq.getDate());
+                        agregarRowTablaVentas(IDq.toString() , EstadoVq, Clienteq,  RFCq, SubTotalq.toString(), IVAq.toString(), Totalq.toString(), FechaS);
+                    }
+            }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,e);
+            } 
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,10 +133,19 @@ public class BuscarVenta extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnRealizar = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        dcFechaInicio = new com.toedter.calendar.JDateChooser();
+        dcFechaFin = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -83,14 +174,14 @@ public class BuscarVenta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Estado venta", "Cliente", "RFC", "Sub total", "IVA", "Total"
+                "ID", "Estado venta", "Cliente", "RFC", "Sub total", "IVA", "Total", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -103,16 +194,16 @@ public class BuscarVenta extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TablaVentas);
         if (TablaVentas.getColumnModel().getColumnCount() > 0) {
-            TablaVentas.getColumnModel().getColumn(0).setResizable(false);
-            TablaVentas.getColumnModel().getColumn(0).setPreferredWidth(150);
             TablaVentas.getColumnModel().getColumn(1).setResizable(false);
             TablaVentas.getColumnModel().getColumn(1).setPreferredWidth(150);
             TablaVentas.getColumnModel().getColumn(2).setResizable(false);
             TablaVentas.getColumnModel().getColumn(2).setPreferredWidth(150);
             TablaVentas.getColumnModel().getColumn(3).setResizable(false);
             TablaVentas.getColumnModel().getColumn(3).setPreferredWidth(150);
+            TablaVentas.getColumnModel().getColumn(4).setResizable(false);
             TablaVentas.getColumnModel().getColumn(4).setPreferredWidth(150);
             TablaVentas.getColumnModel().getColumn(5).setPreferredWidth(150);
+            TablaVentas.getColumnModel().getColumn(6).setPreferredWidth(150);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 560, 200));
@@ -132,13 +223,18 @@ public class BuscarVenta extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Estado venta:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        jLabel5.setText("Fecha Inicio");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         cmbEstado.setBackground(new java.awt.Color(153, 51, 0));
         cmbEstado.setMaximumRowCount(5);
-        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Pagado", "No pagado", "Cancelado", "Todos los atributos" }));
-        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 120, -1));
+        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los atributos", "PAGADO", "NOPAGADO", "CANCELADO" }));
+        cmbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEstadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 150, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -170,6 +266,11 @@ public class BuscarVenta extends javax.swing.JFrame {
         btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 150, -1, -1));
 
         btnModificar.setBackground(new java.awt.Color(153, 51, 0));
@@ -194,7 +295,26 @@ public class BuscarVenta extends javax.swing.JFrame {
         });
         getContentPane().add(btnRealizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 440, -1, -1));
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Fecha Fin");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Estado venta:");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+
+        dcFechaInicio.setDateFormatString("dd/MM/yyyy");
+        getContentPane().add(dcFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 160, -1));
+        getContentPane().add(dcFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 150, 160, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
+        jLabel1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jLabel1ComponentShown(evt);
+            }
+        });
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 580));
 
         pack();
@@ -245,14 +365,41 @@ public class BuscarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRFCKeyTyped
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        GenerarVenta generar = new GenerarVenta();
-        generar.setVisible(true);
-        this.dispose();
+        Integer CurrentRow = this.TablaVentas.getSelectedRow();        
+        if (CurrentRow>-1){
+            String ID = TablaVentas.getValueAt(CurrentRow, 0).toString();
+            GenerarVenta generar = new GenerarVenta();
+            generar.prepararModVenta(ID);
+            generar.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, "Favor de sleccionar una opcion", "Error", 0);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnRealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarActionPerformed
         
     }//GEN-LAST:event_btnRealizarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       realizarBusqueda();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEstadoActionPerformed
+
+    private void jLabel1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel1ComponentShown
+        // TODO add your handling code here
+    }//GEN-LAST:event_jLabel1ComponentShown
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        Calendar FI = Calendar.getInstance();
+        FI.set(Calendar.DAY_OF_MONTH, 1);
+        this.dcFechaFin.setDate(Calendar.getInstance().getTime());
+        this.dcFechaInicio.setDate(FI.getTime());
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
@@ -296,7 +443,10 @@ public class BuscarVenta extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRealizar;
     private javax.swing.JComboBox<String> cmbEstado;
+    private com.toedter.calendar.JDateChooser dcFechaFin;
+    private com.toedter.calendar.JDateChooser dcFechaInicio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -305,6 +455,7 @@ public class BuscarVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCodigo;
