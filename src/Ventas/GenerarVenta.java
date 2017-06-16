@@ -363,6 +363,24 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         prepararVentaPago(venta.getId().toString());
         venta.setVentaPagoCollection(ventapago);
         fillFormulario();
+        txtCliente.setEnabled(false);
+        txtRfc.setEnabled(false);
+        txtDomicilio.setEnabled(false);
+        txtNumero.setEnabled(false);
+        txtCp.setEnabled(false);
+        txtColonia.setEnabled(false);
+        txtTelefono.setEnabled(false);
+        txtSubtotal.setEnabled(false);
+        txtIva.setEnabled(false);
+        txtTotal.setEnabled(false);
+        txtLetras.setEnabled(false);
+        btnAgregar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnGenerar.setEnabled(false);
+        btnAgregar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnGenerar.setVisible(false);
+        
     }
     public void prepararVenta(String IDVenta){
         Conexion conex = new Conexion();
@@ -633,7 +651,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         btnGenerar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCanelar = new javax.swing.JButton();
         txtEfectivo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -825,16 +843,16 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(153, 51, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cancelar Venta");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCanelar.setBackground(new java.awt.Color(153, 51, 0));
+        btnCanelar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnCanelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCanelar.setText("Cancelar Venta");
+        btnCanelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCanelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 560, 130, -1));
+        getContentPane().add(btnCanelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 560, 130, -1));
 
         txtEfectivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
@@ -881,11 +899,9 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
        setTotales();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        BuscarVenta buscar = new BuscarVenta();
-        buscar.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnCanelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanelarActionPerformed
+
+    }//GEN-LAST:event_btnCanelarActionPerformed
 
     private void txtSubtotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtotalKeyTyped
         txtSubtotal.setEditable(false);
@@ -942,9 +958,9 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaConceptos;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCanelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGenerar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

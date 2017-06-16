@@ -6,9 +6,11 @@
 package Ventanas;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -25,7 +27,7 @@ public class Conexion {
     
     public MysqlDataSource getConnection()
     {
-        MysqlDataSource dataSource = new MysqlDataSource();
+            MysqlDataSource dataSource = new MysqlDataSource();
             dataSource.setServerName(SERVER);
             dataSource.setDatabaseName(DATABASE);
             dataSource.setUser(USERNAME);
@@ -37,4 +39,19 @@ public class Conexion {
             }
             return null;
     }
+    public Connection reportes(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://"+SERVER+"/"+DATABASE,USERNAME,PASSWORD);
+            return con;
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
