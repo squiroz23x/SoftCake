@@ -14,6 +14,7 @@ import Reportes.GenerarReportes;
 import Ventanas.Conexion;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,6 +184,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 630, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 630, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(113, 22, 2));
@@ -551,46 +557,57 @@ public class RegistroUsuario extends javax.swing.JFrame {
         empleado.setPassword(txtPassword.getText());
     }
     
-    private void modEmpleado(){       
+    private void modEmpleado(){
         if (!"".equals(txtNombre.getText()) && !"".equals(txtApellidoP.getText()) && !"".equals(txtApellidoM.getText()) && CalendarFecha.getDate() !=null && !"".equals(txtDireccion.getText()) && !"".equals(txtNumeroE.getText()) && !"".equals(txtColonia.getText()) && !"".equals(txtCp.getText()) && !"Seleccionar".equals(cmbEstado.getSelectedItem()) && !"".equals(txtMunicipio.getText()) && !"".equals(txtTelefono.getText()) && !"".equals(txtIdentificador.getText()) && !"".equals(txtUsuario.getText()) && !"".equals(txtPassword.getText())){
             updateEmpleado();
-            if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
-                SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
-                String fechanacimiento = date.format(empleado.getFechaNacimiento());        
-                Conexion conex = new Conexion();
-                String Query = ("UPDATE empleados SET "
-                        + "Activo='"+ empleado.getActivo() +"',"
-                        + "Nombre='"+ empleado.getNombre() +"',"
-                        + "ApellidoP='"+ empleado.getApellidoP() +"',"
-                        + "ApellidoM='"+ empleado.getApellidoM() +"',"
-                        + "FechaNacimiento='"+ fechanacimiento +"',"
-                        + "Direccion='"+ empleado.getDireccion() +"',"
-                        + "NumExt='"+ empleado.getNumExt() +"',"
-                        + "NumInt='"+ empleado.getNumInt() +"',"
-                        + "CP='"+ empleado.getCp() +"',"
-                        + "Colonia='"+ empleado.getColonia() +"',"
-                        + "Estado='"+ empleado.getEstado() +"',"
-                        + "Municipio='"+ empleado.getMunicipio() +"',"
-                        + "Telefono='"+ empleado.getTelefono() +"',"
-                        + "Ext='"+ empleado.getExt() +"',"
-                        + "Celular='"+ empleado.getCelular() +"',"
-                        + "Email='"+ empleado.getEmail() +"',"
-                        + "Facebook='"+ empleado.getFacebook() +"',"
-                        + "Identificador='"+ empleado.getIdentificador() +"',"
-                        + "Usuario='"+ empleado.getUsuario() +"',"
-                        + "Password='"+ empleado.getPassword() +"',"
-                        + "FechaMod=CURRENT_TIMESTAMP "
-                        + "WHERE ID="+empleado.getId());
-                MysqlDataSource dataSource = conex.getConnection();        
-                try(Connection conn = dataSource.getConnection()){
-                    Statement stmt = conn.createStatement();          
-                    stmt.executeUpdate(Query);
-                    JOptionPane.showMessageDialog(null,"Los datos fueron modificados satisfactoriamente.");
-                }catch(SQLException e){
-                    JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+            updateEmpleado();
+            Calendar Hoy = Calendar.getInstance();
+            Calendar Calendario = Calendar.getInstance();
+            Calendario.setTime(CalendarFecha.getDate());       
+            Integer Ano = Calendario.get(Calendar.YEAR);
+            Ano +=18;
+            Calendario.set(Calendar.YEAR, Ano);
+            if (Calendario.before(Hoy)) {
+                if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
+                    SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+                    String fechanacimiento = date.format(empleado.getFechaNacimiento());        
+                    Conexion conex = new Conexion();
+                    String Query = ("UPDATE empleados SET "
+                            + "Activo='"+ empleado.getActivo() +"',"
+                            + "Nombre='"+ empleado.getNombre() +"',"
+                            + "ApellidoP='"+ empleado.getApellidoP() +"',"
+                            + "ApellidoM='"+ empleado.getApellidoM() +"',"
+                            + "FechaNacimiento='"+ fechanacimiento +"',"
+                            + "Direccion='"+ empleado.getDireccion() +"',"
+                            + "NumExt='"+ empleado.getNumExt() +"',"
+                            + "NumInt='"+ empleado.getNumInt() +"',"
+                            + "CP='"+ empleado.getCp() +"',"
+                            + "Colonia='"+ empleado.getColonia() +"',"
+                            + "Estado='"+ empleado.getEstado() +"',"
+                            + "Municipio='"+ empleado.getMunicipio() +"',"
+                            + "Telefono='"+ empleado.getTelefono() +"',"
+                            + "Ext='"+ empleado.getExt() +"',"
+                            + "Celular='"+ empleado.getCelular() +"',"
+                            + "Email='"+ empleado.getEmail() +"',"
+                            + "Facebook='"+ empleado.getFacebook() +"',"
+                            + "Identificador='"+ empleado.getIdentificador() +"',"
+                            + "Usuario='"+ empleado.getUsuario() +"',"
+                            + "Password='"+ empleado.getPassword() +"',"
+                            + "FechaMod=CURRENT_TIMESTAMP "
+                            + "WHERE ID="+empleado.getId());
+                    MysqlDataSource dataSource = conex.getConnection();        
+                    try(Connection conn = dataSource.getConnection()){
+                        Statement stmt = conn.createStatement();          
+                        stmt.executeUpdate(Query);
+                        JOptionPane.showMessageDialog(null,"Los datos fueron modificados satisfactoriamente.");
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
                 }
             }else{
-                JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
+                JOptionPane.showMessageDialog(null, "Menor de 18 Años");  
             }
         }else{
             JOptionPane.showMessageDialog(null,"Los campos marcados con * son obligatorios.");
@@ -625,46 +642,54 @@ public class RegistroUsuario extends javax.swing.JFrame {
     }
     
     private void insEmpleado(){       
-        
-        Boolean ValidacionesNulas = true;
         if (!"".equals(txtNombre.getText()) && !"".equals(txtApellidoP.getText()) && !"".equals(txtApellidoM.getText()) && CalendarFecha.getDate() !=null && !"".equals(txtDireccion.getText()) && !"".equals(txtNumeroE.getText()) && !"".equals(txtColonia.getText()) && !"".equals(txtCp.getText()) && !"Seleccionar".equals(cmbEstado.getSelectedItem()) && !"".equals(txtMunicipio.getText()) && !"".equals(txtTelefono.getText()) && !"".equals(txtIdentificador.getText()) && !"".equals(txtUsuario.getText()) && !"".equals(txtPassword.getText())){
             updateEmpleado();
-            if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
-                SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
-                String fechanacimiento = date.format(empleado.getFechaNacimiento());        
-                Conexion conex = new Conexion();
-                String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"
-                        + empleado.getNombre()+"','"
-                        + empleado.getApellidoP()+"','"
-                        + empleado.getApellidoM()+"','"
-                        + fechanacimiento+"','"
-                        + empleado.getDireccion()+"','"
-                        + empleado.getNumExt()+"','"
-                        + empleado.getNumInt()+"','"
-                        + empleado.getCp()+"','"
-                        + empleado.getColonia()+"','"
-                        + empleado.getEstado()+"','"
-                        + empleado.getMunicipio()+"','"
-                        + empleado.getTelefono()+"','"
-                        + empleado.getExt()+"','"
-                        + empleado.getCelular()+"','"
-                        + empleado.getEmail()+"','"
-                        + empleado.getFacebook()+"','"
-                        + empleado.getIdentificador()+"','"
-                        + empleado.getUsuario()+"','"
-                        + empleado.getPassword()
-                        +"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");            
-                MysqlDataSource dataSource = conex.getConnection();        
-                try(Connection conn = dataSource.getConnection()){
-                    Statement stmt = conn.createStatement();          
-                    stmt.executeUpdate(Query);
-                    JOptionPane.showMessageDialog(null,"Registro realizado exitosamente.");
-                }catch(SQLException e){
-                    JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+            Calendar Hoy = Calendar.getInstance();
+            Calendar Calendario = Calendar.getInstance();
+            Calendario.setTime(CalendarFecha.getDate());       
+            Integer Ano = Calendario.get(Calendar.YEAR);
+            Ano +=18;
+            Calendario.set(Calendar.YEAR, Ano);
+            if (Calendario.before(Hoy)) {
+                if (validarUsuario(empleado.getUsuario(),empleado.getIdentificador())){
+                    SimpleDateFormat date = new SimpleDateFormat ("yyyy-MM-dd");
+                    String fechanacimiento = date.format(empleado.getFechaNacimiento());        
+                    Conexion conex = new Conexion();
+                    String Query = ("INSERT INTO `empleados` (`Activo`, `Nombre`, `ApellidoP`, `ApellidoM`, `FechaNacimiento`, `Direccion`, `NumExt`, `NumInt`, `CP`, `Colonia`, `Estado`, `Municipio`, `Telefono`, `Ext`, `Celular`, `Email`, `Facebook`, `Identificador`, `Usuario`, `Password`, `FechaCreacion`, `FechaMod`) VALUES ('1','"
+                            + empleado.getNombre()+"','"
+                            + empleado.getApellidoP()+"','"
+                            + empleado.getApellidoM()+"','"
+                            + fechanacimiento+"','"
+                            + empleado.getDireccion()+"','"
+                            + empleado.getNumExt()+"','"
+                            + empleado.getNumInt()+"','"
+                            + empleado.getCp()+"','"
+                            + empleado.getColonia()+"','"
+                            + empleado.getEstado()+"','"
+                            + empleado.getMunicipio()+"','"
+                            + empleado.getTelefono()+"','"
+                            + empleado.getExt()+"','"
+                            + empleado.getCelular()+"','"
+                            + empleado.getEmail()+"','"
+                            + empleado.getFacebook()+"','"
+                            + empleado.getIdentificador()+"','"
+                            + empleado.getUsuario()+"','"
+                            + empleado.getPassword()
+                            +"',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");            
+                    MysqlDataSource dataSource = conex.getConnection();        
+                    try(Connection conn = dataSource.getConnection()){
+                        Statement stmt = conn.createStatement();          
+                        stmt.executeUpdate(Query);
+                        JOptionPane.showMessageDialog(null,"Registro realizado exitosamente.");
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(null,"Error con la conexion de la base de datos: "+e);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
                 }
             }else{
-                JOptionPane.showMessageDialog(null,"El Usuario o Identificador ya existe, favor de proporcionar uno diferente.");
-            }   
+                JOptionPane.showMessageDialog(null, "Menor de 18 Años");  
+            }
         }else{
             JOptionPane.showMessageDialog(null,"Los campos marcados con * son obligatorios.");            
         }               
@@ -975,6 +1000,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
         GenerarReportes gr = new GenerarReportes();
         gr.ReporteEmpleado(empleado.getId());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jLabel12MouseClicked
 
     /**
      * @param args the command line arguments
