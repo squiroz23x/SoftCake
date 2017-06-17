@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Ventanas.*;
+import Ventas.CompletarVenta;
 import Ventas.GenerarVenta;
 
 /**
@@ -348,10 +349,13 @@ public class ExistenciaProductos extends javax.swing.JFrame {
             txtNombre.setText("");
         }
     }//GEN-LAST:event_txtNombreKeyTyped
-
+    GenerarVenta CompVenta = new GenerarVenta();
+    
+    public void setComopVenta ( GenerarVenta parametro){
+        CompVenta = parametro;
+    }
     private void lblVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblVentaMouseClicked
-        Menu menu = new Menu();
-        menu.setVisible(true);
+        CompVenta.setVisible(true);        
         this.dispose();
     }//GEN-LAST:event_lblVentaMouseClicked
 

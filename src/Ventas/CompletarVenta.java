@@ -50,8 +50,8 @@ public class CompletarVenta extends javax.swing.JFrame {
          setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
     }
 	private void insPago(){
-        Boolean ValidadNulo = true;        
-        if (ValidadNulo){
+              
+        if (!"".equals(txtMonto.getText()) && !"Selecionar".equals(cmbMetodoPago.getSelectedItem())){
             updatePago();
             if (validadPago()){
                 Conexion conex = new Conexion();
@@ -430,7 +430,6 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         txtVentaNumero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtVentaNumero.setEnabled(false);
         txtVentaNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtVentaNumeroActionPerformed(evt);
@@ -618,7 +617,7 @@ public class CompletarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        GenerarVenta venta = new GenerarVenta();
+        Menu venta = new Menu();
         venta.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel11MouseClicked

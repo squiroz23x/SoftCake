@@ -208,9 +208,8 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
 
         }
     }
-	private Integer insVenta(){
-        Boolean ValidadNulo = true;        
-        if (ValidadNulo){
+	private Integer insVenta(){       
+        if (!"".equals(txtCliente.getText()) && !"".equals(txtRfc.getText()) && !"".equals(txtDomicilio.getText()) && !"".equals(txtNumero.getText()) && !"".equals(txtCp.getText()) && !"".equals(txtColonia.getText()) && !"".equals(txtTelefono.getText()) &&  this.TablaConceptos.getRowCount() > 0){
             updateVenta();
             if (validadVenta()){
                 Conexion conex = new Conexion();                
@@ -245,10 +244,10 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
                 }catch(SQLException e){
                     JOptionPane.showMessageDialog(null,e);
                 }
-            }else{
+            }
+        }else{
                 JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
             }
-        }
         return 0;
     }
     
@@ -402,6 +401,8 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         btnAgregar.setVisible(false);
         btnEliminar.setVisible(false);
         btnGenerar.setVisible(false);
+        
+      
         
     }
     public void prepararVenta(String IDVenta){
@@ -851,27 +852,12 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(txtLetras, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 510, 490, -1));
 
         txtSubtotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtSubtotal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSubtotalKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 100, -1));
 
         txtIva.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtIva.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIvaKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, 100, -1));
 
         txtTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTotalKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, 100, -1));
 
         btnGenerar.setBackground(new java.awt.Color(153, 51, 0));
@@ -948,12 +934,14 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        Integer ID = insVenta();     
+        Integer ID = insVenta();
+        if (ID > 0){
         CompletarVenta completar = new CompletarVenta();
         completar.prepararInsPago(ID.toString());
         completar.Cajas();
         completar.setVisible(true);
         this.dispose();
+        }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -983,18 +971,6 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private void btnCanelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanelarActionPerformed
         eliVenta();
     }//GEN-LAST:event_btnCanelarActionPerformed
-
-    private void txtSubtotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtotalKeyTyped
-        txtSubtotal.setEditable(false);
-    }//GEN-LAST:event_txtSubtotalKeyTyped
-
-    private void txtIvaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIvaKeyTyped
-        txtIva.setEditable(false);
-    }//GEN-LAST:event_txtIvaKeyTyped
-
-    private void txtTotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyTyped
-        txtTotal.setEditable(false);
-    }//GEN-LAST:event_txtTotalKeyTyped
 
     private void txtLetrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLetrasKeyTyped
         txtLetras.setEditable(false);
@@ -1098,6 +1074,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private void txtCatalogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCatalogoActionPerformed
         ExistenciaProductos existencia = new ExistenciaProductos();
         existencia.MostrarCatalogo();
+        existencia.setComopVenta(this);
         existencia.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_txtCatalogoActionPerformed

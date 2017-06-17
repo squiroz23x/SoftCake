@@ -5,6 +5,7 @@
  */
 package Empleados;
 
+import Reportes.GenerarReportes;
 import Ventanas.Conexion;
 import Ventanas.Menu;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
@@ -215,6 +216,11 @@ public class ControlEmpleados extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Reporte General");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 100, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
@@ -383,6 +389,11 @@ public class ControlEmpleados extends javax.swing.JFrame {
             txtMaterno.setText("");
         }
     }//GEN-LAST:event_txtMaternoKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GenerarReportes gr = new GenerarReportes();
+        gr.ReporteEmpleados();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
