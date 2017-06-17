@@ -135,8 +135,6 @@ public class Menu extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        btnReporte = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaCaducidad = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -210,7 +208,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Control de inventario");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -225,12 +223,12 @@ public class Menu extends javax.swing.JFrame {
                 btnCerrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, -1, -1));
+        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cerrar sesión");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, -1, -1));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, 20, -1));
@@ -239,19 +237,6 @@ public class Menu extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("SoftCake");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, -1));
-
-        btnReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reporte.png"))); // NOI18N
-        btnReporte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Reporte de ventas");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, -1, -1));
 
         TablaCaducidad.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -426,13 +411,6 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
-    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
-        // TODO add your handling code here:
-        Reportes reporte = new Reportes();
-        reporte.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnReporteActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         About about = new About();
         about.setVisible(true);
@@ -536,7 +514,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnControl;
     private javax.swing.JButton btnInventario;
-    private javax.swing.JButton btnReporte;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnVenta;
     private javax.swing.JButton jButton1;
@@ -547,7 +524,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

@@ -413,7 +413,6 @@ public class CompletarVenta extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txtVendedor = new javax.swing.JTextField();
         btnPagar = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
@@ -557,18 +556,7 @@ public class CompletarVenta extends javax.swing.JFrame {
                 btnPagarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, -1, -1));
-
-        btnCerrar.setBackground(new java.awt.Color(153, 51, 0));
-        btnCerrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCerrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrar.setText("CERRAR");
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, -1, -1));
+        getContentPane().add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 450, -1, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -624,10 +612,6 @@ public class CompletarVenta extends javax.swing.JFrame {
     private void txtTotalPAgadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPAgadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalPAgadoActionPerformed
-
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-           JOptionPane.showMessageDialog(null,this.getIDVentaMPcmb());     // TODO add your handling code here:
-    }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         Menu venta = new Menu();
@@ -716,7 +700,6 @@ public class CompletarVenta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaVenta;
-    private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnMetodoPago;
     private javax.swing.JButton btnPagar;
     private javax.swing.JComboBox<String> cmbMetodoPago;
