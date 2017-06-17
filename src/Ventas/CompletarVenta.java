@@ -477,6 +477,16 @@ public class CompletarVenta extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(TablaVenta);
+        if (TablaVenta.getColumnModel().getColumnCount() > 0) {
+            TablaVenta.getColumnModel().getColumn(0).setResizable(false);
+            TablaVenta.getColumnModel().getColumn(0).setPreferredWidth(200);
+            TablaVenta.getColumnModel().getColumn(1).setResizable(false);
+            TablaVenta.getColumnModel().getColumn(1).setPreferredWidth(200);
+            TablaVenta.getColumnModel().getColumn(2).setResizable(false);
+            TablaVenta.getColumnModel().getColumn(2).setPreferredWidth(200);
+            TablaVenta.getColumnModel().getColumn(3).setResizable(false);
+            TablaVenta.getColumnModel().getColumn(3).setPreferredWidth(200);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, -1, 60));
 

@@ -813,13 +813,31 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
             new String [] {
                 "IDArticulo", "IDArticulo_Lote", "Codigo", "Cantidad", "Descripción", "Stock", "Precio Unitario", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         TablaConceptos.addHierarchyListener(new java.awt.event.HierarchyListener() {
             public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
                 TablaConceptosHierarchyChanged(evt);
             }
         });
         jScrollPane1.setViewportView(TablaConceptos);
+        if (TablaConceptos.getColumnModel().getColumnCount() > 0) {
+            TablaConceptos.getColumnModel().getColumn(0).setResizable(false);
+            TablaConceptos.getColumnModel().getColumn(1).setResizable(false);
+            TablaConceptos.getColumnModel().getColumn(2).setResizable(false);
+            TablaConceptos.getColumnModel().getColumn(3).setResizable(false);
+            TablaConceptos.getColumnModel().getColumn(4).setResizable(false);
+            TablaConceptos.getColumnModel().getColumn(5).setResizable(false);
+            TablaConceptos.getColumnModel().getColumn(6).setResizable(false);
+            TablaConceptos.getColumnModel().getColumn(7).setResizable(false);
+        }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 680, 140));
 
