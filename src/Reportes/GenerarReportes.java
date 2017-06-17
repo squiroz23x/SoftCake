@@ -18,7 +18,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
- * @author sergi
+
  */
 public class GenerarReportes {
     Conexion conexion = new Conexion();
@@ -29,13 +29,15 @@ public class GenerarReportes {
     
     String rtReporteEmpleado = "Reportes/Empleado.jasper";
     String rtReporteEmpleados = "Reportes/Empleados.jasper";
+    String rtReporteInventario = "Reportes/Inventario.jasper";
+    String rtReporteProducto = "Reportes/Producto.jasper";
+    String rtReporteVenta = "Reportes/Venta.jasper";
     
-    public void ReporteEmpleado(String pID, String pNombre){
+    public void ReporteEmpleado(Integer pID){
         try{
             jrReporte = (JasperReport) JRLoader.loadObject(rtReporteEmpleado);
             Map parametro = new HashMap();
-            parametro.put("IDEmpleado",pID);
-            parametro.put("Nombre",pNombre);
+            parametro.put("ID",pID);            
             jpReporte = JasperFillManager.fillReport(jrReporte, parametro, con);
             jvRepoerte = new JasperViewer(jpReporte,false);
             jvRepoerte.setTitle("Reporte de Empleado");
@@ -45,20 +47,46 @@ public class GenerarReportes {
         }
     }
     
-    public void ReporteEmpleados(String pID, String pNombre){
-        try{
-            Map parametro = new HashMap();
-            parametro.put("IDEmpleado",pID);
-            parametro.put("Nombre",pNombre);
-            jrReporte = (JasperReport) JRLoader.loadObject(rtReporteEmpleados);
-            
-            jpReporte = JasperFillManager.fillReport(jrReporte, parametro, con);
+    public void ReporteEmpleados(){
+        try{            
+            jrReporte = (JasperReport) JRLoader.loadObject(rtReporteEmpleados);            
+            jpReporte = JasperFillManager.fillReport(jrReporte, null, con);
             jvRepoerte = new JasperViewer(jpReporte,false);
-            jvRepoerte.setTitle("Reporte de Empleado");
+            jvRepoerte.setTitle("Reporte general de empleados");
             jvRepoerte.setVisible(true);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
     }
-    
+    public void ReporteInventario()
+    {
+        try
+        {
+           jrReporte = (JasperReport) JRLoader.loadObject(rtReporteInventario); 
+           jpReporte = JasperFillManager.fillReport(jrReporte, null, con);
+           jvRepoerte = new JasperViewer(jpReporte,false);
+           jvRepoerte.setTitle("Reporte general de inventario");
+           jvRepoerte.setVisible(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        
+    }
+    public void ReporteProducto(Integer pID)
+    {
+        try
+        {
+           jrReporte = (JasperReport) JRLoader.loadObject(rtReporteInventario); 
+           Map parametro = new HashMap();
+           parametro.put("ID",pID);    
+           jpReporte = JasperFillManager.fillReport(jrReporte, null, con);
+           jvRepoerte = new JasperViewer(jpReporte,false);
+           jvRepoerte.setTitle("Reporte general de inventario");
+           jvRepoerte.setVisible(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        
+    }
 }
+
