@@ -35,14 +35,31 @@ public class Menu extends javax.swing.JFrame {
          setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
     }
     
-    private void actualizarCaducados(){
-        String FECHA = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-        String Query = "UPDATE `articulo_lote` SET `Activo` = 0 WHERE `Activo` = 1 AND `FecbaCaducidad` < '"+FECHA+"'";
+    private void modQuery(String Query){
         Conexion conex = new Conexion();
         MysqlDataSource dataSource = conex.getConnection();        
         try(Connection conn = dataSource.getConnection()){
                 Statement stmt = conn.createStatement();            
                 stmt.executeUpdate(Query);
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    private void actualizarCaducados(){
+        String FECHA = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String Query = "SELECT `ID`,`IDArticulo` FROM `articulo_lote` WHERE `Activo` = 1 AND `FecbaCaducidad` < '"+FECHA+"'";
+        Conexion conex = new Conexion();
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                while(ResulQuery.next()){
+                    Integer ID = ResulQuery.getInt("ID");
+                    Integer IDArticulo = ResulQuery.getInt("IDArticulo");
+                    modQuery("UPDATE `articulo` SET `Existencia` = ( SELECT SUM(`Cantidad`) As Total FROM `articulo_lote` WHERE `Activo` = 1 AND `IDArticulo` = '" + IDArticulo.toString() + "' ) WHERE `ID` = '" + IDArticulo.toString() + "' ");
+                    modQuery("UPDATE `articulo_lote` SET `Activo` = 0 WHERE `ID` = "+ID.toString());                    
+                }                
         }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e);
         }
