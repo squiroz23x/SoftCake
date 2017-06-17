@@ -38,6 +38,11 @@ public class Inventario extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
+    public void Cajas()
+    {
+        txtExistencia.setEditable(false);
+    }
+    
     private void insArticulo(){
        if (!"".equals(txtCodigo.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtPrecio.getText()) && !"".equals(txtDescripcion.getText()) && !"Seleccionar".equals(cmbUnidad.getSelectedItem()) && !"".equals(txtMaximo.getText()) && !"".equals(txtMinimo.getText())){
              updateArticulo();
@@ -609,11 +614,6 @@ public class Inventario extends javax.swing.JFrame {
         jPanel3.add(lblExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         txtExistencia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtExistencia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtExistenciaKeyTyped(evt);
-            }
-        });
         jPanel3.add(txtExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 80, -1));
 
         btnModificarLote.setText("Modificar Lote");
@@ -790,13 +790,6 @@ public class Inventario extends javax.swing.JFrame {
             txtMinimo.setText("");
         }
     }//GEN-LAST:event_txtMinimoKeyTyped
-
-    private void txtExistenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtExistenciaKeyTyped
-        char c = evt.getKeyChar();
-        if(c<'0'||c>'9')evt.consume();
-        
-        txtExistencia.setEditable(false);
-    }//GEN-LAST:event_txtExistenciaKeyTyped
 
     private void lblFondo1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_lblFondo1ComponentShown
         // TODO add your handling code here:

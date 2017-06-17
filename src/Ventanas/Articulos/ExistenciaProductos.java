@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Ventanas.*;
+import Ventas.GenerarVenta;
 
 /**
  *
@@ -44,8 +45,8 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaProductos = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblExistencia = new javax.swing.JLabel();
+        lblBack = new javax.swing.JLabel();
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -53,10 +54,9 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         txtCodigo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
+        lblCatalogo = new javax.swing.JLabel();
+        lblVenta = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -110,18 +110,18 @@ public class ExistenciaProductos extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 710, 210));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Existencia de productos");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+        lblExistencia.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblExistencia.setForeground(new java.awt.Color(255, 255, 255));
+        lblExistencia.setText("Existencia de productos");
+        getContentPane().add(lblExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
+        lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                lblBackMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 410, -1, -1));
+        getContentPane().add(lblBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 410, -1, -1));
 
         btnModificar.setBackground(new java.awt.Color(153, 51, 0));
         btnModificar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -187,38 +187,42 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         });
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 130, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 470));
+        lblCatalogo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblCatalogo.setForeground(new java.awt.Color(255, 255, 255));
+        lblCatalogo.setText("Catalogo de productos");
+        getContentPane().add(lblCatalogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 230, -1));
 
-        jMenu1.setText("Productos");
-
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.png"))); // NOI18N
-        jMenuItem1.setText("Registro de productos");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+        lblVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
+        lblVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblVentaMouseClicked(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        getContentPane().add(lblVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 410, -1, -1));
 
-        jMenuBar1.add(jMenu1);
-
-        setJMenuBar(jMenuBar1);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    public void VentanaNormal()
+    {
+        lblVenta.setVisible(false);
+        lblCatalogo.setVisible(false);
+    }
+    public void MostrarCatalogo()
+    {
+        btnNuevo.setVisible(false);
+        btnModificar.setVisible(false);
+        lblExistencia.setVisible(false);
+        lblBack.setVisible(false);
+    }
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
         Menu menu = new Menu();
         menu.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Inventario inventario = new Inventario();
-        inventario.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_lblBackMouseClicked
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:        
@@ -299,6 +303,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
             Identificador = TablaProductos.getValueAt(RowSeleccionado, 0).toString();
             Inventario articulo = new Inventario();
             articulo.prepararModArticulo(Identificador);
+            articulo.Cajas();
             articulo.setVisible(true);
             this.dispose();
         }else{
@@ -344,6 +349,12 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
+    private void lblVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblVentaMouseClicked
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblVentaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -388,14 +399,13 @@ public class ExistenciaProductos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBack;
+    private javax.swing.JLabel lblCatalogo;
+    private javax.swing.JLabel lblExistencia;
+    private javax.swing.JLabel lblVenta;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

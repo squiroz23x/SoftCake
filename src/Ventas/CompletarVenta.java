@@ -33,6 +33,17 @@ public class CompletarVenta extends javax.swing.JFrame {
      ArticuloLote articulolote = new ArticuloLote();
      VentaPago indventapago = new VentaPago();
      
+     public void Cajas()
+    {
+        txtVentaNumero.setEditable(false);
+        txtCliente.setEditable(false);
+        txtRFC.setEditable(false);
+        txtTotalFacturado.setEditable(false);
+        txtTotalPAgado.setEditable(false);
+        txtTotalPagar.setEditable(false);
+        txtVendedor.setEditable(false);
+    }
+     
     public CompletarVenta() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -420,9 +431,9 @@ public class CompletarVenta extends javax.swing.JFrame {
 
         txtVentaNumero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtVentaNumero.setEnabled(false);
-        txtVentaNumero.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtVentaNumeroKeyTyped(evt);
+        txtVentaNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVentaNumeroActionPerformed(evt);
             }
         });
         getContentPane().add(txtVentaNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 150, -1));
@@ -438,20 +449,9 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
         txtCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtCliente.setEnabled(false);
-        txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtClienteKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 150, -1));
 
         txtRFC.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtRFC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtRFCKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtRFC, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 150, -1));
 
         TablaVenta.setModel(new javax.swing.table.DefaultTableModel(
@@ -502,11 +502,6 @@ public class CompletarVenta extends javax.swing.JFrame {
                 txtTotalFacturadoActionPerformed(evt);
             }
         });
-        txtTotalFacturado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTotalFacturadoKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtTotalFacturado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 150, -1));
 
         txtTotalPAgado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -515,19 +510,9 @@ public class CompletarVenta extends javax.swing.JFrame {
                 txtTotalPAgadoActionPerformed(evt);
             }
         });
-        txtTotalPAgado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTotalPAgadoKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtTotalPAgado, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 150, -1));
 
         txtTotalPagar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtTotalPagar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTotalPagarKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtTotalPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 150, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -549,11 +534,6 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
 
         txtVendedor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtVendedor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtVendedorKeyTyped(evt);
-            }
-        });
         getContentPane().add(txtVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 250, -1));
 
         btnPagar.setBackground(new java.awt.Color(153, 51, 0));
@@ -672,30 +652,6 @@ public class CompletarVenta extends javax.swing.JFrame {
       insPago();  // TODO add your handling code here:
     }//GEN-LAST:event_btnPagarActionPerformed
 
-    private void txtVentaNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVentaNumeroKeyTyped
-        txtVentaNumero.setEditable(false);
-    }//GEN-LAST:event_txtVentaNumeroKeyTyped
-
-    private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
-       // txtCliente.setEditable(false);
-    }//GEN-LAST:event_txtClienteKeyTyped
-
-    private void txtRFCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRFCKeyTyped
-       txtRFC.setEditable(false);
-    }//GEN-LAST:event_txtRFCKeyTyped
-
-    private void txtTotalFacturadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalFacturadoKeyTyped
-        txtTotalFacturado.setEditable(false);
-    }//GEN-LAST:event_txtTotalFacturadoKeyTyped
-
-    private void txtTotalPAgadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalPAgadoKeyTyped
-        txtTotalPAgado.setEditable(false);
-    }//GEN-LAST:event_txtTotalPAgadoKeyTyped
-
-    private void txtTotalPagarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalPagarKeyTyped
-        txtTotalPagar.setEditable(false);
-    }//GEN-LAST:event_txtTotalPagarKeyTyped
-
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped
         if(!Character.isDigit(evt.getKeyChar())&& evt.getKeyChar()!='.')
             evt.consume();
@@ -706,9 +662,9 @@ public class CompletarVenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMontoKeyTyped
 
-    private void txtVendedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVendedorKeyTyped
-        txtVendedor.setEditable(false);
-    }//GEN-LAST:event_txtVendedorKeyTyped
+    private void txtVentaNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaNumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtVentaNumeroActionPerformed
 
     /**
      * @param args the command line arguments

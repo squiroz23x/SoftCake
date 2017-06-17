@@ -298,12 +298,14 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
        GenerarVenta venta = new GenerarVenta();
+       venta.Cajas();
        venta.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnVentaActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
-          ExistenciaProductos existencia = new ExistenciaProductos();
+       ExistenciaProductos existencia = new ExistenciaProductos();
+       existencia.VentanaNormal();
        existencia.setVisible(true);
         this.dispose();
         

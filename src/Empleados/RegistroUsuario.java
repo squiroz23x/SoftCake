@@ -10,6 +10,7 @@ import java.sql.*;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.swing.JOptionPane;
 import DataBase.Empleados;
+import Reportes.GenerarReportes;
 import Ventanas.Conexion;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -93,6 +94,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
         lblfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,7 +116,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 600, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarioregistro.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, 230));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 210, 210));
 
         btnGuardar.setBackground(new java.awt.Color(153, 51, 0));
         btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -454,6 +456,17 @@ public class RegistroUsuario extends javax.swing.JFrame {
         jPanel4.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, 190, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 840, 90));
+
+        jButton1.setBackground(new java.awt.Color(153, 51, 0));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("GenerarReporte");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, -1));
 
         lblfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(lblfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 660));
@@ -958,6 +971,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GenerarReportes gr = new GenerarReportes();
+        gr.ReporteEmpleado(empleado.getId());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1000,6 +1018,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cmbEstado;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

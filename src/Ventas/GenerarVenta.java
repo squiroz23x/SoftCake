@@ -6,6 +6,7 @@
 package Ventas;
 
 import DataBase.*;
+import Ventanas.Articulos.ExistenciaProductos;
 import Ventanas.Menu;
 import java.math.BigDecimal;
 import javax.swing.ImageIcon;
@@ -14,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.event.*;
 import Ventanas.Conexion;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +32,13 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     /**
      * Creates new form Venta
      */
+    public void Cajas()
+    {
+        txtSubtotal.setEditable(false);
+        txtIva.setEditable(false);
+        txtTotal.setEditable(false);
+        txtLetras.setEditable(false);
+    }
     public GenerarVenta() {
         initComponents();
          this.setLocationRelativeTo(null);
@@ -666,6 +675,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         btnEliminar = new javax.swing.JButton();
         lblEstadoDoc = new javax.swing.JLabel();
         btnCanelar = new javax.swing.JButton();
+        txtCatalogo = new javax.swing.JButton();
         txtEfectivo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -705,6 +715,11 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         txtCliente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtClienteKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 290, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -713,6 +728,11 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
 
         txtRfc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtRfc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRfcKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 290, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -721,14 +741,24 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
 
         txtDomicilio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtDomicilio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDomicilioKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtDomicilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 490, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Número Int:");
+        jLabel8.setText("Número Ext:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
 
         txtNumero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 40, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -737,6 +767,11 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
 
         txtCp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtCp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCpKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtCp, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 60, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -745,6 +780,11 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
 
         txtColonia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtColonia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColoniaKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 150, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -753,6 +793,16 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, -1));
 
         txtTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, 150, -1));
 
         TablaConceptos.setModel(new javax.swing.table.DefaultTableModel(
@@ -873,6 +923,17 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         });
         getContentPane().add(btnCanelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 560, 130, -1));
 
+        txtCatalogo.setBackground(new java.awt.Color(153, 51, 0));
+        txtCatalogo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtCatalogo.setForeground(new java.awt.Color(255, 255, 255));
+        txtCatalogo.setText("Mostrar Catalogo");
+        txtCatalogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCatalogoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtCatalogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 400, 130, -1));
+
         txtEfectivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(txtEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 650));
@@ -890,6 +951,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         Integer ID = insVenta();     
         CompletarVenta completar = new CompletarVenta();
         completar.prepararInsPago(ID.toString());
+        completar.Cajas();
         completar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGenerarActionPerformed
@@ -937,6 +999,108 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private void txtLetrasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLetrasKeyTyped
         txtLetras.setEditable(false);
     }//GEN-LAST:event_txtLetrasKeyTyped
+
+    private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
+        char c = evt.getKeyChar();
+        if((c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 50;
+        if(txtCliente.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 50 caracteres, intente de nuevo", "Error", 0);
+            txtCliente.setText("");
+        }
+    }//GEN-LAST:event_txtClienteKeyTyped
+
+    private void txtRfcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRfcKeyTyped
+        char c = evt.getKeyChar();
+       if((c<'0'||c>'9')&&(c<'A'||c>'Z'))evt.consume();
+        
+        int longitud = 15;
+        if(txtRfc.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 15 caracteres, intente de nuevo", "Error", 0);
+            txtRfc.setText("");
+        }
+    }//GEN-LAST:event_txtRfcKeyTyped
+
+    private void txtDomicilioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDomicilioKeyTyped
+        char c = evt.getKeyChar();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 80;
+        if(txtDomicilio.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 80 caracteres, intente de nuevo", "Error", 0);
+            txtDomicilio.setText("");
+        }
+    }//GEN-LAST:event_txtDomicilioKeyTyped
+
+    private void txtNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyTyped
+        char c = evt.getKeyChar();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 10;
+        if(txtNumero.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtNumero.setText("");
+        }
+    }//GEN-LAST:event_txtNumeroKeyTyped
+
+    private void txtCpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpKeyTyped
+       char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 10;
+        if(txtCp.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 10 caracteres, intente de nuevo", "Error", 0);
+            txtCp.setText("");
+        }
+    }//GEN-LAST:event_txtCpKeyTyped
+
+    private void txtColoniaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyTyped
+         char c = evt.getKeyChar();
+        if((c<'0'||c>'9')&&(c<'A'||c>'Z')&&(c !=(char)KeyEvent.VK_SPACE))evt.consume();
+        
+        int longitud = 25;
+        if(txtColonia.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtColonia.setText("");
+        }
+    }//GEN-LAST:event_txtColoniaKeyTyped
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0'||c>'9')evt.consume();
+        
+        int longitud = 25;
+        if(txtTelefono.getText().length()>=longitud)
+        {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Este campo no puede ser mayor a 25 caracteres, intente de nuevo", "Error", 0);
+            txtTelefono.setText("");
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtCatalogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCatalogoActionPerformed
+        ExistenciaProductos existencia = new ExistenciaProductos();
+        existencia.MostrarCatalogo();
+        existencia.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_txtCatalogoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -997,6 +1161,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblEstadoDoc;
+    private javax.swing.JButton txtCatalogo;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtColonia;
     private javax.swing.JTextField txtCp;
