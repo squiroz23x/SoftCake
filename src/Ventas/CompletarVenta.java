@@ -6,6 +6,7 @@
 package Ventas;
 
 import DataBase.*;
+import Reportes.GenerarReportes;
 import javax.swing.ImageIcon;
 import Ventanas.Conexion;
 import Ventanas.Menu;
@@ -74,6 +75,8 @@ public class CompletarVenta extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null,"El pago se registro satisfactoriamente");
                         Menu vMenu = new Menu();
                         vMenu.setVisible(true);
+                        GenerarReportes Reporte = new GenerarReportes();
+                        Reporte.ReporteVenta(venta.getId());
                         this.dispose();
                 }catch(SQLException e){
                         JOptionPane.showMessageDialog(null,e);
@@ -659,6 +662,7 @@ public class CompletarVenta extends javax.swing.JFrame {
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
       insPago();  // TODO add your handling code here:
+      
     }//GEN-LAST:event_btnPagarActionPerformed
 
     private void txtMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoKeyTyped

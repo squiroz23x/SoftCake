@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
-		<![CDATA[SELECT articulo.*, articulo_lote.*, articulo.codigo as Jigay, articulo_lote.codigo as jigay1 FROM articulo LEFT JOIN articulo_lote ON articulo_lote.IDArticulo = articulo.ID WHERE articulo_lote.Activo = '1']]>
+		<![CDATA[SELECT articulo.*, articulo_lote.*, articulo.codigo as CodigoArticulo, articulo_lote.codigo as CodigoLote FROM articulo LEFT JOIN articulo_lote ON articulo_lote.IDArticulo = articulo.ID WHERE articulo_lote.Activo = '1']]>
 	</queryString>
 	<field name="ID" class="java.lang.Integer"/>
 	<field name="Activo" class="java.lang.Integer"/>
@@ -22,80 +22,133 @@
 	<field name="Cantidad" class="java.math.BigDecimal"/>
 	<field name="FechaElaboracion" class="java.sql.Date"/>
 	<field name="FecbaCaducidad" class="java.sql.Date"/>
-	<field name="Jigay" class="java.lang.String"/>
-	<field name="jigay1" class="java.lang.String"/>
+	<field name="CodigoArticulo" class="java.lang.String"/>
+	<field name="CodigoLote" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="40"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE GENERAL DE INVENTARIO]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<staticText>
-				<reportElement x="115" y="41" width="100" height="20"/>
+				<reportElement x="0" y="36" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CodigoArticulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="36" width="224" height="20"/>
 				<textElement/>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="233" y="41" width="100" height="20"/>
+				<reportElement x="324" y="36" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Descripcion]]></text>
+				<text><![CDATA[Precio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="41" width="100" height="20"/>
+				<reportElement x="424" y="36" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Cantidad]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="41" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[Jigay]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="450" y="41" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[jigay1]]></text>
+				<text><![CDATA[Existencia]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="75" splitType="Stretch">
+		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="115" y="0" width="100" height="20"/>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CodigoArticulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="224" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="233" y="0" width="100" height="20"/>
+				<reportElement x="324" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Descripcion}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Precio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="100" height="20"/>
+				<reportElement x="424" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{Existencia}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="41">
+			<textField>
+				<reportElement x="145" y="0" width="152" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CodigoLote}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="45" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CodigoLote]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="397" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{FecbaCaducidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="297" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[FecbaCaducidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="21" width="152" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{FechaElaboracion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="45" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[FechaElaboracion]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="397" y="1" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Cantidad}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="13" y="4" width="100" height="20"/>
+			<staticText>
+				<reportElement x="297" y="1" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{Jigay}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="455" y="0" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{jigay1}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="34" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="487" y="34" width="68" height="20"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SoftCake]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

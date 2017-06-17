@@ -7,6 +7,7 @@ package Ventanas;
 
 import Empleados.ControlEmpleados;
 import Empleados.RegistroUsuario;
+import Ventanas.Articulos.ConversionProductos;
 import Ventas.GenerarVenta;
 import Ventanas.Articulos.ExistenciaProductos;
 import Ventas.BuscarVenta;
@@ -150,6 +151,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -328,6 +330,14 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem13.setText("Convertir Productos");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem13);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Reportes");
@@ -391,6 +401,7 @@ public class Menu extends javax.swing.JFrame {
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
        GenerarVenta venta = new GenerarVenta();
        venta.Cajas();
+       venta.Boton();
        venta.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnVentaActionPerformed
@@ -447,6 +458,7 @@ public class Menu extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         GenerarVenta venta = new GenerarVenta();
         venta.setVisible(true);
+        venta.Boton();
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -477,6 +489,12 @@ public class Menu extends javax.swing.JFrame {
         actualizarCaducados();
         fillTablaCaducidad();
     }//GEN-LAST:event_formComponentShown
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        ConversionProductos convertir = new ConversionProductos();
+        convertir.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -541,6 +559,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

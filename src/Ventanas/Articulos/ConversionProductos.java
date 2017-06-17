@@ -479,6 +479,11 @@ public class ConversionProductos extends javax.swing.JFrame {
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, 20, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back.png"))); // NOI18N
+        jLabel12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jLabel12KeyTyped(evt);
+            }
+        });
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 460, -1, -1));
 
         btnBuscarDestino.setText("Buscar Destino");
@@ -678,6 +683,12 @@ public class ConversionProductos extends javax.swing.JFrame {
             this.dispose();            
         }
     }//GEN-LAST:event_btnPartirActionPerformed
+
+    private void jLabel12KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel12KeyTyped
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel12KeyTyped
 
     /**
      * @param args the command line arguments

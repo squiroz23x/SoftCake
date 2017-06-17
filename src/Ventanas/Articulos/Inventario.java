@@ -8,6 +8,7 @@ package Ventanas.Articulos;
 import DataBase.Articulo;
 import DataBase.ArticuloLote;
 import DataBase.ArticuloUnidad;
+import Reportes.GenerarReportes;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class Inventario extends javax.swing.JFrame {
     
     public void Cajas()
     {
-        txtExistencia.setEditable(false);
+        txtExistencia.setEditable(false);        
     }
     
     private void insArticulo(){
@@ -233,6 +234,7 @@ public class Inventario extends javax.swing.JFrame {
         btnAgregar.setVisible(false);
         fillCmbUnidad();
         fillFormulario();
+        btnReporte.setVisible(true);
   
     }
     public void prepararInsArticulo(){
@@ -244,6 +246,7 @@ public class Inventario extends javax.swing.JFrame {
         btnModificarLote.setVisible(false);
         btnModificar.setVisible(false);
         btnEliminar.setVisible(false);
+        this.btnReporte.setVisible(false);
         
     }
     private boolean validadArticulo(String Codigo){
@@ -393,6 +396,7 @@ public class Inventario extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         cmbUnidad = new javax.swing.JComboBox<>();
+        btnReporte = new javax.swing.JButton();
         btnUnidadNuevo = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -558,6 +562,17 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
         jPanel2.add(cmbUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 90, -1));
+
+        btnReporte.setBackground(new java.awt.Color(153, 51, 0));
+        btnReporte.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporte.setText("Generar Reporte");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, -1, -1));
 
         btnUnidadNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -873,6 +888,12 @@ public class Inventario extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         eliArticulo();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        GenerarReportes generar = new GenerarReportes();
+        generar.ReporteProducto(articulo.getId());
+        
+    }//GEN-LAST:event_btnReporteActionPerformed
         
     /**
      * @param args the command line arguments
@@ -916,6 +937,7 @@ public class Inventario extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnModificarLote;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JButton btnUnidadNuevo;
     private javax.swing.JComboBox<String> cmbUnidad;
     private javax.swing.JLabel jLabel11;

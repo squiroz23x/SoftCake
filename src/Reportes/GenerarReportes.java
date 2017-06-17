@@ -76,12 +76,28 @@ public class GenerarReportes {
     {
         try
         {
-           jrReporte = (JasperReport) JRLoader.loadObject(rtReporteInventario); 
+           jrReporte = (JasperReport) JRLoader.loadObject(rtReporteProducto); 
            Map parametro = new HashMap();
            parametro.put("ID",pID);    
-           jpReporte = JasperFillManager.fillReport(jrReporte, null, con);
+           jpReporte = JasperFillManager.fillReport(jrReporte, parametro, con);
            jvRepoerte = new JasperViewer(jpReporte,false);
            jvRepoerte.setTitle("Reporte general de inventario");
+           jvRepoerte.setVisible(true);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        
+    }
+    public void ReporteVenta(Integer pID)
+    {
+        try
+        {
+           jrReporte = (JasperReport) JRLoader.loadObject(rtReporteVenta); 
+           Map parametro = new HashMap();
+           parametro.put("ID",pID);    
+           jpReporte = JasperFillManager.fillReport(jrReporte, parametro, con);
+           jvRepoerte = new JasperViewer(jpReporte,false);
+           jvRepoerte.setTitle("Ticket de compra");
            jvRepoerte.setVisible(true);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);

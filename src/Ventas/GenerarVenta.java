@@ -6,6 +6,7 @@
 package Ventas;
 
 import DataBase.*;
+import Reportes.GenerarReportes;
 import Ventanas.Articulos.ExistenciaProductos;
 import Ventanas.Menu;
 import java.math.BigDecimal;
@@ -32,6 +33,10 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     /**
      * Creates new form Venta
      */
+    public void Boton(){
+        btnReporte.setVisible(false);
+        btnCanelar.setVisible(false);
+    }
     public void Cajas()
     {
         txtSubtotal.setEditable(false);
@@ -675,6 +680,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         lblEstadoDoc = new javax.swing.JLabel();
+        btnReporte = new javax.swing.JButton();
         btnCanelar = new javax.swing.JButton();
         txtCatalogo = new javax.swing.JButton();
         txtEfectivo = new javax.swing.JLabel();
@@ -916,6 +922,14 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         lblEstadoDoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(lblEstadoDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 330, 60));
 
+        btnReporte.setText("Ticket de Compra");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 560, -1, -1));
+
         btnCanelar.setBackground(new java.awt.Color(153, 51, 0));
         btnCanelar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCanelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -1097,6 +1111,11 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         this.dispose();
     }//GEN-LAST:event_txtCatalogoActionPerformed
 
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        GenerarReportes rp = new GenerarReportes();
+        rp.ReporteVenta(venta.getId());
+    }//GEN-LAST:event_btnReporteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1139,6 +1158,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private javax.swing.JButton btnCanelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGenerar;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

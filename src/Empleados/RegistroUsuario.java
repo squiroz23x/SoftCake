@@ -559,8 +559,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
     
     private void modEmpleado(){
         if (!"".equals(txtNombre.getText()) && !"".equals(txtApellidoP.getText()) && !"".equals(txtApellidoM.getText()) && CalendarFecha.getDate() !=null && !"".equals(txtDireccion.getText()) && !"".equals(txtNumeroE.getText()) && !"".equals(txtColonia.getText()) && !"".equals(txtCp.getText()) && !"Seleccionar".equals(cmbEstado.getSelectedItem()) && !"".equals(txtMunicipio.getText()) && !"".equals(txtTelefono.getText()) && !"".equals(txtIdentificador.getText()) && !"".equals(txtUsuario.getText()) && !"".equals(txtPassword.getText())){
-            updateEmpleado();
-            updateEmpleado();
+            updateEmpleado();            
             Calendar Hoy = Calendar.getInstance();
             Calendar Calendario = Calendar.getInstance();
             Calendario.setTime(CalendarFecha.getDate());       

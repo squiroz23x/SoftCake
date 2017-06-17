@@ -14,8 +14,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Ventanas.*;
-import Ventas.CompletarVenta;
 import Ventas.GenerarVenta;
+import Reportes.*;
 
 /**
  *
@@ -57,6 +57,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         lblCatalogo = new javax.swing.JLabel();
         lblVenta = new javax.swing.JLabel();
+        btnReporte = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
@@ -206,6 +207,17 @@ public class ExistenciaProductos extends javax.swing.JFrame {
             }
         });
         getContentPane().add(lblVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 410, -1, -1));
+
+        btnReporte.setBackground(new java.awt.Color(153, 51, 0));
+        btnReporte.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporte.setText("Reporte General");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 470));
@@ -365,6 +377,11 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblVentaMouseClicked
 
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        GenerarReportes generar = new GenerarReportes();
+        generar.ReporteInventario();
+    }//GEN-LAST:event_btnReporteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -405,6 +422,7 @@ public class ExistenciaProductos extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
