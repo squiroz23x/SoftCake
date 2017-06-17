@@ -149,7 +149,7 @@ public class ConversionProductos extends javax.swing.JFrame {
                     + "CURRENT_TIMESTAMP,"
                     + "CURRENT_TIMESTAMP)";
             if (updateLote(Query)){
-                Query = "UPDATE `articulo` SET `Existencia` = ( SELECT SUM(`Cantidad`) As Total FROM `articulo_lote` WHERE `Activo` = 1 AND `IDArticulo` = '" + idArticuloALD + "' ) WHERE `ID` = '" + idArticuloALD + "'";
+                Query = "UPDATE `articulo` SET `Existencia` = ( SELECT IFNULL(SUM(Cantidad),0) AS Total FROM articulo_lote WHERE Activo = 1 AND IDArticulo = '" + idArticuloALD + "' ) WHERE `ID` = '" + idArticuloALD + "'";
                 if (updateLote(Query)){
                     Integer Cantidad = Integer.parseInt(cantidadALO)-1;
                     if ( Cantidad == 0){
@@ -161,7 +161,7 @@ public class ConversionProductos extends javax.swing.JFrame {
                             + "WHERE "
                             + "`ID` = '" + idALO + "'";
                     if (updateLote(Query)){
-                        Query = "UPDATE `articulo` SET `Existencia` = ( SELECT SUM(`Cantidad`) As Total FROM `articulo_lote` WHERE `Activo` = 1 AND `IDArticulo` = '" + idArticuloALO + "' ) WHERE `ID` = '" + idArticuloALO + "'";
+                        Query = "UPDATE `articulo` SET `Existencia` = ( SELECT IFNULL(SUM(Cantidad),0) AS Total FROM articulo_lote WHERE Activo = 1 AND IDArticulo = '" + idArticuloALO + "' ) WHERE `ID` = '" + idArticuloALO + "'";
                         if (updateLote(Query)){
                             JOptionPane.showMessageDialog(null,"Conversion Realizada Exitosamente");
                             return true;

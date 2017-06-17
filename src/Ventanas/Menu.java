@@ -58,7 +58,7 @@ public class Menu extends javax.swing.JFrame {
                     Integer ID = ResulQuery.getInt("ID");
                     Integer IDArticulo = ResulQuery.getInt("IDArticulo");
                     modQuery("UPDATE `articulo_lote` SET `Activo` = 0 WHERE `ID` = "+ID.toString());
-                    modQuery("UPDATE `articulo` SET `Existencia` = ( SELECT SUM(`Cantidad`) As Total FROM `articulo_lote` WHERE `Activo` = 1 AND `IDArticulo` = '" + IDArticulo.toString() + "' ) WHERE `ID` = '" + IDArticulo.toString() + "' ");
+                    modQuery("UPDATE `articulo` SET `Existencia` = ( SELECT IFNULL(SUM(Cantidad),0) AS Total FROM articulo_lote WHERE Activo = 1 AND IDArticulo = '" + IDArticulo.toString() + "' ) WHERE `ID` = '" + IDArticulo.toString() + "' ");
                                         
                 }                
         }catch(SQLException e){
