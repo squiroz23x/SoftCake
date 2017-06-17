@@ -15,7 +15,9 @@ import javax.swing.event.*;
 import Ventanas.Conexion;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
@@ -292,38 +294,44 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
          
     }
     private void modVenta(){
-        Boolean ValidadNulo = true;        
-        if (ValidadNulo){
-            updateVenta();
-            if (validadVenta()){
-                Conexion conex = new Conexion();
-                String Query = "";
-                MysqlDataSource dataSource = conex.getConnection();        
-                try(Connection conn = dataSource.getConnection()){
-                        Statement stmt = conn.createStatement();            
-                        stmt.executeUpdate(Query);
-                }catch(SQLException e){
-                        JOptionPane.showMessageDialog(null,e);
-                }
-            }else{
-                JOptionPane.showMessageDialog(null,"El codigo del Venta esta en uso. Favor de proporcionar otro codigo.");
-            }
-        }else{
-            JOptionPane.showMessageDialog(null,"No se puede dejar campos vacios");
-        }
-        
+       
     }
     private void eliVenta(){
         Conexion conex = new Conexion();
-        String Query = "";
+        String Query = "UPDATE `venta` SET `EstadoDoc` = 'CANCELADO' WHERE `ID` = " + venta.getId().toString();
         MysqlDataSource dataSource = conex.getConnection();        
         try(Connection conn = dataSource.getConnection()){
-                Statement stmt = conn.createStatement();            
-                stmt.executeUpdate(Query);
-        }catch(SQLException e){
+            Statement stmt = conn.createStatement();            
+            stmt.executeUpdate(Query);
+            Query = "UPDATE `venta_pago` SET `Activo` = 0 WHERE `IDVenta` = "+ venta.getId().toString();
+            stmt.executeUpdate(Query);
+            try{               
+                Iterator<VentaConcepto> itVentaConceto = venta.getVentaConceptoCollection().iterator();
+                while (itVentaConceto.hasNext()){
+                    VentaConcepto vc = itVentaConceto.next();
+                    Query = "UPDATE `venta_concepto` SET `Activo`='0' WHERE `ID` = "+ vc.getId().toString();
+                    stmt.executeUpdate(Query);
+                    long Total = vc.getIDArticuloLote().getCantidad() + vc.getCantidad();
+                    Query = "UPDATE `articulo_lote` SET `Cantidad`= '"+Total+" ' WHERE `ID` = "+ vc.getIDArticuloLote().getId().toString();
+                    stmt.executeUpdate(Query);
+                    String FechaInicio = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+                    Query = "UPDATE `articulo_lote` SET `Activo`= 1 WHERE `ID` = "+vc.getIDArticuloLote().getId().toString()+" AND `Cantidad` > 0 AND `FecbaCaducidad` > '"+FechaInicio+"'";
+                    stmt.executeUpdate(Query);
+                    Query = "UPDATE `articulo` SET `Existencia` = ( SELECT SUM(`Cantidad`) As Total FROM `articulo_lote` WHERE `Activo` = 1 AND `IDArticulo` = '" + vc.getIDArticulo().getId().toString() + "' ) WHERE `ID` = '" + vc.getIDArticulo().getId().toString() + "' ";
+                    stmt.executeUpdate(Query);
+                    
+                    JOptionPane.showMessageDialog(null,"El socumento se cancelo exitosamente.");
+                    
+                    Menu menu = new Menu();
+                    menu.setVisible(true);
+                    this.dispose();                    
+                }
+            }catch (Exception e){
                 JOptionPane.showMessageDialog(null,e);
-        }
-        
+            }            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e);
+        }        
     }
     private void updateVenta(){
         Integer Activo = 1;
@@ -363,6 +371,11 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         prepararVentaPago(venta.getId().toString());
         venta.setVentaPagoCollection(ventapago);
         fillFormulario();
+        lblEstadoDoc.setText(venta.getEstadoDoc());
+        if ("CANCELADO".equals(venta.getEstadoDoc())){
+            btnCanelar.setEnabled(false);
+            btnCanelar.setVisible(false);            
+        }
         txtCliente.setEnabled(false);
         txtRfc.setEnabled(false);
         txtDomicilio.setEnabled(false);
@@ -579,18 +592,18 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private void fillTablaConceptos(){
         try{
             limpiarTablaTablaConceptos();
-        Iterator<VentaConcepto> itVentaConceto = venta.getVentaConceptoCollection().iterator();
-        while (itVentaConceto.hasNext()){
-            VentaConcepto vc = itVentaConceto.next();
-            String IDArticulo = vc.getIDArticulo().getId().toString();
-            String IDArticuloLote = vc.getIDArticuloLote().getId().toString();
-            String Codigo = vc.getProdCodigo();
-            Integer Cantidad = vc.getCantidad();
-            String Descripcion = vc.getDrescripcion();
-            Integer Stock = vc.getCantidad();
-            String PrecioU = vc.getPrecioUnitario().toString();            
-            agregarRowTTablaConceptos(IDArticulo, IDArticuloLote, Codigo, Cantidad.toString(), Descripcion, Stock.toString(), PrecioU, "0");          
-        }
+            Iterator<VentaConcepto> itVentaConceto = venta.getVentaConceptoCollection().iterator();
+            while (itVentaConceto.hasNext()){
+                VentaConcepto vc = itVentaConceto.next();
+                String IDArticulo = vc.getIDArticulo().getId().toString();
+                String IDArticuloLote = vc.getIDArticuloLote().getId().toString();
+                String Codigo = vc.getProdCodigo();
+                Integer Cantidad = vc.getCantidad();
+                String Descripcion = vc.getDrescripcion();
+                Integer Stock = vc.getCantidad();
+                String PrecioU = vc.getPrecioUnitario().toString();            
+                agregarRowTTablaConceptos(IDArticulo, IDArticuloLote, Codigo, Cantidad.toString(), Descripcion, Stock.toString(), PrecioU, "0");          
+            }
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
         }       
@@ -651,6 +664,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         btnGenerar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        lblEstadoDoc = new javax.swing.JLabel();
         btnCanelar = new javax.swing.JButton();
         txtEfectivo = new javax.swing.JLabel();
 
@@ -843,6 +857,11 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
         });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, -1, -1));
 
+        lblEstadoDoc.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        lblEstadoDoc.setForeground(new java.awt.Color(255, 0, 0));
+        lblEstadoDoc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblEstadoDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 330, 60));
+
         btnCanelar.setBackground(new java.awt.Color(153, 51, 0));
         btnCanelar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCanelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -900,7 +919,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCanelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanelarActionPerformed
-
+        eliVenta();
     }//GEN-LAST:event_btnCanelarActionPerformed
 
     private void txtSubtotalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtotalKeyTyped
@@ -977,6 +996,7 @@ public class GenerarVenta extends javax.swing.JFrame implements TableModelListen
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEstadoDoc;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtColonia;
     private javax.swing.JTextField txtCp;

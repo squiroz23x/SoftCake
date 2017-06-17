@@ -419,6 +419,7 @@ public class CompletarVenta extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         txtVentaNumero.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtVentaNumero.setEnabled(false);
         txtVentaNumero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtVentaNumeroKeyTyped(evt);

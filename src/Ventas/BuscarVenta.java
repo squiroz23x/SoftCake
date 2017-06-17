@@ -379,7 +379,21 @@ public class BuscarVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnRealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarActionPerformed
-        
+        Integer CurrentRow = this.TablaVentas.getSelectedRow();        
+        if (CurrentRow>-1){
+            String EstadoDoc = TablaVentas.getValueAt(CurrentRow, 1).toString();
+            if ("NOPAGADO".equals(EstadoDoc)){
+                String ID = TablaVentas.getValueAt(CurrentRow, 0).toString();
+                CompletarVenta pagos = new CompletarVenta();
+                pagos.prepararInsPago(ID);
+                pagos.setVisible(true);
+                this.dispose();
+            }else{
+               JOptionPane.showMessageDialog(this, "No Se puede pagar un documento Cancelado o Pagado.", "Error", 0); 
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Favor de sleccionar una opcion", "Error", 0);
+        }
     }//GEN-LAST:event_btnRealizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
