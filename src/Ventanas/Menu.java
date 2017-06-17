@@ -10,7 +10,15 @@ import Empleados.RegistroUsuario;
 import Ventas.GenerarVenta;
 import Ventanas.Articulos.ExistenciaProductos;
 import Ventas.BuscarVenta;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import Ventanas.Conexion;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import java.math.BigDecimal;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +33,67 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
          setIconImage(new ImageIcon(getClass().getResource("/Imagenes/iconcake.png")).getImage());
+    }
+    
+    private void actualizarCaducados(){
+        String FECHA = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String Query = "UPDATE `articulo_lote` SET `Activo` = 0 WHERE `Activo` = 1 AND `FecbaCaducidad` < '"+FECHA+"'";
+        Conexion conex = new Conexion();
+        MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                Statement stmt = conn.createStatement();            
+                stmt.executeUpdate(Query);
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    private void fillTablaCaducidad(){
+        Calendar FI = Calendar.getInstance();
+        Integer Day = FI.get(Calendar.DAY_OF_MONTH);
+        Day += 3;
+        FI.set(Calendar.DAY_OF_MONTH, Day);
+        String FECHA = new SimpleDateFormat("yyyy-MM-dd").format(FI.getTime());
+        String Query = "SELECT `articulo`.`Codigo` AS CodigoArticulo,`articulo`.`Nombre`,`articulo`.`Precio`,`articulo`.`Existencia`, `articulo_lote`.`Codigo` AS CodigoLote,`articulo_lote`.`Cantidad`,`articulo_lote`.`FechaElaboracion`,`articulo_lote`.`FecbaCaducidad` "
+                + "FROM `articulo` "
+                + "LEFT JOIN `articulo_lote` ON `articulo_lote`.`IDArticulo` = `articulo`.`ID` "
+                + "WHERE (`articulo_lote`.`Activo` = 1 AND `articulo_lote`.`FecbaCaducidad` < '"+FECHA+"') "
+                + "ORDER by `articulo_lote`.`FecbaCaducidad` ";
+        Conexion conex = new Conexion();
+	MysqlDataSource dataSource = conex.getConnection();        
+        try(Connection conn = dataSource.getConnection()){
+                limpiarTablaCaducidad();
+                Statement stmt = conn.createStatement();            
+                ResultSet ResulQuery = stmt.executeQuery(Query);
+                while(ResulQuery.next()){
+                    String CodigoArticulo = ResulQuery.getString("CodigoArticulo");
+                    String Nombre = ResulQuery.getString("Nombre");
+                    BigDecimal Precio = ResulQuery.getBigDecimal("Precio");
+                    Integer Existencia = ResulQuery.getInt("Existencia");
+                    String CodigoLote = ResulQuery.getString("CodigoLote");
+                    BigDecimal Cantidad = ResulQuery.getBigDecimal("Cantidad");
+                    Date FechaElaboracion = ResulQuery.getDate("FechaElaboracion");
+                    Date FechaCaducidad = ResulQuery.getDate("FecbaCaducidad");
+                    String FECHA1 = new SimpleDateFormat("yyyy-MM-dd").format(FechaElaboracion);
+                    String FECHA2 = new SimpleDateFormat("yyyy-MM-dd").format(FechaCaducidad);
+                    agregarRowTablaCaducidad(CodigoArticulo,Nombre,Precio.toString(),Existencia.toString(),CodigoLote,Cantidad.toString(),FECHA1,FECHA2);
+                }
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
+    
+    private void limpiarTablaCaducidad(){
+        DefaultTableModel model = (DefaultTableModel) TablaCaducidad.getModel();
+        int CountRows = model.getRowCount();        
+        for (int i = 0; i<CountRows; i++){
+            model.removeRow(0);
+        } 
+    }
+    private void agregarRowTablaCaducidad(String CodigoArticulo,String Nombre,String Precio,String Existencia,String CodigoLote,String Cantidad,String FechaElaboracion,String FechaCaducidad){
+        DefaultTableModel model = (DefaultTableModel) TablaCaducidad.getModel();
+        model.addRow(new Object[]{CodigoArticulo,Nombre,Precio,Existencia,CodigoLote,Cantidad,FechaElaboracion,FechaCaducidad});
     }
 
     /**
@@ -49,11 +118,11 @@ public class Menu extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnReporte = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaCaducidad = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        btnCaducidad = new javax.swing.JTextArea();
         lblFondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -77,6 +146,11 @@ public class Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SoftCake Menú principal");
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/venta.png"))); // NOI18N
@@ -85,7 +159,7 @@ public class Menu extends javax.swing.JFrame {
                 btnVentaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
+        getContentPane().add(btnVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, -1, -1));
 
         btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inventario.png"))); // NOI18N
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
@@ -93,7 +167,7 @@ public class Menu extends javax.swing.JFrame {
                 btnInventarioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, -1, -1));
+        getContentPane().add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
 
         btnControl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/empleado.png"))); // NOI18N
         btnControl.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +175,7 @@ public class Menu extends javax.swing.JFrame {
                 btnControlActionPerformed(evt);
             }
         });
-        getContentPane().add(btnControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, -1, -1));
+        getContentPane().add(btnControl, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -116,7 +190,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Control de inventario");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,7 +205,7 @@ public class Menu extends javax.swing.JFrame {
                 btnCerrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, -1, -1));
+        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -152,12 +226,24 @@ public class Menu extends javax.swing.JFrame {
                 btnReporteActionPerformed(evt);
             }
         });
-        getContentPane().add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, -1, -1));
+        getContentPane().add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Reporte de ventas");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, -1, -1));
+
+        TablaCaducidad.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo Lote", "Nombre", "Precio", "Existencia", "Codigo Lote", "Cantidad", "Elaboracion", "Caducidad"
+            }
+        ));
+        jScrollPane1.setViewportView(TablaCaducidad);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 790, 120));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/about.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +251,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -182,18 +268,6 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, -1, -1));
-
-        jScrollPane2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btnCaducidad.setBackground(new java.awt.Color(113, 22, 2));
-        btnCaducidad.setColumns(20);
-        btnCaducidad.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnCaducidad.setForeground(new java.awt.Color(255, 255, 255));
-        btnCaducidad.setRows(5);
-        btnCaducidad.setText("Los sigueintes productos\nestan cercanos a caducar:");
-        jScrollPane2.setViewportView(btnCaducidad);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 220, -1));
 
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cafe.jpg"))); // NOI18N
         lblFondo.setMaximumSize(new java.awt.Dimension(750, 430));
@@ -380,6 +454,12 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        actualizarCaducados();
+        fillTablaCaducidad();
+    }//GEN-LAST:event_formComponentShown
+
     /**
      * @param args the command line arguments
      */
@@ -416,7 +496,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea btnCaducidad;
+    private javax.swing.JTable TablaCaducidad;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnControl;
     private javax.swing.JButton btnInventario;
@@ -451,7 +531,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFondo;
     // End of variables declaration//GEN-END:variables
 }
