@@ -105,8 +105,14 @@ public class ExistenciaProductos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TablaProductos);
         if (TablaProductos.getColumnModel().getColumnCount() > 0) {
+            TablaProductos.getColumnModel().getColumn(0).setResizable(false);
+            TablaProductos.getColumnModel().getColumn(1).setResizable(false);
             TablaProductos.getColumnModel().getColumn(1).setPreferredWidth(150);
+            TablaProductos.getColumnModel().getColumn(2).setResizable(false);
             TablaProductos.getColumnModel().getColumn(2).setPreferredWidth(200);
+            TablaProductos.getColumnModel().getColumn(3).setResizable(false);
+            TablaProductos.getColumnModel().getColumn(4).setResizable(false);
+            TablaProductos.getColumnModel().getColumn(5).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 710, 210));
